@@ -4,4 +4,5 @@ export declare class ChatGateway {
     private logger;
     handleMessage(message: string, socket: Socket): void;
     joinOrUpdateRoom(roomId: string, socket: Socket): void;
+    createRoom(roomId: string, socket: Socket): void;
 }

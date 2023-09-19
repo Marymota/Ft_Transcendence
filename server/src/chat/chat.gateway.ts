@@ -30,7 +30,18 @@ export class ChatGateway {
     @MessageBody() roomId: string,
     @ConnectedSocket() socket: Socket,
   ) {
-    this.logger.log(`joinRoom: ${socket.id} joined ${roomId}`);
+    this.logger.log(`User ${socket.id}, joined Room ${roomId}`);
+    const rooms = [...socket.rooms].slice(0);
+    if (rooms.length == 2) socket.leave(rooms[1]);
+    socket.join(roomId);
+  }
+
+  @SubscribeMessage('createRoom')
+  createRoom(
+    @MessageBody() roomId: string,
+    @ConnectedSocket() socket: Socket,
+  ) {
+    this.logger.log(`User ${socket.id}, created Room ${roomId}`);
     const rooms = [...socket.rooms].slice(0);
     if (rooms.length == 2) socket.leave(rooms[1]);
     socket.join(roomId);

@@ -26,7 +26,14 @@ let ChatGateway = class ChatGateway {
         this.server.to(rooms[1]).emit('update', message);
     }
     joinOrUpdateRoom(roomId, socket) {
-        this.logger.log(`joinRoom: ${socket.id} joined ${roomId}`);
+        this.logger.log(`User ${socket.id}, joined Room ${roomId}`);
+        const rooms = [...socket.rooms].slice(0);
+        if (rooms.length == 2)
+            socket.leave(rooms[1]);
+        socket.join(roomId);
+    }
+    createRoom(roomId, socket) {
+        this.logger.log(`User ${socket.id}, created Room ${roomId}`);
         const rooms = [...socket.rooms].slice(0);
         if (rooms.length == 2)
             socket.leave(rooms[1]);
@@ -54,6 +61,14 @@ __decorate([
     __metadata("design:paramtypes", [String, socket_io_1.Socket]),
     __metadata("design:returntype", void 0)
 ], ChatGateway.prototype, "joinOrUpdateRoom", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('createRoom'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __param(1, (0, websockets_1.ConnectedSocket)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, socket_io_1.Socket]),
+    __metadata("design:returntype", void 0)
+], ChatGateway.prototype, "createRoom", null);
 exports.ChatGateway = ChatGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({ cors: { origin: '*' } })
 ], ChatGateway);
