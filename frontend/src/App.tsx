@@ -6,6 +6,7 @@ const socket = io('http://localhost:3000');
 
 function App() {
   const [rooms, setRooms] = useState<string[]>([]);
+  const [currentChatLog, setCurrentChatLog] = useState([]);
   const [newRoomName, setNewRoomName] = useState('');
   const [roomID, setRoomID] = useState('');
   const [messageText, setMessageText] = useState('');
@@ -36,6 +37,10 @@ function App() {
     }
     setMessageText('');
   }, [messageText]);
+
+  socket.on('update', (chatLog: []) => {
+    setCurrentChatLog(chatLog);
+  });
 
   return (
     <>
@@ -88,6 +93,9 @@ function App() {
         {rooms.map((roomName, index) => (
           <div className="roomBoard" key={index}>
             <h3>Channell: {roomName}</h3>
+            {currentChatLog.map((name, index) => (
+              <div key={index}>{name}</div>
+            ))}
           </div>
         ))}
       </div>

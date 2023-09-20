@@ -28,8 +28,7 @@ let ChatGateway = class ChatGateway {
         this.logger.log(`message recieved ${roomName}, in room ${roomId}`);
         chatLogs[roomId] = [...chatLogs[roomId], roomName];
         this.logger.log(`Chat log: ${chatLogs[roomId]}`);
-        const rooms = [...socket.rooms].slice(0);
-        this.server.to(rooms[1]).emit('update', roomName);
+        this.server.emit('update', chatLogs[roomId]);
     }
     joinOrUpdateRoom(roomId, socket) {
         this.logger.log(`User ${socket.id}, joined Room ${roomId}`);
