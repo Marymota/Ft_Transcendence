@@ -14,3 +14,5 @@ Run server
 
 - cd server
 - npm run start:dev
+
+UPDATE NODE VERSION TO 19 (https://joshtronic.com/2022/10/23/how-to-install-nodejs-19-on-ubuntu-2004-lts/)
