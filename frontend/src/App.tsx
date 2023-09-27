@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import io from 'socket.io-client';
 import './App.css';
+import Jogo from './components/jogo';
 
 const socket = io('http://localhost:3000');
 
@@ -99,6 +100,7 @@ function App() {
           </div>
         ))}
       </div>
+      <Jogo player1='pedro' player2='antonio'></Jogo>
     </>
   );
 }
