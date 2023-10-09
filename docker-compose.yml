@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  server:
+    container_name: server
+    build: server/
+    image: server
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+    restart: always

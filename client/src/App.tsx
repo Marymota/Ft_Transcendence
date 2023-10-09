@@ -100,7 +100,6 @@ function App() {
           </div>
         ))}
       </div>
-      <Jogo player1='pedro' player2='antonio'></Jogo>
     </>
   );
 }
