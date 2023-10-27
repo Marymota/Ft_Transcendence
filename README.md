@@ -2,6 +2,35 @@
 
 This project is about creating a website for the mighty Pong contest!
 
+## Initial commads to have it all working (DEVELOPMENT FASE)
+
+- Docker
+
+```
+docker stop $(docker ps -qa); \
+docker rm $(docker ps -qa); \
+docker rmi -f $(docker images -qa); \
+docker volume rm $(docker volume ls -q); \
+docker network rm $(docker network ls -q) \
+docker-compose up -d \
+```
+- Backend
+
+```
+cd backend/ && npm install; \
+npx prisma migrate reset; \
+npx prisma db pull; \
+npx prisma generate; \
+npm run start:dev
+```
+- Frontend
+
+```
+cd frontend/ && npm install; \
+npm run dev
+```
+
+
 ## Backend
 
 Command to install backend modules
