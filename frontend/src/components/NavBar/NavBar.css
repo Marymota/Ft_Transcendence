@@ -1,0 +1,14 @@
+.navBar {
+  width: 100%;
+  display: flex;
+}
+
+.button1 {
+  text-align: center;
+  width: 50%; /* for divide container into 2 equal divs  */
+}
+
+.button2 {
+  text-align: center;
+  width: 50%; /* for divide container into 2 equal divs  */
+}

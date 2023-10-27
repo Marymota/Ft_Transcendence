@@ -1,22 +1,104 @@
-# Ft_Transcendence
+# Transcendence
 
-If it's the first time you should first execute the following commands:
+This project is about creating a website for the mighty Pong contest!
 
-- cd react-app
-- npm install
+## Backend
 
-Run react-app
+Command to install backend modules
 
-- cd react-app
-- npm start
+```
+npm install
+```
 
-Run server
+Command to run backend
 
-- cd server
-- npm run start:dev
+```
+npm run start
+OR
+npm run start:dev
+```
 
-UPDATE NODE VERSION TO 19 (https://joshtronic.com/2022/10/23/how-to-install-nodejs-19-on-ubuntu-2004-lts/)
+## Frontend
 
-Pedro:
-Ficheiro onde o design do jogo e feito: ./frontend/src/components/jogo.tsx
-A funcao do Jogo e chamada no ficheiro ./frontend/src/App.tsx
+Command to install frontend modules
+
+```
+npm install
+```
+
+Command to run frontend
+
+```
+npm run dev
+```
+
+## Database
+
+<h4>Manual Input</h4>
+
+- Access Database
+
+  ```
+  docker-compose exec postgres /bin/sh
+  psql -d <POSTGRES_DB> -U <POSTGRES_USER> -W
+  (when password asked: <POSTGRES_PASSWORD>)
+
+  ```
+
+- List all databases
+
+  ```
+  \l
+  ```
+
+- Switch to another Database
+
+  ```
+  \c <db-name>
+  ```
+
+- List database tables
+
+  ```
+  \dt
+  ```
+
+  <a href="https://hasura.io/blog/top-psql-commands-and-flags-you-need-to-know-postgresql/" target="_blank">More Commands</a>
+
+<h4>Prisma</h4>
+
+```
+cd backend/
+```
+
+- Open Prisma Studio
+
+```
+npx prisma studio
+```
+
+- Update changes done to prisma.schema
+
+```
+npx prisma migrate dev --name MODELNAME-model
+npx prisma db pull
+npx prisma generate
+```
+
+- Reset Database
+
+```
+npx prisma migrate reset
+```
+
+## Docker
+
+Commands to clean docker related stuff
+
+```
+docker stop $(docker ps -qa); \
+docker rm $(docker ps -qa); \
+docker rmi -f $(docker images -qa); \
+docker volume rm $(docker volume ls -q); \
+docker network rm $(docker network ls -q)
+```
