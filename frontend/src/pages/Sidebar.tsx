@@ -37,6 +37,9 @@ function Sidebar() {
 			</div>
 		</div>
 		<div className="pong">
+			<div className="leftplayer"></div>
+			<div className="rightplayer"></div>
+			<div className="ball"></div>
 		</div>
 	</div>
   );
