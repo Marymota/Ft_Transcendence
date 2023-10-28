@@ -1,0 +1,9 @@
+.container {
+    display:none;
+}
+
+@media (min-width: 1000px) {
+    .container {
+      display: flex; /* Show the container when the screen size is larger */
+    }
+  }

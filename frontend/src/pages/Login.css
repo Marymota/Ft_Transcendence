@@ -8,6 +8,13 @@
     background-color: #463366;
 }
 
+.container-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100vh;
+}
+
 .disk {
     margin-top: 50px;
     width: 40vh;
