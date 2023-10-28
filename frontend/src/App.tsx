@@ -1,48 +1,28 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import "./App.css";
 import io from "socket.io-client";
+import Home from './pages/Home';
+import Sidebar from './pages/Sidebar'
+// import { getCookies } from './utils/getCookies';
+// import { GET_MY_OPT_CONFIG } from './UI/organisms/TwoFactorAuthBox/TwoFactorAuthBoxQueries';
 
 export const socket = io("http://localhost:3000");
 
 export default function App() {
-  useEffect(() => {
-    socket.on("connect", () => {
-      console.log("connection ID : ", socket.id);
-    });
-  }, []);
-
-  function createUser(name: string) {
-    socket.emit("createUser", name);
-  }
-
-  function printUsers() {
-    socket.emit("printUsers");
-  }
-
-  return (
-    <div className="page">
-      <div className="testAPI">
-        <input id="userNameInput" type="text" placeholder="Name"></input>
-        <button
-          onClick={() => {
-            createUser(
-              (document.getElementById("userNameInput") as HTMLInputElement)
-                .value
-            );
-          }}
-        >
-          Create
-        </button>
-      </div>
-      <div className="testAPI">
-        <button
-          onClick={() => {
-            printUsers();
-          }}
-        >
-          Print Users
-        </button>
-      </div>
-    </div>
-  );
+  // const accessToken = getCookies('access_token');
+  // const { error } = useQuery(GET_MY_OPT_CONFIG);
+  // if (!accessToken) {
+    return (
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/Sidebar" element={<Sidebar />} />
+        </Routes>
+      </Router>
+      // if (error) {
+      //   return<>Error</>;
+      // }
+    );
+  // } 
 }
