@@ -36,8 +36,7 @@ function Sidebar() {
 				<span>EXIT</span>
 			</div>
 		</div>
-		<div = className="pong">
-			{/* pong */}
+		<div className="pong">
 		</div>
 	</div>
   );
