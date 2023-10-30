@@ -1,5 +1,14 @@
+import { socket } from "../../App";
 import "./ChatBox.css";
 import { IoMdSend } from "react-icons/io";
+
+function sendMessage(content: string, sender: string, receiver: string) {
+  socket.emit("sendMsg", {
+    content: content,
+    sender: sender,
+    receiver: receiver,
+  });
+}
 
 function ChatBox() {
   return (
@@ -25,8 +34,23 @@ function ChatBox() {
             </div>
           </div>
           <div className="writeBox">
-            <input className="sendTextInput" placeholder="Write..."></input>
-            <button className="sendMessageButton">
+            <input
+              id="sendText"
+              className="sendTextInput"
+              placeholder="Write..."
+            ></input>
+            <button
+              className="sendMessageButton"
+              onClick={() => {
+                console.log("test0");
+                sendMessage(
+                  (document.getElementById("sendText") as HTMLInputElement)
+                    .value,
+                  "amaria-m",
+                  "pestevao"
+                );
+              }}
+            >
               <div>Send</div> <IoMdSend />
             </button>
           </div>

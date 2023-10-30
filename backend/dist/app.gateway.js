@@ -36,6 +36,11 @@ let AppGateway = class AppGateway {
         const users = await prisma.user.findMany();
         console.log(users);
     }
+    async sendMessage(messageData, client) {
+        const { content, sender, receiver } = messageData;
+        console.log(`${messageData}`);
+        console.log(`${sender} wants to send the following message to ${receiver}. Message: ${content}`);
+    }
 };
 exports.AppGateway = AppGateway;
 __decorate([
@@ -57,6 +62,14 @@ __decorate([
     __metadata("design:paramtypes", [socket_io_1.Socket]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "print", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('sendMsg'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __param(1, (0, websockets_1.ConnectedSocket)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, socket_io_1.Socket]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "sendMessage", null);
 exports.AppGateway = AppGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({ cors: { origin: '*' } })
 ], AppGateway);

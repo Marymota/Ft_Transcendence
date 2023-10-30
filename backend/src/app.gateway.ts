@@ -38,4 +38,17 @@ export class AppGateway {
     const users = await prisma.user.findMany();
     console.log(users);
   }
+
+  @SubscribeMessage('sendMsg')
+  async sendMessage(
+    @MessageBody()
+    messageData: { content: string; sender: string; receiver: string },
+    @ConnectedSocket() client: Socket,
+  ): Promise<undefined> {
+    const { content, sender, receiver } = messageData;
+    console.log(`${messageData}`);
+    console.log(
+      `${sender} wants to send the following message to ${receiver}. Message: ${content}`,
+    );
+  }
 }
