@@ -1,5 +1,45 @@
-.box {
-  width: 40%;
-  height: 60vh;
-  background-color: aliceblue;
+.chatBox {
+  margin: auto;
+  width: 85%;
+  height: 85%;
+  background-color: #5cbbbe;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
+.chatGroups {
+  background-color: #4ea0a2;
+  padding: 2%;
+  width: 30%;
+  display: flex;
+  flex-flow: column;
+}
+
+.chatDisplay {
+  width: 70%;
+  padding: auto;
+}
+
+.searchGroup {
+  border: 0;
+  background-color: #5cbbbe;
+  padding: 2%;
+  /* border-radius: 2em; */
+}
+
+.group-names {
+  margin: 5% 0%;
+  padding: 2%;
+  border: solid 0.1em #5cbbbe;
+  border-radius: 0.1em;
+  height: 90%;
+}
+
+.groupName {
+  margin: 5% 2%;
+  background-color: #5cbbbe;
+  padding: 2%;
+  border-radius: 0.5em;
+  color: #fbf060;;
 }

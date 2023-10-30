@@ -1,12 +1,5 @@
-.body {
-  background-color: #463366;
-  display: flex;
-  margin: 0;
-  padding: 0;
-}
-
 .sidebar {
-  width: 50vh;
+  width: 20%;
   background: #333;
   color: #fff;
   display: flex;
