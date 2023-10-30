@@ -1,107 +1,71 @@
 .body {
-	background-color: #463366;
-	display: flex;
-	margin: 0;
-	padding: 0;
+  background-color: #463366;
+  display: flex;
+  margin: 0;
+  padding: 0;
 }
 
 .sidebar {
-	width: 50vh;
-	background: #333;
-	color: #fff;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	padding-left: 40px;
-	height: 100vh;
-	background-color: #463366;
-	border-right: 5px solid aquamarine;
+  width: 50vh;
+  background: #333;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 40px;
+  height: 98vh;
+  background-color: #463366;
+  border-right: 5px solid aquamarine;
 }
 
 .logo {
-	margin-top: 50px;
-	margin-bottom: 50px;
-	margin-left: 15px;
-	justify-self:  center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-left: 15px;
+  justify-self: center;
 }
 
 .logo img {
-	width: 80%;
-	justify-content: center;
+  width: 80%;
+  justify-content: center;
 }
 
 .menu {
-	margin-top: 20px;
+  margin-top: 20px;
 }
 
 .menu-item {
-	display: flex;
-	align-items: center;
-	flex-direction: row;
-	transition: border-color 0.2s;
-	border: 2px solid transparent;
-	border-radius: 25px;
-	padding: 20px;
-	width: 300px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  transition: border-color 0.2s;
+  border: 2px solid transparent;
+  border-radius: 25px;
+  padding: 20px;
+  width: 300px;
 }
 
 .menu-item img {
-	width: 5.5vh;
-	margin-right: 5px;
+  width: 5.5vh;
+  margin-right: 5px;
 }
 
 .menu-item:active {
-	border-color: aquamarine;
+  border-color: aquamarine;
 }
 
 .menu-item:hover {
-	border-color: aquamarine;
+  border-color: aquamarine;
 }
 
 .content {
-	flex: 1;
-	padding: 50px;
+  flex: 1;
+  padding: 50px;
 }
 
 span {
-	font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-	color:white;
-	margin-left: 5vh;
-	font-size: 2.2vh;
-}
-
-.pong {
-	position: absolute;
-	background-color: #000000;
-	top: 20px;
-	left: 60vh;
-	width: 100vh;
-	height: 90vh;
-}
-
-.rightplayer {
-	position: absolute;
-	background-color: #0000ff;
-	top: 40vh;
-	right: 5vh;
-	width: 3vh;
-	height: 10vh;
-}
-
-.leftplayer {
-	position: absolute;
-	background-color: #ff0000;
-	top: 40vh;
-	left: 5vh;
-	width: 3vh;
-	height: 10vh;
-}
-
-.ball {
-	position: absolute;
-	background-color: #ffffff;
-	top: 40vh;
-	left: 50vh;
-	width: 1vh;
-	height: 1vh;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: white;
+  margin-left: 5vh;
+  font-size: 2.2vh;
 }

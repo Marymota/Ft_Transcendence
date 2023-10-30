@@ -1,0 +1,35 @@
+.pong {
+  position: absolute;
+  background-color: #000000;
+  top: 20px;
+  left: 60vh;
+  width: 100vh;
+  height: 90vh;
+}
+
+.rightplayer {
+  position: absolute;
+  background-color: #0000ff;
+  top: 40vh;
+  right: 5vh;
+  width: 3vh;
+  height: 10vh;
+}
+
+.leftplayer {
+  position: absolute;
+  background-color: #ff0000;
+  top: 40vh;
+  left: 5vh;
+  width: 3vh;
+  height: 10vh;
+}
+
+.ball {
+  position: absolute;
+  background-color: #ffffff;
+  top: 40vh;
+  left: 50vh;
+  width: 1vh;
+  height: 1vh;
+}

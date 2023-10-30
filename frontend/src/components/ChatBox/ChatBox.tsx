@@ -3,7 +3,7 @@ import "./ChatBox.css";
 function ChatBox() {
   return (
     <>
-      <div>ola</div>
+      <div className="box"></div>
     </>
   );
 }
