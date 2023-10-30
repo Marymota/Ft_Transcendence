@@ -1,4 +1,5 @@
 import "./ChatBox.css";
+import { IoMdSend } from "react-icons/io";
 
 function ChatBox() {
   return (
@@ -25,7 +26,9 @@ function ChatBox() {
           </div>
           <div className="writeBox">
             <input className="sendTextInput" placeholder="Write..."></input>
-            <button className="sendMessageButton">Send</button>
+            <button className="sendMessageButton">
+              <div>Send</div> <IoMdSend />
+            </button>
           </div>
         </div>
       </div>

@@ -118,6 +118,9 @@
 }
 
 .sendMessageButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin: 3%;
   width: 10%;
   border: 0;
