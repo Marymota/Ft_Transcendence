@@ -41,5 +41,10 @@
   background-color: #5cbbbe;
   padding: 2%;
   border-radius: 0.5em;
-  color: #fbf060;;
+  color: #fbf060;
+}
+
+.groupName:hover {
+  background-color: #4ea0a2;
+  color: #d2c951;
 }
