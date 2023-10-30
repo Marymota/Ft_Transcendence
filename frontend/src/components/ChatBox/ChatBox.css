@@ -25,7 +25,8 @@
   border: 0;
   background-color: #5cbbbe;
   padding: 2%;
-  /* border-radius: 2em; */
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: white;
 }
 
 .group-names {
@@ -42,9 +43,86 @@
   padding: 2%;
   border-radius: 0.5em;
   color: #fbf060;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: white;
 }
 
 .groupName:hover {
   background-color: #4ea0a2;
   color: #d2c951;
+}
+
+.chatDisplay {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.messagesBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 90%;
+  width: 90%;
+  background-color: #4ea0a2;
+  margin: 5% 5% 1% 5%;
+}
+
+.message {
+  width: 95%;
+  margin: 1% 2.5%;
+}
+
+.sentMessage {
+  text-align: right;
+}
+
+.receivedMessage {
+  justify-content: left;
+}
+
+.messageBuble {
+  display: inline-block;
+  background-color: #5cbbbe;
+  padding: 1.3% 2% 1% 2%;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: white;
+}
+
+.receivedBuble {
+  border-radius: 1em 1em 1em 0em;
+}
+
+.sentBuble {
+  border-radius: 1em 1em 0em 1em;
+}
+
+.writeBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80%;
+  height: 8%;
+  margin: 1% 10%;
+  background-color: #4ea0a2;
+}
+
+.sendTextInput {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: white;
+  margin: 3%;
+  width: 80%;
+  border: 0;
+  background-color: #5cbbbe;
+  padding: 1.5% 1% 1% 1%;
+}
+
+.sendMessageButton {
+  margin: 3%;
+  width: 10%;
+  border: 0;
+  background-color: #5cbbbe;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: white;
+  padding: 0.84% 1% 1% 1%;
 }

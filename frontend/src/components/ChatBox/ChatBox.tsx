@@ -14,7 +14,20 @@ function ChatBox() {
             <div className="groupName group5">Andre</div>
           </div>
         </div>
-        <div className="chatDisplay"></div>
+        <div className="chatDisplay">
+          <div className="messagesBox">
+            <div className="message sentMessage">
+              <div className="messageBuble sentBuble">Ola</div>
+            </div>
+            <div className="message receivedMessage">
+              <div className="messageBuble receivedBuble">Adeus</div>
+            </div>
+          </div>
+          <div className="writeBox">
+            <input className="sendTextInput" placeholder="Write..."></input>
+            <button className="sendMessageButton">Send</button>
+          </div>
+        </div>
       </div>
     </>
   );
