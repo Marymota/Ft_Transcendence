@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "./Sidebar.css";
 import * as Logo from "../../images/PONG-logo.png";
@@ -9,16 +9,11 @@ import * as Chat from "../../images/chat-icon.png";
 import * as Profile from "../../images/perfil-icon.png";
 import * as Exit from "../../images/exit-icon.png";
 
-function handleClick(page: string) {
-  useNavigate()("/" + page);
-}
-
 const Sidebar: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("tab1");
   const changeTab = (tab: string) => {
     console.log(tab);
     setActiveTab(tab);
-    if (tab == "Chat" || tab == "Home" || tab == "Play") handleClick(tab);
   };
 
   return (
@@ -27,49 +22,54 @@ const Sidebar: React.FC = () => {
         <img className="ilogo" src={Logo.default} alt="Logo Pong" />
       </div>
       <div className="menu">
-        <div
+        <Link
           className={`menu-item ${activeTab === "tab1" ? "active" : ""}`}
-          onClick={() => changeTab("Play")}
+          to="/Play"
+          onClick={() => changeTab("tab1")}
         >
           <img className="iplay" src={Play.default} alt="Play icon" />
-          <span>PLAY</span>
-        </div>
+          <div className="linkDiv">PLAY</div>
+        </Link>
 
-        <div
+        <Link
           className={`menu-item ${activeTab === "tab2" ? "active" : ""}`}
-          onClick={() => changeTab("Leaderboard")}
+          to="/Home"
+          onClick={() => changeTab("tab2")}
         >
           <img
             className="ileaderboard"
             src={Leaderboard.default}
             alt="Logo Pong"
           />
-          <span>LEADERBOARD</span>
-        </div>
+          <div className="linkDiv">LEADERBOARD</div>
+        </Link>
 
-        <div
+        <Link
           className={`menu-item ${activeTab === "tab3" ? "active" : ""}`}
-          onClick={() => changeTab("Chat")}
+          to="/Chat"
+          onClick={() => changeTab("tab3")}
         >
           <img className="ichat" src={Chat.default} alt="Chat icon" />
-          <span>CHAT</span>
-        </div>
+          <div className="linkDiv">CHAT</div>
+        </Link>
 
-        <div
+        <Link
           className={`menu-item ${activeTab === "tab4" ? "active" : ""}`}
-          onClick={() => changeTab("Profile")}
+          to="/Home"
+          onClick={() => changeTab("tab4")}
         >
           <img className="iprofile" src={Profile.default} alt="Profile icon" />
-          <span>PROFILE</span>
-        </div>
+          <div className="linkDiv">PROFILE</div>
+        </Link>
 
-        <div
+        <Link
           className={`menu-item ${activeTab === "tab5" ? "active" : ""}`}
-          onClick={() => changeTab("Exit")}
+          to="/Home"
+          onClick={() => changeTab("tab5")}
         >
           <img className="iexit" src={Exit.default} alt="Exit icon" />
-          <span>EXIT</span>
-        </div>
+          <div className="linkDiv">EXIT</div>
+        </Link>
       </div>
       <script src="sidebar.js"></script>
     </div>

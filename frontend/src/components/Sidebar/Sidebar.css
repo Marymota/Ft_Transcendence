@@ -25,6 +25,9 @@
 
 .menu {
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
 }
 
 .menu-item {
@@ -56,7 +59,14 @@
   padding: 50px;
 }
 
-span {
+/* span {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: white;
+  margin-left: 5vh;
+  font-size: 2.2vh;
+} */
+
+.linkDiv {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   color: white;
   margin-left: 5vh;
