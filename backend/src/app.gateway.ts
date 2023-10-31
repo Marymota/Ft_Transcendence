@@ -102,4 +102,12 @@ export class AppGateway {
     }
     return 'invalid message';
   }
+
+  // GET USERS FUNCTION
+
+  @SubscribeMessage('getUsers')
+  async getUsers(@ConnectedSocket() client: Socket): Promise<undefined> {
+    const users = await prisma.user.findMany();
+    this.server.emit('getUsers', users);
+  }
 }

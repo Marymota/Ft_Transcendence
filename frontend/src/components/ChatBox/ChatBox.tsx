@@ -1,6 +1,23 @@
+import { useEffect, useState } from "react";
 import { socket } from "../../App";
 import "./ChatBox.css";
 import { IoMdSend } from "react-icons/io";
+
+type Message = {
+  id: number;
+  content: string | null;
+  recepientId: number;
+  Recepient: User;
+};
+
+type User = {
+  id: number;
+  firstName: string;
+  userName: string;
+  avatar: string;
+  isActive: boolean;
+  Messages: Message[]; // You might need to define the Message type as well
+};
 
 function sendMessage(content: string, sender: string, receiver: string) {
   socket.emit("sendMessage", {
@@ -10,23 +27,31 @@ function sendMessage(content: string, sender: string, receiver: string) {
   });
 }
 
-function testDatabase() {
-  console.log("testDatabase frontend called");
-  socket.emit("testDatabase");
-}
-
 function ChatBox() {
+  const [users, setUsers] = useState<User[]>([]);
+  socket.emit("getUsers");
+
+  useEffect(() => {
+    socket.on("getUsers", (data) => {
+      setUsers(data);
+    });
+  }, []);
+
   return (
     <>
       <div className="chatBox">
         <div className="chatGroups">
           <input className="searchGroup" placeholder="Search..."></input>
           <div className="group-names">
-            <div className="groupName group1">Paulo</div>
-            <div className="groupName group2">Antonio</div>
-            <div className="groupName group3">Simao</div>
-            <div className="groupName group4">Pedro</div>
-            <div className="groupName group5">Andre</div>
+            {users.length > 0 ? (
+              users.map((user) => (
+                <div className="groupName group1" key={user.id}>
+                  {user.userName}
+                </div>
+              ))
+            ) : (
+              <p>no users</p>
+            )}
           </div>
         </div>
         <div className="chatDisplay">
@@ -39,13 +64,7 @@ function ChatBox() {
             </div>
             <div className="message receivedMessage">
               <div className="messageBuble receivedBuble">
-                <button
-                  onClick={() => {
-                    testDatabase();
-                  }}
-                >
-                  Test Database
-                </button>
+                <button onClick={() => {}}>Ask</button>
               </div>
             </div>
           </div>

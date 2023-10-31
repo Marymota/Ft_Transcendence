@@ -79,6 +79,10 @@ let AppGateway = class AppGateway {
         }
         return 'invalid message';
     }
+    async getUsers(client) {
+        const users = await prisma.user.findMany();
+        this.server.emit('getUsers', users);
+    }
 };
 exports.AppGateway = AppGateway;
 __decorate([
@@ -106,6 +110,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "sendMessage", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('getUsers'),
+    __param(0, (0, websockets_1.ConnectedSocket)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [socket_io_1.Socket]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "getUsers", null);
 exports.AppGateway = AppGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({ cors: { origin: '*' } })
 ], AppGateway);
