@@ -3,11 +3,16 @@ import "./ChatBox.css";
 import { IoMdSend } from "react-icons/io";
 
 function sendMessage(content: string, sender: string, receiver: string) {
-  socket.emit("sendMsg", {
-    content: content,
+  socket.emit("sendMessage", {
     sender: sender,
-    receiver: receiver,
+    recipient: receiver,
+    content: content,
   });
+}
+
+function testDatabase() {
+  console.log("testDatabase frontend called");
+  socket.emit("testDatabase");
 }
 
 function ChatBox() {
@@ -32,6 +37,17 @@ function ChatBox() {
             <div className="message receivedMessage">
               <div className="messageBuble receivedBuble">Adeus</div>
             </div>
+            <div className="message receivedMessage">
+              <div className="messageBuble receivedBuble">
+                <button
+                  onClick={() => {
+                    testDatabase();
+                  }}
+                >
+                  Test Database
+                </button>
+              </div>
+            </div>
           </div>
           <div className="writeBox">
             <input
@@ -42,7 +58,6 @@ function ChatBox() {
             <button
               className="sendMessageButton"
               onClick={() => {
-                console.log("test0");
                 sendMessage(
                   (document.getElementById("sendText") as HTMLInputElement)
                     .value,

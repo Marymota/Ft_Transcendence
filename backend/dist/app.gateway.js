@@ -22,24 +22,62 @@ let AppGateway = class AppGateway {
     constructor() {
         this.logger = new common_1.Logger('Gateway Log');
     }
-    async create(data, client) {
-        await prisma.user.create({
-            data: {
-                userName: data,
-                firstName: 'Alice',
-                avatar: '',
-            },
-        });
-        console.log(`created user: ${data}`);
-    }
     async print(client) {
         const users = await prisma.user.findMany();
         console.log(users);
     }
-    async sendMessage(messageData, client) {
-        const { content, sender, receiver } = messageData;
-        console.log(`${messageData}`);
-        console.log(`${sender} wants to send the following message to ${receiver}. Message: ${content}`);
+    async createUser(messageData) {
+        const allUsers = await prisma.user.findMany();
+        for (let index = 0; index < allUsers.length; index++) {
+            if (messageData.userName == allUsers[index].userName) {
+                console.log('invalid userName');
+                return 'invalid userName';
+            }
+        }
+        await prisma.user.create({
+            data: {
+                firstName: messageData.firstName,
+                userName: messageData.userName,
+                avatar: messageData.avatar,
+            },
+        });
+        console.log('created user');
+        return 'created user';
+    }
+    async sendMessage(messageData) {
+        if (messageData.content == '')
+            return 'invalid message';
+        const allUsers = await prisma.user.findMany();
+        for (let index = 0; index < allUsers.length; index++) {
+            if (messageData.sender == allUsers[index].userName) {
+                for (let idx = 0; idx < allUsers.length; idx++) {
+                    if (messageData.recipient == allUsers[idx].userName) {
+                        const msg = await prisma.message.create({
+                            data: {
+                                content: messageData.content,
+                                recepientId: allUsers[idx].id,
+                            },
+                        });
+                        const res = await prisma.user.findUnique({
+                            where: { userName: allUsers[index].userName },
+                            select: {
+                                Messages: true,
+                            },
+                        });
+                        await prisma.user.update({
+                            data: {
+                                Messages: {
+                                    set: [...res.Messages, msg],
+                                },
+                            },
+                            where: { userName: allUsers[index].userName },
+                        });
+                        return 'sent message';
+                    }
+                }
+            }
+        }
+        return 'invalid message';
     }
 };
 exports.AppGateway = AppGateway;
@@ -48,14 +86,6 @@ __decorate([
     __metadata("design:type", socket_io_1.Server)
 ], AppGateway.prototype, "server", void 0);
 __decorate([
-    (0, websockets_1.SubscribeMessage)('createUser'),
-    __param(0, (0, websockets_1.MessageBody)()),
-    __param(1, (0, websockets_1.ConnectedSocket)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, socket_io_1.Socket]),
-    __metadata("design:returntype", Promise)
-], AppGateway.prototype, "create", null);
-__decorate([
     (0, websockets_1.SubscribeMessage)('printUsers'),
     __param(0, (0, websockets_1.ConnectedSocket)()),
     __metadata("design:type", Function),
@@ -63,11 +93,17 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "print", null);
 __decorate([
-    (0, websockets_1.SubscribeMessage)('sendMsg'),
+    (0, websockets_1.SubscribeMessage)('createUser'),
     __param(0, (0, websockets_1.MessageBody)()),
-    __param(1, (0, websockets_1.ConnectedSocket)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, socket_io_1.Socket]),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "createUser", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('sendMessage'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "sendMessage", null);
 exports.AppGateway = AppGateway = __decorate([
