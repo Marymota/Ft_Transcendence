@@ -1,24 +1,27 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
-}
-
-model User {
-    id        Int       @id @default(autoincrement())
-    firstName String    @db.VarChar
-    userName  String    @unique @db.VarChar
-    avatar    String    @db.VarChar
-    isActive  Boolean   @default(true)
-    Messages  Message[]
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Message {
-    id          Int     @id @default(autoincrement())
-    content     String?
-    recepientId Int
-    Recepient   User    @relation(fields: [recepientId], references: [id])
+  id          Int     @id @default(autoincrement())
+  content     String?
+  senderId    Int
+  recepientId Int
+  Recepient   User    @relation("recepientMsg", fields: [recepientId], references: [id])
+  Sender      User    @relation("senderMsg", fields: [senderId], references: [id])
+}
+
+model User {
+  id               Int       @id @default(autoincrement())
+  firstName        String    @db.VarChar
+  userName         String    @unique @db.VarChar
+  avatar           String    @db.VarChar
+  isActive         Boolean   @default(true)
+  MessagesReceived Message[] @relation("recepientMsg")
+  MessagesSent     Message[] @relation("senderMsg")
 }

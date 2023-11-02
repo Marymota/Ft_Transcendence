@@ -52,6 +52,10 @@
   color: #d2c951;
 }
 
+.selectedChannelStyle {
+  background-color: #356b6d;
+}
+
 .chatDisplay {
   display: flex;
   flex-direction: column;
