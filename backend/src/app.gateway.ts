@@ -105,7 +105,6 @@ export class AppGateway {
   @SubscribeMessage('getUsers')
   async getUsers(@ConnectedSocket() client: Socket): Promise<undefined> {
     const users = await prisma.user.findMany();
-    console.log('asked for users');
     this.server.emit('getUsers', users);
     console.log('sent users');
   }

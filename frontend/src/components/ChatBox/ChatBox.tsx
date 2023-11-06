@@ -30,42 +30,34 @@ function sendMessage(content: string, sender: string, receiver: string) {
   });
 }
 
-function callGetUsers() {
-  socket.emit("getUsers");
-}
-
 function ChatBox() {
   const currentUser = "amaria-m";
   const [users, setUsers] = useState<User[]>([]);
   const [channelSelected, setChannelSelected] = useState("");
   const [channelMessages, setChannelMessages] = useState<Message[]>([]);
 
-  socket.on("getUsers", (data) => {
-    console.log(`${data}`);
-    setUsers(data);
-  });
   useEffect(() => {
-    callGetUsers();
-    const intervalId = setInterval(callGetUsers, 2000);
+    console.log("entered users useEffect");
+    const handleGetUsers = (data: User[]) => {
+      console.log(`${data}`);
+      setUsers(data);
+    };
+    socket.on("getUsers", handleGetUsers);
+    socket.emit("getUsers");
     return () => {
-      clearInterval(intervalId);
+      socket.off("getUsers", handleGetUsers);
     };
   }, []);
 
-  useEffect(() => {
-    socket.on("getChannelMessages", (data) => {
-      const messagesData: Message[] = data;
-      setChannelMessages(messagesData);
-    });
-  }, []);
-
-  useEffect(() => {
-    socket.emit("getChannelMessages", currentUser, channelSelected);
-  }, [channelSelected]);
-
   function selectChannel(channelName: string) {
-    console.log(`selected channel: ${channelName}`);
+    const handleChannelMessages = (data: Message[]) => {
+      setChannelMessages(data);
+    };
     setChannelSelected(channelName);
+    console.log(`selected channel: ${channelName}`);
+    socket.on("getChannelMessages", handleChannelMessages);
+    socket.emit("getChannelMessages", currentUser, channelSelected);
+    socket.off("getChannelMessages", handleChannelMessages);
   }
 
   return (

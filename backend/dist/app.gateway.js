@@ -80,7 +80,6 @@ let AppGateway = class AppGateway {
     }
     async getUsers(client) {
         const users = await prisma.user.findMany();
-        console.log('asked for users');
         this.server.emit('getUsers', users);
         console.log('sent users');
     }
