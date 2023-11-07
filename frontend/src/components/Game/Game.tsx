@@ -1,28 +1,69 @@
 import "./Game.css";
 
+import React, { PureComponent } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { GameEngine } from 'react-native-game-engine';
 
-document.addEventListener('keydown', function(event) {
-	let rightplayer = document.getElementById('.rightplayer');
+/*interface Entity {
+    position: [number, number];
+}
 
-	// Get the current position of the rightplayer.
-	if (rightplayer != null)
-	{
-			let style = window.getComputedStyle(rightplayer);
-			let top = parseInt(style.getPropertyValue('top'));
+interface TouchEvent {
+    type: string;
+    id: string;
+    delta: { pageX: number; pageY: number; };
+}
 
-			
-			// Update the position based on the key pressed.
-			switch (event.key) {
-					case 'ArrowUp':
-							rightplayer.style.top = `${top - 10}px`;
-							break;
-					case 'ArrowDown':
-							rightplayer.style.top = `${top + 10}px`;
-							break;
-				}
-	}
+interface Entities {
+    [key: string]: Entity;
+}
+
+const MoveObject = (entities: Entities, { touches }: { touches: TouchEvent[] }) => {
+    touches.filter(t => t.type === "move").forEach(t => {
+        let object = entities[t.id];
+        if (object && object.position) {
+            object.position = [
+                object.position[0] + t.delta.pageX,
+                object.position[1] + t.delta.pageY
+            ];
+        }
+    });
+
+    return entities;
+};
+
+class App extends PureComponent {
+    render() {
+        return (
+            <View style={styles.container}>
+                <GameEngine
+                    systems={[MoveObject]}
+                    entities={{
+                        object: {
+                            position: [0, 0],
+                            renderer: <View style={styles.object} />
+                        },
+                    }}
+                />
+            </View>
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#FFF',
+    },
+    object: {
+        width: 50,
+        height: 50,
+        backgroundColor: 'blue',
+    },
 });
 
+export default App;
+*/
 const Game: React.FC = () => {
 	return (
 		<div className="game">
@@ -33,6 +74,6 @@ const Game: React.FC = () => {
 			</div>
 		</div>
 	);
-};
+}
 
 export default Game;
