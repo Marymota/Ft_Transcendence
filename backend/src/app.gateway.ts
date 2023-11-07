@@ -64,43 +64,40 @@ export class AppGateway {
       content: string;
     },
   ): Promise<String> {
-    if (messageData.content == '') return 'invalid message';
-    const allUsers = await prisma.user.findMany();
-    for (let index = 0; index < allUsers.length; index++) {
-      // if sender exists
-      if (messageData.sender == allUsers[index].userName) {
-        for (let idx = 0; idx < allUsers.length; idx++) {
-          // if recipient exists
-          if (messageData.recipient == allUsers[idx].userName) {
-            // create message
-            const msg = await prisma.message.create({
-              data: {
-                content: messageData.content,
-                recepientId: allUsers[idx].id,
-              },
-            });
-            // find user past messages
-            const res = await prisma.user.findUnique({
-              where: { userName: allUsers[index].userName },
-              select: {
-                Messages: true,
-              },
-            });
-            // update user that sent message
-            await prisma.user.update({
-              data: {
-                Messages: {
-                  set: [...res.Messages, msg],
-                },
-              },
-              where: { userName: allUsers[index].userName },
-            });
-            return 'sent message';
-          }
-        }
-      }
-    }
-    return 'invalid message';
+    if (
+      messageData.content == '' ||
+      messageData.sender == '' ||
+      messageData.recipient == ''
+    )
+      return 'invalid message';
+    const senderUser = await prisma.user.findUnique({
+      where: { userName: messageData.sender },
+      select: {
+        id: true,
+        userName: true,
+        MessagesSent: true,
+        MessagesReceived: true,
+      },
+    });
+    const recepientUser = await prisma.user.findUnique({
+      where: { userName: messageData.recipient },
+      select: {
+        id: true,
+        userName: true,
+        MessagesSent: true,
+        MessagesReceived: true,
+      },
+    });
+    if (!senderUser || !recepientUser) return 'invalid isers';
+    // create message
+    const msg = await prisma.message.create({
+      data: {
+        content: messageData.content,
+        senderId: senderUser.id,
+        recepientId: recepientUser.id,
+      },
+    });
+    return 'msg added';
   }
 
   // GET USERS FUNCTION
@@ -109,5 +106,41 @@ export class AppGateway {
   async getUsers(@ConnectedSocket() client: Socket): Promise<undefined> {
     const users = await prisma.user.findMany();
     this.server.emit('getUsers', users);
+    console.log('sent users');
+  }
+
+  // GET MESSAGES FUNCTION
+
+  @SubscribeMessage('getChannelMessages')
+  async getMessages(
+    @MessageBody() messageData: { sender: string; recepient: string },
+  ): Promise<string> {
+    if (messageData.sender == '' || messageData.recepient == '')
+      return 'invalid parameters';
+    const sender = await prisma.user.findFirst({
+      where: { userName: messageData.sender },
+      select: {
+        MessagesSent: true,
+      },
+    });
+
+    const recepient = await prisma.user.findFirst({
+      where: { userName: messageData.recepient },
+      select: {
+        id: true,
+      },
+    });
+    let messages = sender.MessagesSent;
+    let index = 0;
+    while (index < messages.length) {
+      for (index = 0; index < messages.length; index++) {
+        if (messages[index].recepientId != recepient.id) {
+          messages = messages.splice(index, 1);
+          break;
+        }
+      }
+    }
+    this.server.emit('getChannelMessages', messages);
+    return 'sucess';
   }
 }

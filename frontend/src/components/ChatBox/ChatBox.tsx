@@ -6,8 +6,10 @@ import { IoMdSend } from "react-icons/io";
 type Message = {
   id: number;
   content: string | null;
+  senderId: number;
   recepientId: number;
   Recepient: User;
+  Sender: User;
 };
 
 type User = {
@@ -16,7 +18,8 @@ type User = {
   userName: string;
   avatar: string;
   isActive: boolean;
-  Messages: Message[]; // You might need to define the Message type as well
+  MessagesReceived: Message[];
+  MessagesSent: Message[];
 };
 
 function sendMessage(content: string, sender: string, receiver: string) {
@@ -28,14 +31,34 @@ function sendMessage(content: string, sender: string, receiver: string) {
 }
 
 function ChatBox() {
+  const currentUser = "amaria-m";
   const [users, setUsers] = useState<User[]>([]);
-  socket.emit("getUsers");
+  const [channelSelected, setChannelSelected] = useState("");
+  const [channelMessages, setChannelMessages] = useState<Message[]>([]);
 
   useEffect(() => {
-    socket.on("getUsers", (data) => {
+    console.log("entered users useEffect");
+    const handleGetUsers = (data: User[]) => {
+      console.log(`${data}`);
       setUsers(data);
-    });
+    };
+    socket.on("getUsers", handleGetUsers);
+    socket.emit("getUsers");
+    return () => {
+      socket.off("getUsers", handleGetUsers);
+    };
   }, []);
+
+  function selectChannel(channelName: string) {
+    const handleChannelMessages = (data: Message[]) => {
+      setChannelMessages(data);
+    };
+    setChannelSelected(channelName);
+    console.log(`selected channel: ${channelName}`);
+    socket.on("getChannelMessages", handleChannelMessages);
+    socket.emit("getChannelMessages", currentUser, channelSelected);
+    socket.off("getChannelMessages", handleChannelMessages);
+  }
 
   return (
     <>
@@ -45,28 +68,37 @@ function ChatBox() {
           <div className="group-names">
             {users.length > 0 ? (
               users.map((user) => (
-                <div className="groupName group1" key={user.id}>
+                <div
+                  onClick={() => {
+                    selectChannel(user.userName);
+                  }}
+                  className={
+                    "groupName group1 " +
+                    (channelSelected == user.userName && "selectedChannelStyle")
+                  }
+                  key={user.id}
+                >
                   {user.userName}
                 </div>
               ))
             ) : (
-              <p>no users</p>
+              <p>No Users</p>
             )}
           </div>
         </div>
         <div className="chatDisplay">
           <div className="messagesBox">
-            <div className="message sentMessage">
-              <div className="messageBuble sentBuble">Ola</div>
-            </div>
-            <div className="message receivedMessage">
-              <div className="messageBuble receivedBuble">Adeus</div>
-            </div>
-            <div className="message receivedMessage">
-              <div className="messageBuble receivedBuble">
-                <button onClick={() => {}}>Ask</button>
-              </div>
-            </div>
+            {channelMessages.length > 0 ? (
+              channelMessages.map((msg) => (
+                <div className="message receivedMessage">
+                  <div className="messageBuble receivedBuble">
+                    {msg.content}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>No Messages</p>
+            )}
           </div>
           <div className="writeBox">
             <input
@@ -80,8 +112,8 @@ function ChatBox() {
                 sendMessage(
                   (document.getElementById("sendText") as HTMLInputElement)
                     .value,
-                  "amaria-m",
-                  "pestevao"
+                  currentUser,
+                  channelSelected
                 );
               }}
             >

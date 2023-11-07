@@ -45,43 +45,71 @@ let AppGateway = class AppGateway {
         return 'created user';
     }
     async sendMessage(messageData) {
-        if (messageData.content == '')
+        if (messageData.content == '' ||
+            messageData.sender == '' ||
+            messageData.recipient == '')
             return 'invalid message';
-        const allUsers = await prisma.user.findMany();
-        for (let index = 0; index < allUsers.length; index++) {
-            if (messageData.sender == allUsers[index].userName) {
-                for (let idx = 0; idx < allUsers.length; idx++) {
-                    if (messageData.recipient == allUsers[idx].userName) {
-                        const msg = await prisma.message.create({
-                            data: {
-                                content: messageData.content,
-                                recepientId: allUsers[idx].id,
-                            },
-                        });
-                        const res = await prisma.user.findUnique({
-                            where: { userName: allUsers[index].userName },
-                            select: {
-                                Messages: true,
-                            },
-                        });
-                        await prisma.user.update({
-                            data: {
-                                Messages: {
-                                    set: [...res.Messages, msg],
-                                },
-                            },
-                            where: { userName: allUsers[index].userName },
-                        });
-                        return 'sent message';
-                    }
-                }
-            }
-        }
-        return 'invalid message';
+        const senderUser = await prisma.user.findUnique({
+            where: { userName: messageData.sender },
+            select: {
+                id: true,
+                userName: true,
+                MessagesSent: true,
+                MessagesReceived: true,
+            },
+        });
+        const recepientUser = await prisma.user.findUnique({
+            where: { userName: messageData.recipient },
+            select: {
+                id: true,
+                userName: true,
+                MessagesSent: true,
+                MessagesReceived: true,
+            },
+        });
+        if (!senderUser || !recepientUser)
+            return 'invalid isers';
+        const msg = await prisma.message.create({
+            data: {
+                content: messageData.content,
+                senderId: senderUser.id,
+                recepientId: recepientUser.id,
+            },
+        });
+        return 'msg added';
     }
     async getUsers(client) {
         const users = await prisma.user.findMany();
         this.server.emit('getUsers', users);
+        console.log('sent users');
+    }
+    async getMessages(messageData) {
+        if (messageData.sender == '' || messageData.recepient == '')
+            return 'invalid parameters';
+        const sender = await prisma.user.findFirst({
+            where: { userName: messageData.sender },
+            select: {
+                MessagesSent: true,
+            },
+        });
+        const recepient = await prisma.user.findFirst({
+            where: { userName: messageData.recepient },
+            select: {
+                id: true,
+            },
+        });
+        let messages = sender.MessagesSent;
+        let index = 0;
+        while (index < messages.length) {
+            for (index = 0; index < messages.length; index++) {
+                if (messages[index].recepientId != recepient.id) {
+                    messages = messages.splice(index, 1);
+                    break;
+                }
+            }
+        }
+        this.server.emit('getChannelMessages', messages);
+        return 'sucess';
     }
 };
 exports.AppGateway = AppGateway;
@@ -117,6 +145,13 @@ __decorate([
     __metadata("design:paramtypes", [socket_io_1.Socket]),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "getUsers", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('getChannelMessages'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AppGateway.prototype, "getMessages", null);
 exports.AppGateway = AppGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({ cors: { origin: '*' } })
 ], AppGateway);
