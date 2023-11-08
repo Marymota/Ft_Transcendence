@@ -45,35 +45,42 @@ let AppGateway = class AppGateway {
         return 'created user';
     }
     async sendMessage(messageData) {
-        if (messageData.content == '' ||
+        console.log('1 msg content: ', messageData.content);
+        console.log('trying to save message in database');
+        const numberOfChats = await prisma.chat.count();
+        if (messageData.chatId < 1 ||
+            messageData.chatId > numberOfChats ||
             messageData.sender == '' ||
-            messageData.recipient == '')
-            return 'invalid message';
-        const senderUser = await prisma.user.findUnique({
+            messageData.content == '')
+            return;
+        const chat = await prisma.chat.findFirst({
+            where: { id: messageData.chatId },
+            select: {
+                id: true,
+                type: true,
+                chatName: true,
+                history: true,
+                members: true,
+            },
+        });
+        const senderUser = await prisma.user.findFirst({
             where: { userName: messageData.sender },
             select: {
                 id: true,
                 userName: true,
-                MessagesSent: true,
             },
         });
-        const recepientUser = await prisma.user.findUnique({
-            where: { userName: messageData.recipient },
-            select: {
-                id: true,
-                userName: true,
-                MessagesSent: true,
-            },
-        });
-        if (!senderUser || !recepientUser)
-            return 'invalid isers';
+        if (!senderUser || !chat)
+            return;
+        console.log('2 msg content: ', messageData.content);
         const msg = await prisma.message.create({
             data: {
                 content: messageData.content,
                 senderId: senderUser.id,
+                chatId: chat.id,
             },
         });
-        return 'msg added';
+        console.log('sucessfully saved the message in the database');
     }
     async getUsers() {
         const users = await prisma.user.findMany({

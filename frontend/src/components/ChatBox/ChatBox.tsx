@@ -2,31 +2,23 @@ import { useEffect, useState } from "react";
 import "./ChatBox.css";
 import { IoMdSend } from "react-icons/io";
 import {
+  addMsgToDataBase,
   getChatsFromServer,
-  getUsersFromServer,
 } from "../../dataVars/serverRequests";
 import { useRecoilState } from "recoil";
-import { chatsAtom, usersAtom } from "../../dataVars/atoms";
+import { chatsAtom } from "../../dataVars/atoms";
 import { IChat, IMessage, IUser } from "../../dataVars/types";
-
-// function sendMessage(content: string, sender: string, receiver: string) {
-
-// }
 
 function ChatBox() {
   const currentUser = "amaria-m";
   const [selectedChannel, setSelectedChannel] = useState(0);
-  const [users, setUsers] = useRecoilState(usersAtom);
   const [chats, setChats] = useRecoilState(chatsAtom);
 
   useEffect(() => {
-    getUsersFromServer().then((value) => {
-      setUsers(value);
-    });
     getChatsFromServer().then((value) => {
       setChats(value);
     });
-  }, []);
+  }, [selectedChannel]);
 
   return (
     <>
@@ -82,13 +74,25 @@ function ChatBox() {
             {selectedChannel > 0 &&
             chats[selectedChannel - 1].history.length > 0 ? (
               chats[selectedChannel - 1].history.map((msg: IMessage) => {
-                if (msg.Sender.userName == currentUser) {
+                let userId = 0;
+                chats[selectedChannel - 1].members.map((user) => {
+                  if (user.userName == currentUser) userId = user.id;
+                });
+                if (msg.senderId == userId) {
                   return (
-                    <div className="message sentMessage">{msg.content}</div>
+                    <div className="message sentMessage">
+                      <div key={msg.id} className="messageBuble sentBuble">
+                        {msg.content}
+                      </div>
+                    </div>
                   );
                 } else {
                   return (
-                    <div className="message receivedMessage">{msg.content}</div>
+                    <div className="message receivedMessage">
+                      <div key={msg.id} className="messageBuble receivedBuble">
+                        {msg.content}
+                      </div>
+                    </div>
                   );
                 }
               })
@@ -104,14 +108,16 @@ function ChatBox() {
             ></input>
             <button
               className="sendMessageButton"
-              // onClick={() => {
-              //   sendMessage(
-              //     (document.getElementById("sendText") as HTMLInputElement)
-              //       .value,
-              //     currentUser,
-              //     selectedChannel
-              //   );
-              // }}
+              onClick={() => {
+                addMsgToDataBase(
+                  selectedChannel,
+                  currentUser,
+                  (document.getElementById("sendText") as HTMLInputElement)
+                    .value
+                );
+                setSelectedChannel(0);
+                setSelectedChannel(selectedChannel);
+              }}
             >
               <div>Send</div> <IoMdSend />
             </button>
