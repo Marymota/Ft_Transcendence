@@ -2,25 +2,7 @@ import { useEffect, useState } from "react";
 import { socket } from "../../App";
 import "./ChatBox.css";
 import { IoMdSend } from "react-icons/io";
-
-type Message = {
-  id: number;
-  content: string | null;
-  senderId: number;
-  recepientId: number;
-  Recepient: User;
-  Sender: User;
-};
-
-type User = {
-  id: number;
-  firstName: string;
-  userName: string;
-  avatar: string;
-  isActive: boolean;
-  MessagesReceived: Message[];
-  MessagesSent: Message[];
-};
+import { User, Message } from "../../types";
 
 function sendMessage(content: string, sender: string, receiver: string) {
   socket.emit("sendMessage", {
