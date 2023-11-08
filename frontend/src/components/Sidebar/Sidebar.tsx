@@ -33,7 +33,7 @@ const Sidebar: React.FC = () => {
 
         <Link
           className={`menu-item ${activeTab === "tab2" ? "active" : ""}`}
-          to="/Home"
+          to="/Leaderboard"
           onClick={() => changeTab("tab2")}
         >
           <img
@@ -55,7 +55,7 @@ const Sidebar: React.FC = () => {
 
         <Link
           className={`menu-item ${activeTab === "tab4" ? "active" : ""}`}
-          to="/Home"
+          to="/Profile"
           onClick={() => changeTab("tab4")}
         >
           <img className="iprofile" src={Profile.default} alt="Profile icon" />
