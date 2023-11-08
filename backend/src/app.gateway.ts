@@ -100,44 +100,28 @@ export class AppGateway {
   // GET USERS FUNCTION
 
   @SubscribeMessage('getUsers')
-  async getUsers(@ConnectedSocket() client: Socket): Promise<undefined> {
-    const users = await prisma.user.findMany();
+  async getUsers(): Promise<undefined> {
+    const users = await prisma.user.findMany({
+      include: {
+        MessagesSent: true,
+        Chats: true,
+      },
+    });
     this.server.emit('getUsers', users);
-    console.log('sent users');
+    console.log('sent the list of USERS to frontend');
   }
 
   // GET MESSAGES FUNCTION
 
-  @SubscribeMessage('getChannelMessages')
-  async getMessages(
-    @MessageBody() messageData: { sender: string; recepient: string },
-  ): Promise<string> {
-    if (messageData.sender == '' || messageData.recepient == '')
-      return 'invalid parameters';
-    const sender = await prisma.user.findFirst({
-      where: { userName: messageData.sender },
-      select: {
-        MessagesSent: true,
+  @SubscribeMessage('getChannels')
+  async getMessages(): Promise<undefined> {
+    const chats = await prisma.chat.findMany({
+      include: {
+        history: true,
+        members: true,
       },
     });
-
-    const recepient = await prisma.user.findFirst({
-      where: { userName: messageData.recepient },
-      select: {
-        id: true,
-      },
-    });
-    let messages = sender.MessagesSent;
-    let index = 0;
-    while (index < messages.length) {
-      for (index = 0; index < messages.length; index++) {
-        if (messages[index].chatId != recepient.id) {
-          messages = messages.splice(index, 1);
-          break;
-        }
-      }
-    }
-    this.server.emit('getChannelMessages', messages);
-    return 'sucess';
+    this.server.emit('getChannels', chats);
+    console.log('sent the list of CHATS to frontend');
   }
 }

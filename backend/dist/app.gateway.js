@@ -75,38 +75,25 @@ let AppGateway = class AppGateway {
         });
         return 'msg added';
     }
-    async getUsers(client) {
-        const users = await prisma.user.findMany();
-        this.server.emit('getUsers', users);
-        console.log('sent users');
-    }
-    async getMessages(messageData) {
-        if (messageData.sender == '' || messageData.recepient == '')
-            return 'invalid parameters';
-        const sender = await prisma.user.findFirst({
-            where: { userName: messageData.sender },
-            select: {
+    async getUsers() {
+        const users = await prisma.user.findMany({
+            include: {
                 MessagesSent: true,
+                Chats: true,
             },
         });
-        const recepient = await prisma.user.findFirst({
-            where: { userName: messageData.recepient },
-            select: {
-                id: true,
+        this.server.emit('getUsers', users);
+        console.log('sent the list of USERS to frontend');
+    }
+    async getMessages() {
+        const chats = await prisma.chat.findMany({
+            include: {
+                history: true,
+                members: true,
             },
         });
-        let messages = sender.MessagesSent;
-        let index = 0;
-        while (index < messages.length) {
-            for (index = 0; index < messages.length; index++) {
-                if (messages[index].chatId != recepient.id) {
-                    messages = messages.splice(index, 1);
-                    break;
-                }
-            }
-        }
-        this.server.emit('getChannelMessages', messages);
-        return 'sucess';
+        this.server.emit('getChannels', chats);
+        console.log('sent the list of CHATS to frontend');
     }
 };
 exports.AppGateway = AppGateway;
@@ -137,16 +124,14 @@ __decorate([
 ], AppGateway.prototype, "sendMessage", null);
 __decorate([
     (0, websockets_1.SubscribeMessage)('getUsers'),
-    __param(0, (0, websockets_1.ConnectedSocket)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [socket_io_1.Socket]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "getUsers", null);
 __decorate([
-    (0, websockets_1.SubscribeMessage)('getChannelMessages'),
-    __param(0, (0, websockets_1.MessageBody)()),
+    (0, websockets_1.SubscribeMessage)('getChannels'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AppGateway.prototype, "getMessages", null);
 exports.AppGateway = AppGateway = __decorate([

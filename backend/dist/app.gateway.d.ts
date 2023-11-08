@@ -13,9 +13,6 @@ export declare class AppGateway {
         recipient: string;
         content: string;
     }): Promise<String>;
-    getUsers(client: Socket): Promise<undefined>;
-    getMessages(messageData: {
-        sender: string;
-        recepient: string;
-    }): Promise<string>;
+    getUsers(): Promise<undefined>;
+    getMessages(): Promise<undefined>;
 }
