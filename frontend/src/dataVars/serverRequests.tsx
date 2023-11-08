@@ -24,7 +24,6 @@ export async function addMsgToDataBase(
   sender: string,
   content: string
 ) {
-  console.log("msg content", content);
   socket.send("sendMessage", {
     chatId,
     sender,

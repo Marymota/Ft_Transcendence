@@ -9,16 +9,19 @@ import { useRecoilState } from "recoil";
 import { chatsAtom } from "../../dataVars/atoms";
 import { IChat, IMessage, IUser } from "../../dataVars/types";
 
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 function ChatBox() {
   const currentUser = "amaria-m";
   const [selectedChannel, setSelectedChannel] = useState(0);
   const [chats, setChats] = useRecoilState(chatsAtom);
+  const [test, setTest] = useState(0);
 
   useEffect(() => {
     getChatsFromServer().then((value) => {
       setChats(value);
     });
-  }, [selectedChannel]);
+  }, [selectedChannel, test]);
 
   return (
     <>
@@ -71,34 +74,36 @@ function ChatBox() {
         </div>
         <div className="chatDisplay">
           <div className="messagesBox">
-            {selectedChannel > 0 &&
-            chats[selectedChannel - 1].history.length > 0 ? (
-              chats[selectedChannel - 1].history.map((msg: IMessage) => {
-                let userId = 0;
-                chats[selectedChannel - 1].members.map((user) => {
-                  if (user.userName == currentUser) userId = user.id;
-                });
-                if (msg.senderId == userId) {
-                  return (
-                    <div className="message sentMessage">
-                      <div key={msg.id} className="messageBuble sentBuble">
-                        {msg.content}
+            <div className="messageScroll">
+              {selectedChannel > 0 &&
+              chats[selectedChannel - 1].history.length > 0 ? (
+                chats[selectedChannel - 1].history.map((msg: IMessage) => {
+                  let userId = 0;
+                  chats[selectedChannel - 1].members.map((user) => {
+                    if (user.userName == currentUser) userId = user.id;
+                  });
+                  if (msg.senderId == userId) {
+                    return (
+                      <div key={msg.id} className="message sentMessage">
+                        <div className="messageBuble sentBuble">
+                          {msg.content}
+                        </div>
                       </div>
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div className="message receivedMessage">
-                      <div key={msg.id} className="messageBuble receivedBuble">
-                        {msg.content}
+                    );
+                  } else {
+                    return (
+                      <div key={msg.id} className="message receivedMessage">
+                        <div className="messageBuble receivedBuble">
+                          {msg.content}
+                        </div>
                       </div>
-                    </div>
-                  );
-                }
-              })
-            ) : (
-              <p>You have no messages</p>
-            )}
+                    );
+                  }
+                })
+              ) : (
+                <p>You have no messages</p>
+              )}
+            </div>
           </div>
           <div className="writeBox">
             <input
@@ -115,8 +120,7 @@ function ChatBox() {
                   (document.getElementById("sendText") as HTMLInputElement)
                     .value
                 );
-                setSelectedChannel(0);
-                setSelectedChannel(selectedChannel);
+                setTest(test + 1);
               }}
             >
               <div>Send</div> <IoMdSend />

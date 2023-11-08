@@ -63,13 +63,17 @@
 }
 
 .messagesBox {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   height: 90%;
   width: 90%;
   background-color: #4ea0a2;
   margin: 5% 5% 1% 5%;
+  overflow: auto;
+  display: flex;
+}
+
+.messageScroll {
+  height: 100%;
+  width: 100%;
 }
 
 .message {
