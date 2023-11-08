@@ -76,7 +76,6 @@ export class AppGateway {
         id: true,
         userName: true,
         MessagesSent: true,
-        MessagesReceived: true,
       },
     });
     const recepientUser = await prisma.user.findUnique({
@@ -85,7 +84,6 @@ export class AppGateway {
         id: true,
         userName: true,
         MessagesSent: true,
-        MessagesReceived: true,
       },
     });
     if (!senderUser || !recepientUser) return 'invalid isers';
@@ -94,7 +92,6 @@ export class AppGateway {
       data: {
         content: messageData.content,
         senderId: senderUser.id,
-        recepientId: recepientUser.id,
       },
     });
     return 'msg added';
@@ -134,7 +131,7 @@ export class AppGateway {
     let index = 0;
     while (index < messages.length) {
       for (index = 0; index < messages.length; index++) {
-        if (messages[index].recepientId != recepient.id) {
+        if (messages[index].chatId != recepient.id) {
           messages = messages.splice(index, 1);
           break;
         }
