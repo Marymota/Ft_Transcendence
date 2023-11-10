@@ -1,77 +1,48 @@
 import "./Game.css";
 
-import React, { PureComponent } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { GameEngine } from 'react-native-game-engine';
-
-/*interface Entity {
-    position: [number, number];
-}
-
-interface TouchEvent {
-    type: string;
-    id: string;
-    delta: { pageX: number; pageY: number; };
-}
-
-interface Entities {
-    [key: string]: Entity;
-}
-
-const MoveObject = (entities: Entities, { touches }: { touches: TouchEvent[] }) => {
-    touches.filter(t => t.type === "move").forEach(t => {
-        let object = entities[t.id];
-        if (object && object.position) {
-            object.position = [
-                object.position[0] + t.delta.pageX,
-                object.position[1] + t.delta.pageY
-            ];
-        }
-    });
-
-    return entities;
-};
-
-class App extends PureComponent {
-    render() {
-        return (
-            <View style={styles.container}>
-                <GameEngine
-                    systems={[MoveObject]}
-                    entities={{
-                        object: {
-                            position: [0, 0],
-                            renderer: <View style={styles.object} />
-                        },
-                    }}
-                />
-            </View>
-        );
-    }
-}
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#FFF',
-    },
-    object: {
-        width: 50,
-        height: 50,
-        backgroundColor: 'blue',
-    },
-});
-
-export default App;
-*/
 const Game: React.FC = () => {
+
+	let p1_pos_x = 5;
+	let p1_pos_y = 40;
+
+	let p2_pos_x = 5;
+	let p2_pos_y = 40;
+
+
+	function p1_move(x_pos : number, y_pos : number)
+	{
+		var element = document.getElementById("lp");
+		if (element)
+		{
+			element.style.position = "absolute";
+			element.style.left = x_pos+'vh';
+			element.style.top = y_pos+'vh';
+		}
+	}
+
+	function p2_move(x_pos : number, y_pos : number)
+	{
+		var element = document.getElementById("rp");
+		if (element)
+		{
+			element.style.position = "absolute";
+			element.style.right = x_pos+'vh';
+			element.style.top = y_pos+'vh';
+		}
+	}
+	
+	
 	return (
 		<div className="game">
 			<div className="pong">
-				<div className="leftplayer"></div>
-				<div className="rightplayer"></div>
+				<div id="lp" className="leftplayer"></div>
+				<div id="rp" className="rightplayer"></div>
 				<div className="ball"></div>
 			</div>
+			<button onClick={() => {p1_move(p1_pos_x, --p1_pos_y)}}>P1 Up</button>
+			<button onClick={() => {p1_move(p1_pos_x, ++p1_pos_y)}}>P1 Down</button>
+			<button onClick={() => {p2_move(p2_pos_x, --p2_pos_y)}}>P2 Up</button>
+			<button onClick={() => {p2_move(p2_pos_x, ++p2_pos_y)}}>P2 Down</button>
 		</div>
 	);
 }

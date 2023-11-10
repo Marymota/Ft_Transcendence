@@ -29,6 +29,7 @@
     "stable": "^0.1.8"
   },
   "devDependencies": {
+    "@types/matter-js": "^0.19.4",
     "@types/node": "^20.8.8",
     "@types/node-fetch": "^2.6.7",
     "@types/react": "^18.2.15",
