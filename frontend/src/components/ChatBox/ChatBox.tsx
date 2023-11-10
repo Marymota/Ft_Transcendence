@@ -74,10 +74,12 @@ function ChatBox() {
         </div>
         <div className="chatDisplay">
           <div className="messagesBox">
-            <div className="messageScroll">
-              {selectedChannel > 0 &&
-              chats[selectedChannel - 1].history.length > 0 ? (
-                chats[selectedChannel - 1].history.map((msg: IMessage) => {
+            {selectedChannel > 0 &&
+            chats[selectedChannel - 1].history.length > 0 ? (
+              chats[selectedChannel - 1].history
+                .slice(0)
+                .reverse()
+                .map((msg: IMessage) => {
                   let userId = 0;
                   chats[selectedChannel - 1].members.map((user) => {
                     if (user.userName == currentUser) userId = user.id;
@@ -100,10 +102,9 @@ function ChatBox() {
                     );
                   }
                 })
-              ) : (
-                <p>You have no messages</p>
-              )}
-            </div>
+            ) : (
+              <p>You have no messages</p>
+            )}
           </div>
           <div className="writeBox">
             <input
