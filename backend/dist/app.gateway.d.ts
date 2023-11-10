@@ -9,13 +9,10 @@ export declare class AppGateway {
         avatar: string;
     }): Promise<string>;
     sendMessage(messageData: {
+        chatId: number;
         sender: string;
-        recipient: string;
         content: string;
-    }): Promise<String>;
-    getUsers(client: Socket): Promise<undefined>;
-    getMessages(messageData: {
-        sender: string;
-        recepient: string;
-    }): Promise<string>;
+    }): Promise<void>;
+    getUsers(): Promise<undefined>;
+    getMessages(): Promise<undefined>;
 }

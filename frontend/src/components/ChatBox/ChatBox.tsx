@@ -1,64 +1,27 @@
 import { useEffect, useState } from "react";
-import { socket } from "../../App";
 import "./ChatBox.css";
 import { IoMdSend } from "react-icons/io";
+import {
+  addMsgToDataBase,
+  getChatsFromServer,
+} from "../../dataVars/serverRequests";
+import { useRecoilState } from "recoil";
+import { chatsAtom } from "../../dataVars/atoms";
+import { IChat, IMessage, IUser } from "../../dataVars/types";
 
-type Message = {
-  id: number;
-  content: string | null;
-  senderId: number;
-  recepientId: number;
-  Recepient: User;
-  Sender: User;
-};
-
-type User = {
-  id: number;
-  firstName: string;
-  userName: string;
-  avatar: string;
-  isActive: boolean;
-  MessagesReceived: Message[];
-  MessagesSent: Message[];
-};
-
-function sendMessage(content: string, sender: string, receiver: string) {
-  socket.emit("sendMessage", {
-    sender: sender,
-    recipient: receiver,
-    content: content,
-  });
-}
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function ChatBox() {
   const currentUser = "amaria-m";
-  const [users, setUsers] = useState<User[]>([]);
-  const [channelSelected, setChannelSelected] = useState("");
-  const [channelMessages, setChannelMessages] = useState<Message[]>([]);
+  const [selectedChannel, setSelectedChannel] = useState(0);
+  const [chats, setChats] = useRecoilState(chatsAtom);
+  const [test, setTest] = useState(0);
 
   useEffect(() => {
-    console.log("entered users useEffect");
-    const handleGetUsers = (data: User[]) => {
-      console.log(`${data}`);
-      setUsers(data);
-    };
-    socket.on("getUsers", handleGetUsers);
-    socket.emit("getUsers");
-    return () => {
-      socket.off("getUsers", handleGetUsers);
-    };
-  }, []);
-
-  function selectChannel(channelName: string) {
-    const handleChannelMessages = (data: Message[]) => {
-      setChannelMessages(data);
-    };
-    setChannelSelected(channelName);
-    console.log(`selected channel: ${channelName}`);
-    socket.on("getChannelMessages", handleChannelMessages);
-    socket.emit("getChannelMessages", currentUser, channelSelected);
-    socket.off("getChannelMessages", handleChannelMessages);
-  }
+    getChatsFromServer().then((value) => {
+      setChats(value);
+    });
+  }, [selectedChannel, test]);
 
   return (
     <>
@@ -66,39 +29,81 @@ function ChatBox() {
         <div className="chatGroups">
           <input className="searchGroup" placeholder="Search..."></input>
           <div className="group-names">
-            {users.length > 0 ? (
-              users.map((user) => (
-                <div
-                  onClick={() => {
-                    selectChannel(user.userName);
-                  }}
-                  className={
-                    "groupName group1 " +
-                    (channelSelected == user.userName && "selectedChannelStyle")
-                  }
-                  key={user.id}
-                >
-                  {user.userName}
-                </div>
-              ))
+            {chats.length > 0 ? (
+              chats.map((chat: IChat) => {
+                if (chat.type == "group") {
+                  return (
+                    <div
+                      key={chat.id}
+                      onClick={() => {
+                        setSelectedChannel(chat.id);
+                      }}
+                      className={
+                        "groupName " +
+                        (selectedChannel == chat.id && "selectedChannelStyle")
+                      }
+                    >
+                      {chat.chatName}
+                    </div>
+                  );
+                } else {
+                  let name = "";
+                  chat.members.map((user: IUser) => {
+                    if (user.userName != currentUser) name = user.userName;
+                  });
+                  return (
+                    <div
+                      key={chat.id}
+                      onClick={() => {
+                        setSelectedChannel(chat.id);
+                      }}
+                      className={
+                        "groupName " +
+                        (selectedChannel == chat.id && "selectedChannelStyle")
+                      }
+                    >
+                      {name}
+                    </div>
+                  );
+                }
+              })
             ) : (
-              <p>No Users</p>
+              <p>No Conversations</p>
             )}
           </div>
         </div>
         <div className="chatDisplay">
           <div className="messagesBox">
-            {channelMessages.length > 0 ? (
-              channelMessages.map((msg) => (
-                <div className="message receivedMessage">
-                  <div className="messageBuble receivedBuble">
-                    {msg.content}
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p>No Messages</p>
-            )}
+            <div className="messageScroll">
+              {selectedChannel > 0 &&
+              chats[selectedChannel - 1].history.length > 0 ? (
+                chats[selectedChannel - 1].history.map((msg: IMessage) => {
+                  let userId = 0;
+                  chats[selectedChannel - 1].members.map((user) => {
+                    if (user.userName == currentUser) userId = user.id;
+                  });
+                  if (msg.senderId == userId) {
+                    return (
+                      <div key={msg.id} className="message sentMessage">
+                        <div className="messageBuble sentBuble">
+                          {msg.content}
+                        </div>
+                      </div>
+                    );
+                  } else {
+                    return (
+                      <div key={msg.id} className="message receivedMessage">
+                        <div className="messageBuble receivedBuble">
+                          {msg.content}
+                        </div>
+                      </div>
+                    );
+                  }
+                })
+              ) : (
+                <p>You have no messages</p>
+              )}
+            </div>
           </div>
           <div className="writeBox">
             <input
@@ -109,12 +114,13 @@ function ChatBox() {
             <button
               className="sendMessageButton"
               onClick={() => {
-                sendMessage(
-                  (document.getElementById("sendText") as HTMLInputElement)
-                    .value,
+                addMsgToDataBase(
+                  selectedChannel,
                   currentUser,
-                  channelSelected
+                  (document.getElementById("sendText") as HTMLInputElement)
+                    .value
                 );
+                setTest(test + 1);
               }}
             >
               <div>Send</div> <IoMdSend />

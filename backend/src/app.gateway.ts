@@ -59,88 +59,76 @@ export class AppGateway {
   async sendMessage(
     @MessageBody()
     messageData: {
+      chatId: number;
       sender: string;
-      recipient: string;
       content: string;
     },
-  ): Promise<String> {
+  ) {
+    console.log('1 msg content: ', messageData.content);
+    console.log('trying to save message in database');
+    const numberOfChats = await prisma.chat.count();
     if (
-      messageData.content == '' ||
+      messageData.chatId < 1 ||
+      messageData.chatId > numberOfChats ||
       messageData.sender == '' ||
-      messageData.recipient == ''
+      messageData.content == ''
     )
-      return 'invalid message';
-    const senderUser = await prisma.user.findUnique({
+      return;
+    const chat = await prisma.chat.findFirst({
+      where: { id: messageData.chatId },
+      select: {
+        id: true,
+        type: true,
+        chatName: true,
+        history: true,
+        members: true,
+      },
+    });
+    const senderUser = await prisma.user.findFirst({
       where: { userName: messageData.sender },
       select: {
         id: true,
         userName: true,
-        MessagesSent: true,
-        MessagesReceived: true,
       },
     });
-    const recepientUser = await prisma.user.findUnique({
-      where: { userName: messageData.recipient },
-      select: {
-        id: true,
-        userName: true,
-        MessagesSent: true,
-        MessagesReceived: true,
-      },
-    });
-    if (!senderUser || !recepientUser) return 'invalid isers';
+    if (!senderUser || !chat) return;
     // create message
+    console.log('2 msg content: ', messageData.content);
     const msg = await prisma.message.create({
       data: {
         content: messageData.content,
         senderId: senderUser.id,
-        recepientId: recepientUser.id,
+        chatId: chat.id,
       },
     });
-    return 'msg added';
+    console.log('sucessfully saved the message in the database');
   }
 
   // GET USERS FUNCTION
 
   @SubscribeMessage('getUsers')
-  async getUsers(@ConnectedSocket() client: Socket): Promise<undefined> {
-    const users = await prisma.user.findMany();
+  async getUsers(): Promise<undefined> {
+    const users = await prisma.user.findMany({
+      include: {
+        MessagesSent: true,
+        Chats: true,
+      },
+    });
     this.server.emit('getUsers', users);
-    console.log('sent users');
+    console.log('sent the list of USERS to frontend');
   }
 
   // GET MESSAGES FUNCTION
 
-  @SubscribeMessage('getChannelMessages')
-  async getMessages(
-    @MessageBody() messageData: { sender: string; recepient: string },
-  ): Promise<string> {
-    if (messageData.sender == '' || messageData.recepient == '')
-      return 'invalid parameters';
-    const sender = await prisma.user.findFirst({
-      where: { userName: messageData.sender },
-      select: {
-        MessagesSent: true,
+  @SubscribeMessage('getChannels')
+  async getMessages(): Promise<undefined> {
+    const chats = await prisma.chat.findMany({
+      include: {
+        history: true,
+        members: true,
       },
     });
-
-    const recepient = await prisma.user.findFirst({
-      where: { userName: messageData.recepient },
-      select: {
-        id: true,
-      },
-    });
-    let messages = sender.MessagesSent;
-    let index = 0;
-    while (index < messages.length) {
-      for (index = 0; index < messages.length; index++) {
-        if (messages[index].recepientId != recepient.id) {
-          messages = messages.splice(index, 1);
-          break;
-        }
-      }
-    }
-    this.server.emit('getChannelMessages', messages);
-    return 'sucess';
+    this.server.emit('getChannels', chats);
+    console.log('sent the list of CHATS to frontend');
   }
 }
