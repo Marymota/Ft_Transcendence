@@ -12,20 +12,14 @@ function Login() {
 
   return (
     <>
-      <div className="container">
+      <div className="login">
         <img className="disk" src={Disk.default} alt="Disquete Illustration" />
         <img className="logo" src={Logo.default} alt="Logo Pong" />
         <p className="slogan">Play Old Nice Games</p>
         <form>
-          <Button
+          <Button className="button"
             onClick={login}
             type="button"
-            style={{
-              width: "350px",
-              height: "48px",
-              background: "#5CB9BD",
-              color: "white",
-            }}
           >
             42 Intra
           </Button>
