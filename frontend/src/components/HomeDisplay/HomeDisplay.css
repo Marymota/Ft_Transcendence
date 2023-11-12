@@ -1,0 +1,20 @@
+.container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #463366;
+  }
+  
+  .disk {
+    width: 35%;
+    max-width: 40vh;
+    height: auto;
+  }
+  
+  .container .logo {
+    width: 35%;
+    max-width: 40vh;
+    margin-bottom: 5px;
+  }

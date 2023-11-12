@@ -1,13 +1,7 @@
 
-
-/* .number {
-    margin: 0 50px;
-} */
-
 .leaderboard {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   --color-light: aquamarine;
   --color-dark: #463366;
@@ -18,7 +12,6 @@
 .leaderboard .header {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   display: flex;
-  margin: 50px;
   align-items: center;
   width: 50%;
   color: white;
