@@ -20,3 +20,16 @@
   align-items: center;
   height: 100vh;
 }
+
+.page-header {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  color: white;
+  margin-top: 17.5vh;
+  font-size: large;
+}
+
+.page-header > .title {
+  margin-left: 20px;
+}

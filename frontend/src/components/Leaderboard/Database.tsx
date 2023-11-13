@@ -14,18 +14,18 @@ export const DataBoard = [
         dt: "2023-09-09"
     },
     {
-        name: "Craig",
+        name: "Ruth",
         location: "Portugal",
-        score: "1609",
+        score: "109",
         img: "https://avatars.githubusercontent.com/u/20130249?v=4",
-        dt: "2023-11-09"
+        dt: "2023-12-09"
     },
     {
-        name: "Julio",
+        name: "Fill",
         location: "Brasil",
-        score: "986",
+        score: "98",
         img: "https://avatars.githubusercontent.com/u/20130249?v=4",
-        dt: "2023-09-09"
+        dt: "2024-01-09"
     },
 ]
 
