@@ -2,12 +2,10 @@
 import "./Leaderboard.css";
 
 import * as leaderboard from "../../images/leaderboard-icon.png";
-import Profiles from "./Profiles"
+import Profiles from "./Profiles";
 import { DataBoard } from "./Database";
 
-
 const LeaderBoard: React.FC = () => {
-
   //   const [period, setPeriod] = useState(0);
 
   // const handleClick = (e:any ) => {
@@ -17,7 +15,11 @@ const LeaderBoard: React.FC = () => {
   return (
     <div className="leaderboard">
       <div className="page-header">
-        <img className="icon" src={leaderboard.default} alt="leaderboard icon image" />
+        <img
+          className="icon"
+          src={leaderboard.default}
+          alt="leaderboard icon image"
+        />
         <h1 className="title">Leaderboard</h1>
       </div>
 
@@ -38,8 +40,8 @@ const LeaderBoard: React.FC = () => {
 
       <script src="sidebar.js"></script>
     </div>
-  )
-}
+  );
+};
 
 // // Get leaderboard users by time
 // function between(data: any, between: any){
