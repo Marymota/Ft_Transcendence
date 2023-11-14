@@ -23,12 +23,12 @@ exports.DatabaseModule = DatabaseModule = __decorate([
                     type: 'postgres',
                     host: configService.get('POSTGRES_HOST'),
                     username: configService.get('POSTGRES_USER'),
-                    port: configService.get('DATABASE_PORT'),
+                    port: configService.get('POSTGRES_PORT'),
                     password: configService.get('POSTGRES_PASSWORD'),
                     database: configService.get('POSTGRES_DB'),
                     entities: [__dirname + '/../**/*.entity.{ts,js}'],
                     synchronize: true,
-                })
+                }),
             }),
         ],
     })

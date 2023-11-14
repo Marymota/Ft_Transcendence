@@ -13,7 +13,7 @@ export const socket = new mySocket();
 
 export default function App() {
   return (
-    <div className='App' id='main'>
+    <div className="App" id="main">
       <RecoilRoot>
         <Router>
           <Routes>
