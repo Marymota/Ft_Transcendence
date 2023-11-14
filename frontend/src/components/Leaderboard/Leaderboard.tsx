@@ -1,27 +1,29 @@
-import React from 'react'
+// import React, { useState } from 'react'
 import "./Leaderboard.css";
 
-// import * as Profile from "../../images/perfil-icon.png";
 import * as leaderboard from "../../images/leaderboard-icon.png";
-import Profiles from "./Profiles"
-
+import Profiles from "./Profiles";
 import { DataBoard } from "./Database";
 
 const LeaderBoard: React.FC = () => {
+  //   const [period, setPeriod] = useState(0);
 
-  const handleClick = (e: any) => {
-    console.log(e.target)
-  }
+  // const handleClick = (e:any ) => {
+  //   setPeriod(e.target.dataset.id)
+  // }
 
   return (
-  
     <div className="leaderboard">
-      <div className="header">
-        <img className="icon" src={leaderboard.default} alt="leaderboard icon image" />
+      <div className="page-header">
+        <img
+          className="icon"
+          src={leaderboard.default}
+          alt="leaderboard icon image"
+        />
         <h1 className="title">Leaderboard</h1>
       </div>
 
-      <div className="time">
+      {/* <div className="time">
         <button 
           onClick={handleClick}
           data-id='7'>7 Days</button>
@@ -31,48 +33,36 @@ const LeaderBoard: React.FC = () => {
         <button
           onClick={handleClick}
           data-id='0'>All time</button>
-      </div>
+      </div> */}
 
+      {/* <Profiles DataBoard={between(DataBoard, period)}></Profiles> */}
       <Profiles DataBoard={DataBoard}></Profiles>
 
-      {/* <div className="profiles">
-        <div className="leaderboard-item">
-          <span className="number"> 1 </span>
-          <img className="profile" src={Profile.default} alt="profile image" />
-          <div className="nickname">CRAIG</div>
-          <p className="points"> 1609 XP</p>
-        </div>
-      <div className="leaderboard-item">
-          <span className="number"> 2 </span>
-          <img className="ileaderboard"
-            src={Profile.default}
-            alt="Logo Pong"
-          />
-          <div className="nickname">JULIO</div>
-          <p className="points"> 989 XP</p>
-      </div>
-      <div className="leaderboard-item">
-          <span className="number"> 3 </span>
-          <img className="ichat" src={Profile.default} alt="Chat icon" />
-          <div className="nickname">MAR</div>
-          <p className="points"> 471 XP</p>
-      </div>
-      <div className="leaderboard-item">
-          <span className="number"> 4 </span>
-          <img className="iprofile" src={Profile.default} alt="Profile icon" />
-          <div className="nickname">VITORIA</div>
-          <p className="points"> 270 XP</p>
-      </div>
-      <div className="leaderboard-item">
-          <span className="number"> 5 </span>
-          <img className="iexit" src={Profile.default} alt="Exit icon" />
-          <div className="nickname">EDDO</div>
-          <p className="points"> 260 XP</p>
-        </div>
-      </div> */}
       <script src="sidebar.js"></script>
     </div>
   );
 };
+
+// // Get leaderboard users by time
+// function between(data: any, between: any){
+//   const today = new Date();
+//   const previous = new Date(today);
+//   previous.setDate(previous.getDate()-(between+1)); //10-7=3
+
+//   let filter = data.filter((val: { dt: string | number | Date; }): any =>{
+//     let userDate = new Date(val.dt);
+//     return previous<=userDate&&today>=userDate;
+//   })
+
+//   //sort with ascending order
+//   return filter.sort((a:any , b:any) =>{
+//     if (a.score === b.score) {
+//       return b.score - a.score;
+//     }
+//     else {
+//       return b.score - a.score;
+//     }
+//   })
+// }
 
 export default LeaderBoard;

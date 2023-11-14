@@ -9,7 +9,7 @@ import { useRecoilState } from "recoil";
 import { chatsAtom } from "../../dataVars/atoms";
 import { IChat, IMessage, IUser } from "../../dataVars/types";
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+// const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function ChatBox() {
   const currentUser = "amaria-m";
