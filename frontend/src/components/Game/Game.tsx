@@ -2,16 +2,20 @@ import "./Game.css";
 
 const Game: React.FC = () => {
 
+	let height = 60;
+	let width = 85;
+
 	let p1_pos_x = 5;
-	let p1_pos_y = 40;
+	let p1_pos_y = (height / 2);
 
 	let p2_pos_x = 5;
-	let p2_pos_y = 40;
+	let p2_pos_y = (height / 2);
 
-	let ball_pos_x = 40;
-	let ball_pos_y = 40;
+	let ball_pos_x = width / 2;
+	let ball_pos_y = (height / 2);
 
-	let test = 1;
+	let ball_x_dir = 1;
+	let ball_y_dir = 1;
 
 	document.addEventListener('keydown', (e) => {
 		if (e.key == 'w')
@@ -21,7 +25,7 @@ const Game: React.FC = () => {
 		}
 		if (e.key == 's')
 		{
-			if (p1_pos_y < 80)
+			if (p1_pos_y < height)
 				p1_move(p1_pos_x, ++p1_pos_y)
 		}
 		if (e.key == 'ArrowUp')
@@ -31,7 +35,7 @@ const Game: React.FC = () => {
 		}
 		if (e.key == 'ArrowDown')
 		{
-			if (p2_pos_y < 80)
+			if (p2_pos_y < height)
 				p2_move(p2_pos_x, ++p2_pos_y)
 		}
 	}); 
@@ -64,24 +68,29 @@ const Game: React.FC = () => {
 		if (element)
 		{
 			element.style.position = "absolute";
-			element.style.right = x_pos+'vh';
+			element.style.left = x_pos+'vh';
 			element.style.top = y_pos+'vh';
 		}
 	}
 
-	setInterval(update, 50);
-	function update(){
-		if (ball_pos_y > 80)
-			test = -1
+	setInterval(updateball, 50);
+	function updateball(){
+		if (ball_pos_y > height)
+			ball_y_dir = -1
 		else if (ball_pos_y < 0)
-			test = 1;
-		ball_pos_y = ball_pos_y + test;
+			ball_y_dir = 1;
+		if (ball_pos_x > width)
+			ball_x_dir = -1
+		else if (ball_pos_x < 0)
+			ball_x_dir = 1;
+		ball_pos_y = ball_pos_y + ball_y_dir;
+		ball_pos_x = ball_pos_x + ball_x_dir;
 		ball_move(ball_pos_x, ball_pos_y);
 	 }
 	
 	return (
 		<div className="game">
-			<div className="pong">
+			<div id="pong" className="pong">
 				<div id="lp" className="leftplayer"></div>
 				<div id="rp" className="rightplayer"></div>
 				<div id="ball" className="ball"></div>
