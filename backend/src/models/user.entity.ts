@@ -1,90 +1,90 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 class User {
-    @PrimaryGeneratedColumn('uuid')
-    id: string
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column("text", {unique: true})
-    username: string
+  @Column('text', { unique: true })
+  username: string;
 
-	@Column("text", {unique: true})
-    displayname: string
+  @Column('text', { unique: true })
+  displayname: string;
 
-    @Column("text", {unique: true})
-    email: string
+  @Column('text', { unique: true })
+  email: string;
 
-    @Column()
-    password: string
+  @Column()
+  password: string;
 
-    @Column()
-    avatar: string
+  @Column()
+  avatar: string;
 
-    @Column()
-    is2FOn: boolean
+  @Column()
+  is2FOn: boolean;
 
-	@Column()
-    secret2F: string
+  @Column()
+  secret2F: string;
 
-    @Column()
-    elo: number
+  @Column()
+  elo: number;
 
-    @Column()
-    friends: string;
+  @Column()
+  friends: string;
 
-    @Column()
-    blocked: string;
+  @Column()
+  blocked: string;
 
-    @Column()
-    chat: string;
+  @Column()
+  chat: string;
 
-    @Column()
-    msgHist: string;
+  @Column()
+  msgHist: string;
 
-    @Column()
-    idWebSocket: string;
+  @Column()
+  idWebSocket: string;
 
-    @Column()
-    gameNumber: number;
+  @Column()
+  gameNumber: number;
 
-    @Column()
-    gameWin: number;
+  @Column()
+  gameWin: number;
 
-    @Column()
-    gameLose:number;
+  @Column()
+  gameLose: number;
 
-    @Column()
-    winLoseRate: string;
+  @Column()
+  winLoseRate: string;
 
-    @Column()
-    totalPointGet: number;
+  @Column()
+  totalPointGet: number;
 
-    @Column()
-    totalPointTake: number;
+  @Column()
+  totalPointTake: number;
 
-    @Column()
-    pointGetTakeRate: string;
+  @Column()
+  pointGetTakeRate: string;
 
-    @Column()
-    winStreak: number;
+  @Column()
+  winStreak: number;
 
-    @Column()
-    gameHist: string;
+  @Column()
+  gameHist: string;
 
-    @Column()
-    xp: number;
+  @Column()
+  xp: number;
 
-    @Column()
-    totalGame: number;
+  @Column()
+  totalGame: number;
 
-    @Column()
-    socketID: string;
+  @Column()
+  socketID: string;
 
-    @Column()
-    slot: number;
+  @Column()
+  slot: number;
 
-    @Column()
-    inGame: boolean;
+  @Column()
+  inGame: boolean;
 }
 
 export default User;
