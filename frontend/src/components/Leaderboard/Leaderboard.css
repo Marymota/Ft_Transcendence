@@ -5,8 +5,9 @@
   --color-light: aquamarine;
   --color-dark: #463366;
   text-align: center;
-  width: 20%;
-  margin-left: 50px;
+  height:100vh;
+  overflow-x: hidden;
+  width: 100vw;
 }
 
 .leaderboard .time {
@@ -33,6 +34,8 @@
 
 .leaderboard > .page-header {
   margin-top: 0;
+  background-color: #463366;
+  padding: 50px;
 }
 
 .active {
@@ -41,7 +44,7 @@
 }
 
 #profile {
-  margin-top: 3em;
+  margin-top: 15em;
   color: white;
 }
 
@@ -50,7 +53,6 @@
   justify-content: space-between;
   gap: 5em;
   text-align: left;
-  margin-left: 20em;
 }
 
 #profile .flex .item {
@@ -93,9 +95,7 @@
 }
 
 @media (min-width: 1000px) {
-  .leaderboard {
-    margin-top: 200px;
-  }
+
   #profile .flex {
     display: flex;
     justify-content: space-between;
@@ -109,6 +109,5 @@
     display: flex;
     justify-content: space-between;
     gap: 1em;
-    margin-left: 150px;
   }
 }
