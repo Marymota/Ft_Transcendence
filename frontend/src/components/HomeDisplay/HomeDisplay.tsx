@@ -11,7 +11,10 @@ function HomeDisplay() {
         <img className='disk' src={Disk.default} alt="Disquete Illustration" />
         <img className='logo' src={Logo.default} alt="Logo Pong" />
         <div className="play-button">
-					<span style={{ fontSize: "50px" }}>PLAY</span>
+					<span style={{
+            fontSize: "4vw",
+            color: "white"
+          }}>PLAY</span>
 				</div>
       </div>
     </>

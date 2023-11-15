@@ -8,37 +8,37 @@
 }
 
 .disk {
-  width: 35%;
+  width: 50%;
   max-width: 40vh;
-  height: auto;
+  margin-bottom: 50px;;
 }
 
 .login .logo {
-  width: 35%;
+  width: 50%;
   max-width: 40vh;
   margin-bottom: 5px;
 }
 
 .slogan {
   color: white;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 .login .button {
   margin-top: 25px;
-  width: 25vw;
-  max-width: 40vh;
-  height: 48px;
+  width: 20vw;
   background: #5cb9bd;
   color: white;
+  font-size: 15px;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 800px) {
+
   .slogan {
-    font-size: 20px;
+    font-size: 3vw;
   }
   .login .button {
-    width: 150px;
-    height: 35px;
+    width: 200px;
+    font-size: 15px;
   }
 }

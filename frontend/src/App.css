@@ -26,10 +26,21 @@
   align-items: center;
   width: 50%;
   color: white;
-  margin-top: 17.5vh;
   font-size: large;
 }
 
 .page-header > .title {
   margin-left: 20px;
+}
+
+@media screen and (max-width: 800px) {
+  .page-header {
+    color: white;
+    font-size:small;
+    margin-left: -100px;
+  }
+  
+  .page-header > .title {
+    margin-left: 20px;
+  }
 }
