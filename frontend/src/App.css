@@ -7,7 +7,6 @@
 .page {
   background-color: black;
   width: 100%;
-  margin: 0;
 }
 
 .testAPI {
@@ -18,16 +17,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
 .page-header {
   display: flex;
+  justify-content: center;
   align-items: center;
-  width: 50%;
   color: white;
-  margin-top: 17.5vh;
-  font-size: large;
+  font-size: 1ft;
+  position: fixed;
 }
 
 .page-header > .title {

@@ -1,20 +1,22 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  width: 20%;
   background: #333;
   color: #fff;
-  padding-left: 40px;
-  height: 98vh;
   background-color: #463366;
   border-right: 5px solid aquamarine;
+  width: 20%;
+  height: 100vh;
   max-width: 100px;
+  padding-top:120px;
   padding-right: 350px;
+  margin-right: 50px;;
+  margin-left: 40px;
 }
 
-.logo {
+.sidebar > .logo {
   width: 300px;
-  margin-top: 20vh;
+  margin-top: 5vw;
   margin-bottom: 50px;
   margin-left: 15px;
 }
@@ -59,11 +61,6 @@
   padding: 50px;
 }
 
-span {
-  color: white;
-  margin-left: 5vh;
-}
-
 .linkDiv {
   color: white;
   margin-left: 5vh;
@@ -72,6 +69,8 @@ span {
 
 .sidebar {
   display: none;
+  --color-light: aquamarine;
+  --color-dark: #463366;
 }
 
 @media (min-width: 1000px) {

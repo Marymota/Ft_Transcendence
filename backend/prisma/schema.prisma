@@ -7,30 +7,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Message {
-  id       Int      @id @default(autoincrement())
-  date     DateTime @default(now())
-  content  String?
-  senderId Int
-  chatId   Int?
-  Chat     Chat?    @relation(fields: [chatId], references: [id])
-  Sender   User     @relation("senderMsg", fields: [senderId], references: [id])
+model friends {
+  id       Int    @id @default(autoincrement())
+  userName String @unique @db.VarChar
+  user     user[]
 }
 
-model User {
-  id           Int       @id @default(autoincrement())
-  firstName    String    @db.VarChar
-  userName     String    @unique @db.VarChar
-  avatar       String    @db.VarChar
-  isActive     Boolean   @default(true)
-  MessagesSent Message[] @relation("senderMsg")
-  Chats        Chat[]    @relation("chatUser")
+model message {
+  id               Int     @id @default(autoincrement())
+  sender           String
+  recipient        String
+  content          String?
+  user_messageFrom user[]  @relation("messageFrom")
+  user_messageTo   user[]  @relation("messageTo")
 }
 
-model Chat {
-  id       Int       @id @default(autoincrement())
-  type     String    @default("personal")
-  chatName String    @db.VarChar
-  history  Message[]
-  members  User[]    @relation("chatUser")
+model user {
+  id                  Int       @id @default(autoincrement())
+  firstName           String    @db.VarChar
+  userName            String    @unique @db.VarChar
+  avatar              String    @db.VarChar
+  isActive            Boolean   @default(true)
+  friends             friends[]
+  message_messageFrom message[] @relation("messageFrom")
+  message_messageTo   message[] @relation("messageTo")
 }

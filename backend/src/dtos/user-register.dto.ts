@@ -69,3 +69,32 @@ class UserRegisterDto {
 }
 
 export default UserRegisterDto;
+
+// {
+// 	"password":1234567,
+// 	"username": "amaria-m",
+// 	"email":"amaria-m@gmail.com",
+// 	"avatar":"bla",
+// 	"passwordRepeat":"1234567",
+// 	"is2FOn":"false",
+// 	"secret2F",
+// 	"elo":"0",
+// 	"displayname":"antonio",
+// 	"friends",
+// 	"blocked",
+// 	"chat",
+// 	"msgHist",
+// 	"idWebSocket",
+// 	"gameNumber":"0",
+// 	"gameWin":"0",
+// 	"gameLose":"0",
+// 	"winLoseRate":"",
+// 	"totalPointGet":"0",
+// 	"totalPointTake":"0",
+// 	"pointGetTakeRate",
+// 	"winStreak":"0",
+// 	"gameHist",
+// 	"xp":"0",
+// 	"totalGame":"0",
+// 	"socketID&slot
+// }

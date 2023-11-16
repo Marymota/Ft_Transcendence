@@ -6,15 +6,15 @@
     flex-direction: column;
     background-color: #463366;
   }
-  
-  .disk {
-    width: 35%;
+
+  .container > .disk {
+    width: 50%;
     max-width: 40vh;
-    height: auto;
+    margin-bottom: 50px;;
   }
   
-  .container .logo {
-    width: 35%;
+  .container > .logo {
+    width: 50%;
     max-width: 40vh;
     margin-bottom: 5px;
   }
