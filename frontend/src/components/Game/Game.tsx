@@ -11,7 +11,7 @@ const Game: React.FC = () => {
 	let p2_pos_x = 5;
 	let p2_pos_y = (height / 2);
 
-	let ball_pos_x = width / 2;
+	let ball_pos_x = (width / 2);
 	let ball_pos_y = (height / 2);
 
 	let ball_x_dir = 1;
@@ -75,13 +75,18 @@ const Game: React.FC = () => {
 
 	setInterval(updateball, 50);
 	function updateball(){
+		if (ball_pos_x < 0 || ball_pos_x > width)
+		{
+			ball_pos_x = (width / 2);
+			ball_pos_y = (height / 2);
+		}
 		if (ball_pos_y > height)
 			ball_y_dir = -1
 		else if (ball_pos_y < 0)
 			ball_y_dir = 1;
-		if (ball_pos_x > width)
+		if (ball_pos_x > width - 5 && ball_pos_y <= p2_pos_y + 5 && ball_pos_y >= p2_pos_y - 5)
 			ball_x_dir = -1
-		else if (ball_pos_x < 0)
+		else if (ball_pos_x < 0 + 5 && ball_pos_y <= p1_pos_y + 5 && ball_pos_y >= p1_pos_y - 5)
 			ball_x_dir = 1;
 		ball_pos_y = ball_pos_y + ball_y_dir;
 		ball_pos_x = ball_pos_x + ball_x_dir;
