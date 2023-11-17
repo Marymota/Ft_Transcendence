@@ -13,7 +13,7 @@ const typeorm_1 = require("typeorm");
 let User = class User {
 };
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", String)
 ], User.prototype, "id", void 0);
 __decorate([

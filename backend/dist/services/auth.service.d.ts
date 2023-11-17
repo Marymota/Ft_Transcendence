@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import User from 'src/models/user.entity';
+import User from 'src/entitys/user.entity';
 import { UserService } from 'src/services/user.service';
 import UserRegisterDto from 'src/dtos/user-register.dto';
 import { Response } from 'express';

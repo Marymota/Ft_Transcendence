@@ -1,4 +1,4 @@
-import User from "src/models/user.entity";
+import User from 'src/entitys/user.entity';
 import { Repository } from 'typeorm';
 import { ChangeDisplayNameDto } from 'src/dtos/user-changedisplay.dto';
 import UserRegisterDto from 'src/dtos/user-register.dto';

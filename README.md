@@ -69,7 +69,7 @@ npm run dev
 
   ```
   docker-compose exec postgres /bin/sh
-  psql -d <POSTGRES_DB> -U <POSTGRES_USER> -W
+  psql -d <POSTGRES_DATABASE> -U <POSTGRES_USER> -W
   (when password asked: <POSTGRES_PASSWORD>)
 
   ```

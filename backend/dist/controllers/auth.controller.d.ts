@@ -10,7 +10,7 @@ export declare class AuthController {
     private auth42Service;
     private userService;
     constructor(authService: AuthService, auth42Service: Auth42Service, userService: UserService);
-    register(registrationData: UserRegisterDto): Promise<import("../models/user.entity").default>;
+    register(registrationData: UserRegisterDto): Promise<import("../entitys/user.entity").default>;
     login(request: RequestWithUser, response: Response): Promise<Response<any, Record<string, any>>>;
     logOut(_request: RequestWithUser, response: Response): Promise<void>;
     logcheck(request: RequestWithUser, response: Response): Promise<Response<any, Record<string, any>>>;

@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { HttpException, HttpStatus, Injectable, Res } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import User from 'src/models/user.entity';
+import User from 'src/entitys/user.entity';
 import { UserService } from 'src/services/user.service';
 import TokenPayload from '../interfaces/token-payload.i';
 import * as bcrypt from 'bcrypt';

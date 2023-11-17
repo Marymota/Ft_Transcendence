@@ -8,7 +8,7 @@ export declare class UserController {
     constructor(userService: UserService);
     getuserinformation(request: RequestWithUser, response: Response): Promise<Response<any, Record<string, any>>>;
     changeDisplayName(request: RequestWithUser, newData: ChangeDisplayName): Promise<{}>;
-    uploadFile(request: RequestWithUser, file: any): Promise<import("../models/user.entity").default>;
+    uploadFile(request: RequestWithUser, file: any): Promise<import("../entitys/user.entity").default>;
     getUserImage(request: RequestWithUser, response: any): Promise<any>;
     postUserIMage(request: RequestWithUser, response: any, userId: UserId): Promise<any>;
     getAllUsers(request: RequestWithUser, response: any): Promise<any>;
