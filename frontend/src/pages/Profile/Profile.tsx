@@ -1,5 +1,6 @@
 import Profile from "../../components/Profile/Profile";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import Achievments from "../../components/Profile/Achievments";
 
 const _Profile: React.FC = () => {
 
@@ -7,7 +8,10 @@ const _Profile: React.FC = () => {
     <>
       <div className="container-row">
         <Sidebar />
-        <Profile />
+        <div className="container-col">
+          <Profile />
+          <Achievments />
+        </div>
       </div>
     </>
   );

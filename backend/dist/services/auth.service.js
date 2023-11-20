@@ -43,9 +43,9 @@ let AuthService = class AuthService {
                 secret2F: 'undefine',
                 avatar: 'notset',
                 elo: 800,
-                chat: '',
-                blocked: '',
-                friends: '',
+                chat: [],
+                blocked: [],
+                friends: [],
                 msgHist: '',
                 idWebSocket: '',
                 gameNumber: 0,
@@ -61,7 +61,7 @@ let AuthService = class AuthService {
                 totalGame: 0,
                 socketID: '',
                 slot: 0,
-                inGame: false,
+                isActive: false,
             });
             user.password = undefined;
             return user;

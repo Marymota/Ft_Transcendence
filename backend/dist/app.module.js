@@ -16,12 +16,13 @@ const user_module_1 = require("./modules/user.module");
 const auth_module_1 = require("./modules/auth.module");
 const database_module_1 = require("./modules/database.module");
 const jwt_strategy_1 = require("./auth/jwtauth/jwt.strategy");
+const chat_module_1 = require("./modules/chat.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [database_module_1.DatabaseModule, config_1.ConfigModule.forRoot(), user_module_1.UserModule, auth_module_1.AuthModule],
+        imports: [database_module_1.DatabaseModule, config_1.ConfigModule.forRoot(), user_module_1.UserModule, auth_module_1.AuthModule, chat_module_1.ChatModule],
         controllers: [app_controller_1.AppController, user_controller_1.UserController],
         providers: [app_service_1.AppService, jwt_strategy_1.default],
     })

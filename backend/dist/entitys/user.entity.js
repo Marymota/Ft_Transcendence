@@ -10,10 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
+const channel_entity_1 = require("./channel.entity");
 let User = class User {
 };
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", String)
 ], User.prototype, "id", void 0);
 __decorate([
@@ -49,17 +50,17 @@ __decorate([
     __metadata("design:type", Number)
 ], User.prototype, "elo", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
+    (0, typeorm_1.Column)({ type: String, array: true }),
+    __metadata("design:type", Array)
 ], User.prototype, "friends", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
+    (0, typeorm_1.Column)({ type: String, array: true }),
+    __metadata("design:type", Array)
 ], User.prototype, "blocked", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], User.prototype, "chat", void 0);
+    (0, typeorm_1.OneToMany)((type) => channel_entity_1.default, (channel) => channel.members),
+    __metadata("design:type", Array)
+], User.prototype, "chats", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
@@ -121,9 +122,9 @@ __decorate([
     __metadata("design:type", Number)
 ], User.prototype, "slot", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ default: true }),
     __metadata("design:type", Boolean)
-], User.prototype, "inGame", void 0);
+], User.prototype, "isActive", void 0);
 User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);

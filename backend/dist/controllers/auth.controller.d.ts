@@ -2,15 +2,15 @@ import { AuthService } from '../services/auth.service';
 import RequestWithUser from '../interfaces/request-with-user.i';
 import { Response } from 'express';
 import UserRegisterDto from 'src/dtos/user-register.dto';
-import { Auth42Service } from "../auth/42auth/42auth.service";
-import { UserService } from "src/services/user.service";
+import { Auth42Service } from '../auth/42auth/42auth.service';
+import { UserService } from 'src/services/user.service';
 import { Request } from 'express';
 export declare class AuthController {
     private authService;
     private auth42Service;
     private userService;
     constructor(authService: AuthService, auth42Service: Auth42Service, userService: UserService);
-    register(registrationData: UserRegisterDto): Promise<import("../models/user.entity").default>;
+    register(registrationData: UserRegisterDto): Promise<import("../entitys/user.entity").default>;
     login(request: RequestWithUser, response: Response): Promise<Response<any, Record<string, any>>>;
     logOut(_request: RequestWithUser, response: Response): Promise<void>;
     logcheck(request: RequestWithUser, response: Response): Promise<Response<any, Record<string, any>>>;

@@ -1,3 +1,4 @@
+import Channel from 'src/entitys/channel.entity';
 declare class UserRegisterDto {
     password: string;
     username: string;
@@ -8,9 +9,9 @@ declare class UserRegisterDto {
     secret2F: string;
     elo: number;
     displayname: string;
-    friends: string;
-    blocked: string;
-    chat: string;
+    friends: string[];
+    blocked: string[];
+    chat: Channel[];
     msgHist: string;
     idWebSocket: string;
     gameNumber: number;
@@ -26,6 +27,6 @@ declare class UserRegisterDto {
     totalGame: number;
     socketID: string;
     slot: number;
-    inGame: boolean;
+    isActive: boolean;
 }
 export default UserRegisterDto;

@@ -1,4 +1,4 @@
-import User from "src/models/user.entity";
+import User from 'src/entitys/user.entity';
 interface TokenPayload {
     user: User;
 }

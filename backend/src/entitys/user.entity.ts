@@ -1,8 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import Channel from './channel.entity';
 
 @Entity()
 class User {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string;
 
   @Column('text', { unique: true })
@@ -29,14 +30,15 @@ class User {
   @Column()
   elo: number;
 
-  @Column()
-  friends: string;
+  @Column({ type: String, array: true })
+  friends: string[];
 
-  @Column()
-  blocked: string;
+  @Column({ type: String, array: true })
+  blocked: string[];
 
-  @Column()
-  chat: string;
+  // This doesnt appear in database
+  @OneToMany((type) => Channel, (channel) => channel.members)
+  chats: Channel[];
 
   @Column()
   msgHist: string;
@@ -83,8 +85,8 @@ class User {
   @Column()
   slot: number;
 
-  @Column()
-  inGame: boolean;
+  @Column({ default: true })
+  isActive: boolean;
 }
 
 export default User;

@@ -7,10 +7,11 @@ import { UserModule } from './modules/user.module';
 import { AuthModule } from './modules/auth.module';
 import { DatabaseModule } from './modules/database.module';
 import JwtStrategy from './auth/jwtauth/jwt.strategy';
+import { ChatModule } from './modules/chat.module';
 
 
 @Module({
-  imports: [DatabaseModule, ConfigModule.forRoot(), UserModule, AuthModule],
+  imports: [DatabaseModule, ConfigModule.forRoot(), UserModule, AuthModule, ChatModule],
   controllers: [AppController, UserController],
   providers: [AppService, JwtStrategy],
 })

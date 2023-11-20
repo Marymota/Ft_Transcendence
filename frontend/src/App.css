@@ -31,3 +31,14 @@
 .page-header > .title {
   margin-left: 20px;
 }
+
+.container-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

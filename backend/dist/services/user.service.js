@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const user_entity_1 = require("../models/user.entity");
+const user_entity_1 = require("../entitys/user.entity");
 const typeorm_2 = require("typeorm");
 const qrcode_1 = require("qrcode");
 const bcrypt = require("bcrypt");
@@ -29,13 +29,13 @@ let UserService = class UserService {
             user.password = undefined;
             return user;
         }
-        throw new common_1.HttpException("UserId provided is invalid!", common_1.HttpStatus.NOT_FOUND);
+        throw new common_1.HttpException('UserId provided is invalid!', common_1.HttpStatus.NOT_FOUND);
     }
     async findByUsername(username) {
         const user = await this.userRepo.findOneBy({ username });
         if (user)
             return user;
-        throw new common_1.HttpException("Username provided is invalid!", common_1.HttpStatus.NOT_FOUND);
+        throw new common_1.HttpException('Username provided is invalid!', common_1.HttpStatus.NOT_FOUND);
     }
     async create(userData) {
         const newUser = await this.userRepo.create(userData);
@@ -78,23 +78,23 @@ let UserService = class UserService {
         const user = await this.userRepo.query(`SELECT displayname, id, elo, xp FROM public."user"`);
         if (user)
             return user;
-        throw new common_1.HttpException("Users not found!", common_1.HttpStatus.NOT_FOUND);
+        throw new common_1.HttpException('Users not found!', common_1.HttpStatus.NOT_FOUND);
     }
     async FindUserOnDB(hash) {
         const user = await this.userRepo.query(`SELECT id FROM public."user"`);
         if (!user)
             return undefined;
         for (let i = 0; user[i]; i++) {
-            if (await bcrypt.compare((user[i].id), hash))
+            if (await bcrypt.compare(user[i].id, hash))
                 return user[i].id;
         }
-        throw new common_1.HttpException("User not found!", common_1.HttpStatus.NOT_FOUND);
+        throw new common_1.HttpException('User not found!', common_1.HttpStatus.NOT_FOUND);
     }
     async getUserPublicData(userID) {
         const user = await this.userRepo.query(`SELECT displayname, id, elo FROM public."user" WHERE id = userID`);
         if (user)
             return user;
-        throw new common_1.HttpException("Error in get user public information!", common_1.HttpStatus.NOT_FOUND);
+        throw new common_1.HttpException('Error in get user public information!', common_1.HttpStatus.NOT_FOUND);
     }
     async setTwoFactorAuthenticationSecret(secret, userId) {
         try {

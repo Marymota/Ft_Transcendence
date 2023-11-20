@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { HttpException, HttpStatus, Injectable, Res } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import User from 'src/models/user.entity';
+import User from 'src/entitys/user.entity';
 import { UserService } from 'src/services/user.service';
 import TokenPayload from '../interfaces/token-payload.i';
 import * as bcrypt from 'bcrypt';
@@ -36,9 +36,9 @@ export class AuthService {
         secret2F: 'undefine',
         avatar: 'notset',
         elo: 800,
-        chat: '',
-        blocked: '',
-        friends: '',
+        chat: [],
+        blocked: [],
+        friends: [],
         msgHist: '',
         idWebSocket: '',
         gameNumber: 0,
@@ -54,7 +54,7 @@ export class AuthService {
         totalGame: 0,
         socketID: '',
         slot: 0,
-        inGame: false,
+        isActive: false,
       });
       user.password = undefined;
       return user;
