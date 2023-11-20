@@ -11,7 +11,7 @@ declare class User {
     elo: number;
     friends: string[];
     blocked: string[];
-    chats: Channel[];
+    channels: Channel[];
     msgHist: string;
     idWebSocket: string;
     gameNumber: number;

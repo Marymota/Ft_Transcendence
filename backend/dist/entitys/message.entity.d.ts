@@ -4,7 +4,7 @@ declare class Message {
     id: string;
     date: Date;
     sender: User;
-    channel: Channel;
     content: string;
+    channel: Channel;
 }
 export default Message;

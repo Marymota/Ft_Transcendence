@@ -19,11 +19,11 @@ class Message {
   @ManyToOne((type) => User, (user) => user.id)
   sender: User;
 
-  @ManyToOne((type) => Channel, (channel) => channel.id)
-  channel: Channel;
-
   @Column()
   content: string;
+
+	@ManyToOne(() => Channel, (channel) => channel.history)
+  channel: Channel;
 }
 
 export default Message;

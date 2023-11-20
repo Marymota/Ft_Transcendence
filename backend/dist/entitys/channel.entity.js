@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
+const user_entity_1 = require("./user.entity");
 const message_entity_1 = require("./message.entity");
 let Channel = class Channel {
 };
@@ -26,7 +27,8 @@ __decorate([
     __metadata("design:type", String)
 ], Channel.prototype, "avatar", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: String, array: true }),
+    (0, typeorm_1.ManyToMany)(() => user_entity_1.default, (user) => user.channels),
+    (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
 ], Channel.prototype, "members", void 0);
 __decorate([
@@ -42,7 +44,7 @@ __decorate([
     __metadata("design:type", Array)
 ], Channel.prototype, "blocked", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)((type) => message_entity_1.default, (message) => message.channel),
+    (0, typeorm_1.OneToMany)(() => message_entity_1.default, (message) => message.channel),
     __metadata("design:type", Array)
 ], Channel.prototype, "history", void 0);
 Channel = __decorate([

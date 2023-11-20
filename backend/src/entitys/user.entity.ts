@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 import Channel from './channel.entity';
 
 @Entity()
@@ -37,8 +44,9 @@ class User {
   blocked: string[];
 
   // This doesnt appear in database
-  @OneToMany((type) => Channel, (channel) => channel.members)
-  chats: Channel[];
+  @ManyToMany(() => Channel, (channel) => channel.members)
+  @JoinTable()
+  channels: Channel[];
 
   @Column()
   msgHist: string;
