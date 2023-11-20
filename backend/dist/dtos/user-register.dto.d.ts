@@ -1,5 +1,4 @@
 import Channel from 'src/entitys/channel.entity';
-import User from 'src/entitys/user.entity';
 declare class UserRegisterDto {
     password: string;
     username: string;
@@ -10,8 +9,8 @@ declare class UserRegisterDto {
     secret2F: string;
     elo: number;
     displayname: string;
-    friends: User[];
-    blocked: User[];
+    friends: string[];
+    blocked: string[];
     chat: Channel[];
     msgHist: string;
     idWebSocket: string;

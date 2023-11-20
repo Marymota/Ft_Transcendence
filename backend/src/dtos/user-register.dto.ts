@@ -30,9 +30,9 @@ class UserRegisterDto {
 
   displayname: string;
 
-  friends: User[];
+  friends: string[];
 
-  blocked: User[];
+  blocked: string[];
 
   chat: Channel[];
 

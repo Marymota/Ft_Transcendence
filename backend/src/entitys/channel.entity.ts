@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToOne,
+} from 'typeorm';
 import User from './user.entity';
 import Message from './message.entity';
 
@@ -13,19 +19,20 @@ class Channel {
   @Column()
   avatar: string;
 
-  @OneToMany((type) => User, (user) => user.id)
-  members: User[];
+  @Column({ type: String, array: true })
+  members: string[];
 
-  @OneToMany((type) => User, (user) => user.id)
-  creator: User;
+  @Column()
+  creator: string;
 
-  @OneToMany((type) => User, (user) => user.id)
-  admins: User[];
+  @Column({ type: String, array: true })
+  admins: string[];
 
-  @OneToMany((type) => User, (user) => user.id)
-  blocked: User[];
+  @Column({ type: String, array: true })
+  blocked: string[];
 
-	@OneToMany((type) => Message, (message) => message.channel)
+	// This doesnt appear in database
+  @OneToMany((type) => Message, (message) => message.channel)
   history: Message[];
 }
 

@@ -30,12 +30,13 @@ class User {
   @Column()
   elo: number;
 
-  @OneToMany((type) => User, (user) => user.friends)
-  friends: User[];
+  @Column({ type: String, array: true })
+  friends: string[];
 
-  @OneToMany((type) => User, (user) => user.blocked)
-  blocked: User[];
+  @Column({ type: String, array: true })
+  blocked: string[];
 
+  // This doesnt appear in database
   @OneToMany((type) => Channel, (channel) => channel.members)
   chats: Channel[];
 

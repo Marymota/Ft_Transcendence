@@ -23,11 +23,11 @@ __decorate([
     __metadata("design:type", Date)
 ], Message.prototype, "date", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)((type) => user_entity_1.default, (user) => user.id),
+    (0, typeorm_1.ManyToOne)((type) => user_entity_1.default, (user) => user.id),
     __metadata("design:type", user_entity_1.default)
 ], Message.prototype, "sender", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)((type) => channel_entity_1.default, (channel) => channel.id),
+    (0, typeorm_1.ManyToOne)((type) => channel_entity_1.default, (channel) => channel.id),
     __metadata("design:type", channel_entity_1.default)
 ], Message.prototype, "channel", void 0);
 __decorate([

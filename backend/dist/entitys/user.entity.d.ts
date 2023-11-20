@@ -9,8 +9,8 @@ declare class User {
     is2FOn: boolean;
     secret2F: string;
     elo: number;
-    friends: User[];
-    blocked: User[];
+    friends: string[];
+    blocked: string[];
     chats: Channel[];
     msgHist: string;
     idWebSocket: string;
