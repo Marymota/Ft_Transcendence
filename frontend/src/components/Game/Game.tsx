@@ -17,26 +17,36 @@ const Game: React.FC = () => {
 	let ball_x_dir = 1;
 	let ball_y_dir = 1;
 
+	let p1_dir = 0;
+	let p2_dir = 0;
+
 	document.addEventListener('keydown', (e) => {
 		if (e.key == 'w')
 		{
-			if (p1_pos_y > 0)
-				p1_move(p1_pos_x, --p1_pos_y)
+			p1_dir = -1;
 		}
 		if (e.key == 's')
 		{
-			if (p1_pos_y < height)
-				p1_move(p1_pos_x, ++p1_pos_y)
+			p1_dir = 1;
 		}
 		if (e.key == 'ArrowUp')
 		{
-			if (p2_pos_y > 0)
-				p2_move(p2_pos_x, --p2_pos_y)
+			p2_dir = -1;
 		}
 		if (e.key == 'ArrowDown')
 		{
-			if (p2_pos_y < height)
-				p2_move(p2_pos_x, ++p2_pos_y)
+			p2_dir = 1;
+		}
+	});
+
+	document.addEventListener('keyup', (e) => {
+		if (e.key == 'w' || e.key == 's')
+		{
+			p1_dir = 0;
+		}
+		if (e.key == 'ArrowUp' || e.key == 'ArrowDown')
+		{
+			p2_dir = 0;
 		}
 	}); 
 
@@ -73,8 +83,28 @@ const Game: React.FC = () => {
 		}
 	}
 
-	setInterval(updateball, 50);
-	function updateball(){
+	setInterval(updategame, 50);
+	function updategame(){
+		if (p1_dir < 0)
+		{
+			if (p1_pos_y > 0)
+				p1_move(p1_pos_x, --p1_pos_y)
+		}
+		if (p1_dir > 0)
+		{
+			if (p1_pos_y < height)
+				p1_move(p1_pos_x, ++p1_pos_y)
+		}
+		if (p2_dir < 0)
+		{
+			if (p2_pos_y > 0)
+				p2_move(p2_pos_x, --p2_pos_y)
+		}
+		if (p2_dir > 0)
+		{
+			if (p2_pos_y < height)
+				p2_move(p2_pos_x, ++p2_pos_y)
+		}
 		if (ball_pos_x < 0 || ball_pos_x > width)
 		{
 			ball_pos_x = (width / 2);
