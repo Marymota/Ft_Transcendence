@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import Channel from 'src/entitys/channel.entity';
+import Message from 'src/entitys/message.entity';
 import User from 'src/entitys/user.entity';
 
 @Module({
@@ -15,7 +17,7 @@ import User from 'src/entitys/user.entity';
         port: configService.get('POSTGRES_PORT'),
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DATABASE'),
-        entities: [User],
+        entities: [User, Channel, Message],
         synchronize: true,
       }),
     }),

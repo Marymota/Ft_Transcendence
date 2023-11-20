@@ -1,3 +1,4 @@
+import Channel from './channel.entity';
 declare class User {
     id: string;
     username: string;
@@ -8,9 +9,9 @@ declare class User {
     is2FOn: boolean;
     secret2F: string;
     elo: number;
-    friends: string;
-    blocked: string;
-    chat: string;
+    friends: User[];
+    blocked: User[];
+    chats: Channel[];
     msgHist: string;
     idWebSocket: string;
     gameNumber: number;
@@ -26,6 +27,6 @@ declare class User {
     totalGame: number;
     socketID: string;
     slot: number;
-    inGame: boolean;
+    isActive: boolean;
 }
 export default User;

@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import Channel from './channel.entity';
 
 @Entity()
 class User {
@@ -29,14 +30,14 @@ class User {
   @Column()
   elo: number;
 
-  @Column()
-  friends: string;
+  @OneToMany((type) => User, (user) => user.friends)
+  friends: User[];
 
-  @Column()
-  blocked: string;
+  @OneToMany((type) => User, (user) => user.blocked)
+  blocked: User[];
 
-  @Column()
-  chat: string;
+  @OneToMany((type) => Channel, (channel) => channel.members)
+  chats: Channel[];
 
   @Column()
   msgHist: string;
@@ -83,8 +84,8 @@ class User {
   @Column()
   slot: number;
 
-  @Column()
-  inGame: boolean;
+  @Column({ default: true })
+  isActive: boolean;
 }
 
 export default User;

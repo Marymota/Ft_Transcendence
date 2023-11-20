@@ -1,71 +1,72 @@
-import { IsEmail,IsString,IsNotEmpty,MinLength } from "class-validator";
-import {Column} from "typeorm";
+import { IsEmail, IsString, IsNotEmpty, MinLength } from 'class-validator';
+import Channel from 'src/entitys/channel.entity';
+import User from 'src/entitys/user.entity';
+import { Column } from 'typeorm';
 
 //the dtos objects are used just to map the received information in the requests.
 class UserRegisterDto {
-	@IsString()
-	@IsNotEmpty()
-	@MinLength(6)
-	password:string;
-	
-	@IsString()
-	@IsNotEmpty()
-	username:string;
-	
-	@IsEmail()
-	email: string;
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(6)
+  password: string;
 
-	avatar: string;
+  @IsString()
+  @IsNotEmpty()
+  username: string;
 
-	@IsNotEmpty()
-	passwordRepeat: string;
+  @IsEmail()
+  email: string;
 
-	is2FOn: boolean;
+  avatar: string;
 
-	secret2F: string;
+  @IsNotEmpty()
+  passwordRepeat: string;
 
-	elo: number;
+  is2FOn: boolean;
 
-	displayname: string;
+  secret2F: string;
 
-	friends: string;
+  elo: number;
 
-	blocked: string;
+  displayname: string;
 
-	chat: string;
+  friends: User[];
 
-	msgHist: string;
+  blocked: User[];
 
-	idWebSocket: string;
+  chat: Channel[];
 
-	gameNumber : number;
+  msgHist: string;
 
-	gameWin: number;
+  idWebSocket: string;
 
-	gameLose:number;
+  gameNumber: number;
 
-	winLoseRate: string;
+  gameWin: number;
 
-	totalPointGet: number;
+  gameLose: number;
 
-	totalPointTake: number;
+  winLoseRate: string;
 
-	pointGetTakeRate: string;
+  totalPointGet: number;
 
-	winStreak: number;
+  totalPointTake: number;
 
-	gameHist: string;
+  pointGetTakeRate: string;
 
-	xp: number;
+  winStreak: number;
 
-	totalGame: number;
+  gameHist: string;
 
-	socketID: string;
+  xp: number;
 
-	slot: number;
+  totalGame: number;
 
-	inGame: boolean;
+  socketID: string;
 
+  slot: number;
+
+  isActive: boolean;
 }
 
 export default UserRegisterDto;

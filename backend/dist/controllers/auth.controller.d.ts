@@ -2,8 +2,8 @@ import { AuthService } from '../services/auth.service';
 import RequestWithUser from '../interfaces/request-with-user.i';
 import { Response } from 'express';
 import UserRegisterDto from 'src/dtos/user-register.dto';
-import { Auth42Service } from "../auth/42auth/42auth.service";
-import { UserService } from "src/services/user.service";
+import { Auth42Service } from '../auth/42auth/42auth.service';
+import { UserService } from 'src/services/user.service';
 import { Request } from 'express';
 export declare class AuthController {
     private authService;
