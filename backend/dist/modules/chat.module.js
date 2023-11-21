@@ -12,14 +12,16 @@ const chat_gateway_1 = require("../gateways/chat.gateway");
 const user_module_1 = require("./user.module");
 const user_service_1 = require("../services/user.service");
 const user_controller_1 = require("../controllers/user.controller");
+const chat_service_1 = require("../services/chat.service");
 let ChatModule = class ChatModule {
 };
 exports.ChatModule = ChatModule;
 exports.ChatModule = ChatModule = __decorate([
     (0, common_1.Module)({
         imports: [user_module_1.UserModule],
-        providers: [chat_gateway_1.ChatGateway, user_service_1.UserService],
+        providers: [chat_gateway_1.ChatGateway, user_service_1.UserService, chat_service_1.ChatService],
         controllers: [user_controller_1.UserController],
+        exports: [chat_service_1.ChatService],
     })
 ], ChatModule);
 //# sourceMappingURL=chat.module.js.map
