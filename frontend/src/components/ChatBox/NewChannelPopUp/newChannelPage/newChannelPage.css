@@ -1,0 +1,9 @@
+.mainTitle2 {
+  display: flex;
+  flex-direction: column;
+  background-color: #7766c2;
+}
+
+.inputMain {
+  margin: 1em 2em;
+}

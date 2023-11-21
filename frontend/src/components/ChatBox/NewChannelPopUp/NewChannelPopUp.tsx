@@ -1,13 +1,26 @@
 import { useState } from "react";
 import "./NewChannelPopUp.css";
+import NewChannelPage from "./newChannelPage/newChannelPage";
+import NewPrivateMessage from "./newPrivateMessage/newPrivateMessage";
 
-export default function NewChannelPopUp() {
-  const [title, setTitle] = useState("channel");
+interface Props {
+  popUp: (n: number) => void;
+}
+
+export default function NewChannelPopUp({ popUp }: Props) {
+  const [title, setTitle] = useState("title1");
   return (
-    <div className="newChannelPopUp">
+    <div
+      className={
+        "newChannelPopUp " +
+        (title == "title1" && "title1Selected") +
+        " " +
+        (title == "title2" && "title2Selected")
+      }
+    >
       <div className="popUpHeader">
         <div
-          className="title1"
+          className="headerTitle title1"
           onClick={() => {
             setTitle("title1");
           }}
@@ -15,13 +28,23 @@ export default function NewChannelPopUp() {
           Private Message
         </div>
         <div
-          className="title2"
+          className="headerTitle title2"
           onClick={() => {
             setTitle("title2");
           }}
         >
           New Channel
         </div>
+      </div>
+      {title == "title2" && <NewChannelPage />}
+      {title == "title1" && <NewPrivateMessage />}
+      <div
+        className="cancelButton"
+        onClick={() => {
+          popUp(0);
+        }}
+      >
+        CANCEL
       </div>
     </div>
   );

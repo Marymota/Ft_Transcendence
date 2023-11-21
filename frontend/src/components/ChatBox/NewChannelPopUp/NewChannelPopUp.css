@@ -1,4 +1,51 @@
 .newChannelPopUp {
   position: absolute;
-	
+  transform: translateY(15em);
+  padding: 0em;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0.5em 1.5em 0 rgba(0, 0, 0, 1), 0 0.6em 2em 0 rgba(0, 0, 0, 0.7);
+  border-radius: 0.3em;
+  height: 45vh;
+}
+
+.popUpHeader {
+  display: flex;
+  flex-direction: row;
+}
+
+.headerTitle {
+  padding: 1em;
+}
+
+.title1 {
+  background-color: #8f3876 !important;
+  border-radius: 0em 0em 2em 0em;
+}
+
+.title2 {
+  background-color: #7766c2 !important;
+  border-radius: 0em 0em 0em 2em;
+}
+
+.title1Selected {
+  background-color: #8f3876 !important;
+}
+
+.title2Selected {
+  background-color: #7766c2 !important;
+}
+
+.cancelButton {
+  text-align: center;
+  position: absolute;
+  padding: 0.2em 0em;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  bottom: 0;
+}
+
+.cancelButton:hover {
+	cursor: pointer;
+  background-color: rgb(202, 202, 202);
 }
