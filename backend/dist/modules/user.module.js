@@ -16,6 +16,7 @@ const passport_1 = require("@nestjs/passport");
 const config_1 = require("@nestjs/config");
 const jwt_1 = require("@nestjs/jwt");
 const jwt_strategy_1 = require("../auth/jwtauth/jwt.strategy");
+const chat_module_1 = require("./chat.module");
 let UserModule = class UserModule {
 };
 exports.UserModule = UserModule;
@@ -35,6 +36,7 @@ exports.UserModule = UserModule = __decorate([
                     },
                 }),
             }),
+            (0, common_1.forwardRef)(() => chat_module_1.ChatModule),
         ],
         controllers: [user_controller_1.UserController],
         providers: [user_service_1.UserService, jwt_strategy_1.default],

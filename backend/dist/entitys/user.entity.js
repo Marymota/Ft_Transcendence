@@ -58,9 +58,10 @@ __decorate([
     __metadata("design:type", Array)
 ], User.prototype, "blocked", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)((type) => channel_entity_1.default, (channel) => channel.members),
+    (0, typeorm_1.ManyToMany)(() => channel_entity_1.default, (channel) => channel.members),
+    (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
-], User.prototype, "chats", void 0);
+], User.prototype, "channels", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)

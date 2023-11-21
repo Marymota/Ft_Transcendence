@@ -4,6 +4,8 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   ManyToOne,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import User from './user.entity';
 import Message from './message.entity';
@@ -17,10 +19,14 @@ class Channel {
   displayname: string;
 
   @Column()
+  type: 'personal' | 'private' | 'public';
+
+  @Column()
   avatar: string;
 
-  @Column({ type: String, array: true })
-  members: string[];
+  @ManyToMany(() => User, (user) => user.channels)
+  @JoinTable()
+  members: User[];
 
   @Column()
   creator: string;
@@ -31,8 +37,7 @@ class Channel {
   @Column({ type: String, array: true })
   blocked: string[];
 
-	// This doesnt appear in database
-  @OneToMany((type) => Message, (message) => message.channel)
+  @OneToMany(() => Message, (message) => message.channel)
   history: Message[];
 }
 

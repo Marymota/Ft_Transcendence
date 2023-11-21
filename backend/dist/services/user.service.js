@@ -19,9 +19,11 @@ const user_entity_1 = require("../entitys/user.entity");
 const typeorm_2 = require("typeorm");
 const qrcode_1 = require("qrcode");
 const bcrypt = require("bcrypt");
+const chat_service_1 = require("./chat.service");
 let UserService = class UserService {
-    constructor(userRepo) {
+    constructor(userRepo, chatService) {
         this.userRepo = userRepo;
+        this.chatService = chatService;
     }
     async findById(id) {
         const user = await this.userRepo.findOneBy({ id });
@@ -159,11 +161,25 @@ let UserService = class UserService {
         }
         return '';
     }
+    async addChannelToUser(userName, channelDisplayName) {
+        const user = await this.findByUsername(userName);
+        if (!user) {
+            throw new common_1.HttpException('User not found!', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        const channel = await this.chatService.findByDisplayName(channelDisplayName);
+        if (!channel) {
+            throw new common_1.HttpException('Cahnnel not found!', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        user.channels.push(channel);
+        await this.userRepo.save(user);
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.default)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(1, (0, common_1.Inject)((0, common_1.forwardRef)(() => chat_service_1.ChatService))),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        chat_service_1.ChatService])
 ], UserService);
 //# sourceMappingURL=user.service.js.map

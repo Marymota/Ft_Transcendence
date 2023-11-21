@@ -2,9 +2,11 @@ import User from 'src/entitys/user.entity';
 import { Repository } from 'typeorm';
 import { ChangeDisplayNameDto } from 'src/dtos/user-changedisplay.dto';
 import UserRegisterDto from 'src/dtos/user-register.dto';
+import { ChatService } from './chat.service';
 export declare class UserService {
     private userRepo;
-    constructor(userRepo: Repository<User>);
+    private chatService;
+    constructor(userRepo: Repository<User>, chatService: ChatService);
     findById(id: string): Promise<User>;
     findByUsername(username: string): Promise<User>;
     create(userData: UserRegisterDto): Promise<User>;
@@ -20,4 +22,5 @@ export declare class UserService {
     generateQrCodeDataURL(otpAuthUrl: string): Promise<string>;
     updateWebSocketId(userId: string, socketId: string): Promise<void>;
     findByDisplayname(displayname: string): Promise<string>;
+    addChannelToUser(userName: string, channelDisplayName: string): Promise<void>;
 }

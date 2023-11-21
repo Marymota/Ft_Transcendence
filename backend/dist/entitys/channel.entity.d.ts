@@ -1,9 +1,11 @@
+import User from './user.entity';
 import Message from './message.entity';
 declare class Channel {
     id: string;
     displayname: string;
+    type: 'personal' | 'private' | 'public';
     avatar: string;
-    members: string[];
+    members: User[];
     creator: string;
     admins: string[];
     blocked: string[];

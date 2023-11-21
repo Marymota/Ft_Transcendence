@@ -1,0 +1,77 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ChatService = void 0;
+const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
+const channel_entity_1 = require("../entitys/channel.entity");
+const typeorm_2 = require("typeorm");
+const user_service_1 = require("./user.service");
+let ChatService = class ChatService {
+    constructor(chatRepo, userService) {
+        this.chatRepo = chatRepo;
+        this.userService = userService;
+    }
+    async findById(id) {
+        const channel = await this.chatRepo.findOneBy({ id });
+        if (channel) {
+            return channel;
+        }
+        throw new common_1.HttpException('ChannelId provided is invalid!', common_1.HttpStatus.NOT_FOUND);
+    }
+    async findByDisplayName(displayname) {
+        const channel = await this.chatRepo.findOneBy({ displayname });
+        if (channel)
+            return channel;
+        throw new common_1.HttpException('Display name provided is invalid!', common_1.HttpStatus.NOT_FOUND);
+    }
+    async createChannel(displayName, avatar, members, creator, type) {
+        if (displayName.length < 1 && type != 'personal') {
+            throw new common_1.HttpException('Public or private channel must have displayName', common_1.HttpStatus.FORBIDDEN);
+        }
+        const creatorUser = await this.userService.findByUsername(creator);
+        if (!creatorUser) {
+            throw new common_1.HttpException('Creator userName not found', common_1.HttpStatus.NOT_FOUND);
+        }
+        if (members.length > 1 && type != 'personal') {
+            throw new common_1.HttpException('type of channel not compatible with more than two mebers', common_1.HttpStatus.FORBIDDEN);
+        }
+        const newChannel = this.chatRepo.create();
+        newChannel.displayname = displayName;
+        newChannel.creator = creator;
+        newChannel.avatar = avatar;
+        newChannel.members.push(creatorUser);
+        await this.chatRepo.save(newChannel);
+        for (let i = 0; i < members.length; i++) {
+            const memberUser = await this.userService.findByUsername(members[i]);
+            if (!memberUser) {
+                throw new common_1.HttpException('member userName not found', common_1.HttpStatus.NOT_FOUND);
+            }
+            newChannel.members.push(memberUser);
+            newChannel.type = type;
+            newChannel.admins.push(creatorUser.username);
+            await this.chatRepo.save(newChannel);
+            this.userService.addChannelToUser(creatorUser.username, newChannel.displayname);
+        }
+    }
+};
+exports.ChatService = ChatService;
+exports.ChatService = ChatService = __decorate([
+    (0, common_1.Injectable)(),
+    __param(0, (0, typeorm_1.InjectRepository)(channel_entity_1.default)),
+    __param(1, (0, common_1.Inject)((0, common_1.forwardRef)(() => user_service_1.UserService))),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        user_service_1.UserService])
+], ChatService);
+//# sourceMappingURL=chat.service.js.map

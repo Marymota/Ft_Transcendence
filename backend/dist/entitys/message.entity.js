@@ -27,13 +27,13 @@ __decorate([
     __metadata("design:type", user_entity_1.default)
 ], Message.prototype, "sender", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)((type) => channel_entity_1.default, (channel) => channel.id),
-    __metadata("design:type", channel_entity_1.default)
-], Message.prototype, "channel", void 0);
-__decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Message.prototype, "content", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => channel_entity_1.default, (channel) => channel.history),
+    __metadata("design:type", channel_entity_1.default)
+], Message.prototype, "channel", void 0);
 Message = __decorate([
     (0, typeorm_1.Entity)()
 ], Message);

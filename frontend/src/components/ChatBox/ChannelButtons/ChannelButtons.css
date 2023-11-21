@@ -1,0 +1,18 @@
+.groupName {
+  margin: 5% 2%;
+  background-color: #5cbbbe;
+  padding: 2%;
+  border-radius: 0.5em;
+  color: #fbf060;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: white;
+}
+
+.groupName:hover {
+  background-color: #4ea0a2;
+  color: #d2c951;
+}
+
+.selectedChannelStyle {
+  background-color: #356b6d;
+}

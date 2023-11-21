@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  forwardRef,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import User from 'src/entitys/user.entity';
 import { Repository } from 'typeorm';
@@ -8,10 +14,16 @@ import { toDataURL } from 'qrcode';
 import * as bcrypt from 'bcrypt';
 import { response } from 'express';
 import UserRegisterDto from 'src/dtos/user-register.dto';
+import { ChatService } from './chat.service';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
+  constructor(
+    @InjectRepository(User)
+    private userRepo: Repository<User>,
+    @Inject(forwardRef(() => ChatService))
+    private chatService: ChatService,
+  ) {}
 
   async findById(id: string) {
     const user: User = await this.userRepo.findOneBy({ id });
@@ -192,5 +204,25 @@ export class UserService {
       );
     }
     return '';
+  }
+
+  async addChannelToUser(userName: string, channelDisplayName: string) {
+    const user = await this.findByUsername(userName);
+    if (!user) {
+      throw new HttpException(
+        'User not found!',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+    const channel =
+      await this.chatService.findByDisplayName(channelDisplayName);
+    if (!channel) {
+      throw new HttpException(
+        'Cahnnel not found!',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+    user.channels.push(channel);
+    await this.userRepo.save(user);
   }
 }
