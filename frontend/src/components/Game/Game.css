@@ -33,3 +33,21 @@
 	width: 1vh;
 	height: 1vh;
 }
+
+.left_score { 
+	height: 50px; 
+	width: 50px; 
+	color: #00ff00; 
+	position: absolute; 
+	left: 10vh; 
+	top: 5vh;
+}
+
+.right_score { 
+	height: 50px;
+	width: 50px; 
+	color: #00ff00; 
+	position: absolute; 
+	right: 10vh; 
+	top: 5vh;
+} 

@@ -20,6 +20,12 @@ const Game: React.FC = () => {
 	let p1_dir = 0;
 	let p2_dir = 0;
 
+	let p1_score_counter; 
+	let p2_score_counter; 
+
+	let p1_score = 0;
+	let p2_score = 0;
+
 	document.addEventListener('keydown', (e) => {
 		if (e.key == 'w')
 		{
@@ -83,6 +89,18 @@ const Game: React.FC = () => {
 		}
 	}
 
+	function resetball()
+	{
+		p1_score_counter = document.querySelector('.left_score'); 
+		p2_score_counter = document.querySelector('.right_score');
+		if (p2_score_counter != null)
+			p2_score_counter.innerHTML = String(p2_score);
+		if (p1_score_counter != null)
+			p1_score_counter.innerHTML = String(p1_score);
+		ball_pos_x = (width / 2);
+		ball_pos_y = (height / 2);
+	}
+
 	setInterval(updategame, 50);
 	function updategame(){
 		if (p1_dir < 0)
@@ -105,10 +123,15 @@ const Game: React.FC = () => {
 			if (p2_pos_y < height)
 				p2_move(p2_pos_x, ++p2_pos_y)
 		}
-		if (ball_pos_x < 0 || ball_pos_x > width)
+		if (ball_pos_x < 0)
 		{
-			ball_pos_x = (width / 2);
-			ball_pos_y = (height / 2);
+			p2_score++;
+			resetball();
+		}
+		if (ball_pos_x > width)
+		{
+			p1_score++;
+			resetball();
 		}
 		if (ball_pos_y > height)
 			ball_y_dir = -1
@@ -129,6 +152,8 @@ const Game: React.FC = () => {
 				<div id="lp" className="leftplayer"></div>
 				<div id="rp" className="rightplayer"></div>
 				<div id="ball" className="ball"></div>
+				<h1 className="left_score">0</h1> 
+     			<h1 className="right_score">0</h1> 
 			</div>
 		</div>
 	);
