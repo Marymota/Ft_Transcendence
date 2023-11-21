@@ -16,20 +16,31 @@ exports.ChatGateway = void 0;
 const common_1 = require("@nestjs/common");
 const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
+const chat_service_1 = require("../services/chat.service");
 const user_service_1 = require("../services/user.service");
 let ChatGateway = class ChatGateway {
-    constructor(userService) {
+    constructor(userService, chatService) {
         this.userService = userService;
+        this.chatService = chatService;
         this.logger = new common_1.Logger('Gateway Log');
     }
     async sendMessage(messageData) {
         console.log('webScoket: frontend asked to send message');
     }
-    async getUsers() {
-        console.log('webScoket: frontend asked for all users');
-    }
-    async getMessages() {
+    async getUserChannels(userName) {
         console.log('webScoket: frontend asked for all channels');
+        const user = this.userService.findByUsername(userName);
+        if (user) {
+            const channels = (await user).channels;
+            if (channels)
+                return channels;
+        }
+    }
+    async createChannel(data) {
+        console.log(`webScoket: frontend asked to creat a channel: {\n\tData:\n\t\tcreator: ${data.creator}\n\t\tdisplayName: ${data.displayName}\n\t\tavatar: ${data.avatar}\n\t\tmembers: ${data.members}}`);
+        if (data.creator.length < 1)
+            return;
+        await this.chatService.createChannel(data.displayName, data.avatar, data.members, data.creator, data.type);
     }
 };
 exports.ChatGateway = ChatGateway;
@@ -45,19 +56,22 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ChatGateway.prototype, "sendMessage", null);
 __decorate([
-    (0, websockets_1.SubscribeMessage)('getUsers'),
+    (0, websockets_1.SubscribeMessage)('getUserChannels'),
+    __param(0, (0, websockets_1.MessageBody)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], ChatGateway.prototype, "getUsers", null);
+], ChatGateway.prototype, "getUserChannels", null);
 __decorate([
-    (0, websockets_1.SubscribeMessage)('getChannels'),
+    (0, websockets_1.SubscribeMessage)('createChannel'),
+    __param(0, (0, websockets_1.MessageBody)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], ChatGateway.prototype, "getMessages", null);
+], ChatGateway.prototype, "createChannel", null);
 exports.ChatGateway = ChatGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({ cors: { origin: '*' } }),
-    __metadata("design:paramtypes", [user_service_1.UserService])
+    __metadata("design:paramtypes", [user_service_1.UserService,
+        chat_service_1.ChatService])
 ], ChatGateway);
 //# sourceMappingURL=chat.gateway.js.map

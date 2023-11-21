@@ -43,7 +43,6 @@ class User {
   @Column({ type: String, array: true })
   blocked: string[];
 
-  // This doesnt appear in database
   @ManyToMany(() => Channel, (channel) => channel.members)
   @JoinTable()
   channels: Channel[];

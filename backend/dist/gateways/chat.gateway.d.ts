@@ -1,8 +1,11 @@
 import { Server } from 'socket.io';
+import Channel from 'src/entitys/channel.entity';
+import { ChatService } from 'src/services/chat.service';
 import { UserService } from 'src/services/user.service';
 export declare class ChatGateway {
     private userService;
-    constructor(userService: UserService);
+    private chatService;
+    constructor(userService: UserService, chatService: ChatService);
     server: Server;
     private logger;
     sendMessage(messageData: {
@@ -10,6 +13,12 @@ export declare class ChatGateway {
         sender: string;
         content: string;
     }): Promise<void>;
-    getUsers(): Promise<undefined>;
-    getMessages(): Promise<undefined>;
+    getUserChannels(userName: string): Promise<Channel[]>;
+    createChannel(data: {
+        creator: string;
+        displayName: string;
+        avatar: string;
+        members: string[];
+        type: 'personal' | 'private' | 'public';
+    }): Promise<undefined>;
 }

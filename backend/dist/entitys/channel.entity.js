@@ -25,6 +25,10 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
+], Channel.prototype, "type", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
 ], Channel.prototype, "avatar", void 0);
 __decorate([
     (0, typeorm_1.ManyToMany)(() => user_entity_1.default, (user) => user.channels),

@@ -9,10 +9,15 @@ import { DatabaseModule } from './modules/database.module';
 import JwtStrategy from './auth/jwtauth/jwt.strategy';
 import { ChatModule } from './modules/chat.module';
 
-
 @Module({
-  imports: [DatabaseModule, ConfigModule.forRoot(), UserModule, AuthModule, ChatModule],
-  controllers: [AppController, UserController],
+  imports: [
+    DatabaseModule,
+    ConfigModule.forRoot(),
+    UserModule,
+    AuthModule,
+    ChatModule,
+  ],
+  controllers: [AppController],
   providers: [AppService, JwtStrategy],
 })
 export class AppModule {}

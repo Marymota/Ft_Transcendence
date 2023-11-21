@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserController } from '../controllers/user.controller';
@@ -7,6 +7,7 @@ import { PassportModule } from '@nestjs/passport';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import JwtStrategy from 'src/auth/jwtauth/jwt.strategy';
+import { ChatModule } from './chat.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import JwtStrategy from 'src/auth/jwtauth/jwt.strategy';
         },
       }),
     }),
+    forwardRef(() => ChatModule),
   ],
   controllers: [UserController],
   providers: [UserService, JwtStrategy],

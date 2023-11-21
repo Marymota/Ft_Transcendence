@@ -11,7 +11,6 @@ const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const config_1 = require("@nestjs/config");
-const user_controller_1 = require("./controllers/user.controller");
 const user_module_1 = require("./modules/user.module");
 const auth_module_1 = require("./modules/auth.module");
 const database_module_1 = require("./modules/database.module");
@@ -22,8 +21,14 @@ let AppModule = class AppModule {
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [database_module_1.DatabaseModule, config_1.ConfigModule.forRoot(), user_module_1.UserModule, auth_module_1.AuthModule, chat_module_1.ChatModule],
-        controllers: [app_controller_1.AppController, user_controller_1.UserController],
+        imports: [
+            database_module_1.DatabaseModule,
+            config_1.ConfigModule.forRoot(),
+            user_module_1.UserModule,
+            auth_module_1.AuthModule,
+            chat_module_1.ChatModule,
+        ],
+        controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, jwt_strategy_1.default],
     })
 ], AppModule);

@@ -19,6 +19,9 @@ class Channel {
   displayname: string;
 
   @Column()
+  type: 'personal' | 'private' | 'public';
+
+  @Column()
   avatar: string;
 
   @ManyToMany(() => User, (user) => user.channels)
@@ -34,7 +37,6 @@ class Channel {
   @Column({ type: String, array: true })
   blocked: string[];
 
-  // This doesnt appear in database
   @OneToMany(() => Message, (message) => message.channel)
   history: Message[];
 }
