@@ -11,13 +11,3 @@ export async function getUserChannels(userName: string) {
     userName
   )) as unknown as IChat[];
 }
-
-// CHATS
-
-// get all chats
-export async function getChatsFromServer() {
-  return (await socket.subscribeOnce(
-    "getChannels",
-    null
-  )) as unknown as IChat[];
-}
