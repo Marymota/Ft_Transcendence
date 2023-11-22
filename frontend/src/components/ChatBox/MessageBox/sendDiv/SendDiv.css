@@ -1,0 +1,30 @@
+.writeBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80%;
+  height: 8%;
+  margin: 1% 10%;
+  background-color: #4ea0a2;
+}
+
+.sendTextInput {
+  color: white;
+  margin: 3%;
+  width: 80%;
+  border: 0;
+  background-color: #5cbbbe;
+  padding: 1.5% 1% 1% 1%;
+}
+
+.sendMessageButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 3%;
+  width: 10%;
+  border: 0;
+  background-color: #5cbbbe;
+  color: white;
+  padding: 0.84% 1% 1% 1%;
+}

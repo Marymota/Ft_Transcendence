@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getUserChannels } from "../../../dataVars/serverRequests";
 import { useRecoilState } from "recoil";
-import { chatsAtom } from "../../../dataVars/atoms";
+import { userChatsAtom } from "../../../dataVars/atoms";
 import { IChat, IUser } from "../../../dataVars/types";
 
 interface Props {
@@ -13,7 +13,7 @@ export default function ChannelButtons({
   currentUser,
   getSelectedChannel,
 }: Props) {
-  const [chats, setChats] = useRecoilState(chatsAtom);
+  const [chats, setChats] = useRecoilState(userChatsAtom);
   const [selectedChannel, setSelectedChannel] = useState("");
 
   useEffect(() => {

@@ -1,0 +1,27 @@
+.message {
+  width: 95%;
+  margin: 1% 2.5%;
+}
+
+.sentMessage {
+  text-align: right;
+}
+
+.receivedMessage {
+  justify-content: left;
+}
+
+.messageBuble {
+  display: inline-block;
+  background-color: #5cbbbe;
+  padding: 1.3% 2% 1% 2%;
+  color: white;
+}
+
+.receivedBuble {
+  border-radius: 1em 1em 1em 0em;
+}
+
+.sentBuble {
+  border-radius: 1em 1em 0em 1em;
+}

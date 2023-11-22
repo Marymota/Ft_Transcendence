@@ -1,12 +1,17 @@
 import { atom } from "recoil";
 import { IChat, IUser } from "./types";
 
-export const usersAtom = atom<IUser[]>({
-  key: "usersAtom",
+export const userChatsAtom = atom<IChat[]>({
+  key: "userChatsAtom",
   default: [],
 });
 
-export const chatsAtom = atom<IChat[]>({
-  key: "chatsAtom",
+export const userFriendsAtom = atom<string[]>({
+  key: "userFriendsAtom",
+  default: [],
+});
+
+export const allUsersAtom = atom<IUser[]>({
+  key: "allUsersAtom",
   default: [],
 });

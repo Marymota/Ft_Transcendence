@@ -1,4 +1,4 @@
-import { IChat } from "./types";
+import { IChat, IUser } from "./types";
 import { socket } from "../App";
 
 // USERS
@@ -12,12 +12,15 @@ export async function getUserChannels(userName: string) {
   )) as unknown as IChat[];
 }
 
-// CHATS
-
-// get all chats
-export async function getChatsFromServer() {
+export async function getUserFriends(userName: string) {
+  console.log(`asking backend for the user ${userName} friends.`);
   return (await socket.subscribeOnce(
-    "getChannels",
-    null
-  )) as unknown as IChat[];
+    "getUserFriends",
+    userName
+  )) as unknown as string[];
+}
+
+export async function getAllUsers() {
+  console.log(`asking backend for all users`);
+  return (await socket.subscribeOnce("getAllUsers", null)) as unknown as IUser[];
 }

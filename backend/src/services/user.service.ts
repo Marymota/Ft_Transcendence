@@ -94,10 +94,13 @@ export class UserService {
   }
 
   async GetAllUsersFromDB() {
-    const user = await this.userRepo.query(
-      `SELECT displayname, id, elo, xp FROM public."user"`,
+    // const user = await this.userRepo.query(
+    //   `SELECT userName, displayname, id, elo, xp FROM public."user"`,
+    // );
+    const users = await this.userRepo.query(
+      `SELECT userName, displayname, email, avatar, elo, friends, blocked FROM public."user"`,
     );
-    if (user) return user;
+    if (users) return users;
     throw new HttpException('Users not found!', HttpStatus.NOT_FOUND);
   }
 

@@ -42,6 +42,18 @@ let ChatGateway = class ChatGateway {
             return;
         await this.chatService.createChannel(data.displayName, data.avatar, data.members, data.creator, data.type);
     }
+    async getUserFriends(userName) {
+        console.log(`webScoket: frontend asked for user ${userName} friends`);
+        const user = await this.userService.findByUsername(userName);
+        if (!user)
+            return [];
+        return user.friends;
+    }
+    async getAllUsers() {
+        console.log(`webScoket: frontend asked for all users`);
+        const users = await this.userService.GetAllUsersFromDB();
+        return users;
+    }
 };
 exports.ChatGateway = ChatGateway;
 __decorate([
@@ -69,6 +81,19 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ChatGateway.prototype, "createChannel", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('getUserFriends'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ChatGateway.prototype, "getUserFriends", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('getAllUsers'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ChatGateway.prototype, "getAllUsers", null);
 exports.ChatGateway = ChatGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({ cors: { origin: '*' } }),
     __metadata("design:paramtypes", [user_service_1.UserService,
