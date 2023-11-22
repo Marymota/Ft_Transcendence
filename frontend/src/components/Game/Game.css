@@ -35,8 +35,6 @@
 }
 
 .left_score { 
-	height: 50px; 
-	width: 50px; 
 	color: #00ff00; 
 	position: absolute; 
 	left: 10vh; 
@@ -44,8 +42,6 @@
 }
 
 .right_score { 
-	height: 50px;
-	width: 50px; 
 	color: #00ff00; 
 	position: absolute; 
 	right: 10vh; 
