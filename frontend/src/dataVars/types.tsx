@@ -9,7 +9,7 @@ export interface IMessage {
 export interface IUser {
   id: string;
   userName: string;
-  displayname: string;
+  displayName: string;
   email: string;
   avatar: string;
   friends: string[];

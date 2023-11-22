@@ -77,9 +77,9 @@ let UserService = class UserService {
         return undefined;
     }
     async GetAllUsersFromDB() {
-        const user = await this.userRepo.query(`SELECT displayname, id, elo, xp FROM public."user"`);
-        if (user)
-            return user;
+        const users = await this.userRepo.query(`SELECT userName, displayname, email, avatar, elo, friends, blocked FROM public."user"`);
+        if (users)
+            return users;
         throw new common_1.HttpException('Users not found!', common_1.HttpStatus.NOT_FOUND);
     }
     async FindUserOnDB(hash) {

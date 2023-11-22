@@ -8,6 +8,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import Channel from 'src/entitys/channel.entity';
+import User from 'src/entitys/user.entity';
 import { ChatService } from 'src/services/chat.service';
 import { UserService } from 'src/services/user.service';
 
@@ -77,5 +78,12 @@ export class ChatGateway {
     const user = await this.userService.findByUsername(userName);
     if (!user) return [];
     return user.friends;
+  }
+
+  @SubscribeMessage('getAllUsers')
+  async getAllUsers(): Promise<User[]> {
+    console.log(`webScoket: frontend asked for all users`);
+    const users = await this.userService.GetAllUsersFromDB();
+    return users;
   }
 }

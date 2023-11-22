@@ -1,5 +1,6 @@
 import { Server } from 'socket.io';
 import Channel from 'src/entitys/channel.entity';
+import User from 'src/entitys/user.entity';
 import { ChatService } from 'src/services/chat.service';
 import { UserService } from 'src/services/user.service';
 export declare class ChatGateway {
@@ -21,4 +22,6 @@ export declare class ChatGateway {
         members: string[];
         type: 'personal' | 'private' | 'public';
     }): Promise<undefined>;
+    getUserFriends(userName: string): Promise<string[]>;
+    getAllUsers(): Promise<User[]>;
 }

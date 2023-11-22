@@ -19,20 +19,42 @@
 
 .title1 {
   background-color: #fcf061;
-  border-radius: 0em 0em 2em 0em;
-}
-
-.title2 {
-  background-color: #d39bc6;
-  border-radius: 0em 0em 0em 2em;
 }
 
 .title1Selected {
   background-color: #fcf061;
 }
 
+.title1TakePoint {
+	border-radius: 0 0 2em 0;
+}
+
+.title2 {
+  background-color: #d39bc6;
+}
+
 .title2Selected {
   background-color: #d39bc6;
+}
+
+.title2LeftPoint {
+	border-radius: 0 0 0 2em;
+}
+
+.title2RightPoint {
+	border-radius: 0 0 2em 0;
+}
+
+.title3 {
+  background-color: #5cbbbe;
+}
+
+.title3Selected {
+  background-color: #5cbbbe;
+}
+
+.title3TakePoint {
+	border-radius: 0 0 0 2em;
 }
 
 .cancelButton {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./newChannelPage.css";
 import { useRecoilState } from "recoil";
-import { userFriendsArtom } from "../../../../dataVars/atoms";
+import { userFriendsAtom } from "../../../../dataVars/atoms";
 import { getUserFriends } from "../../../../dataVars/serverRequests";
 
 interface Props {
@@ -12,7 +12,7 @@ export default function NewChannelPage({ currentUser }: Props) {
   const [name, setName] = useState("");
   const [type, setType] = useState("public");
   const [avatar, setAvatar] = useState("");
-  const [friends, setFriends] = useRecoilState(userFriendsArtom);
+  const [friends, setFriends] = useRecoilState(userFriendsAtom);
 
   useEffect(() => {
     getUserFriends(currentUser).then((value) => {

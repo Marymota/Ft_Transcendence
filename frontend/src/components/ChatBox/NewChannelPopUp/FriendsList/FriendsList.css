@@ -1,0 +1,9 @@
+.mainTitle3 {
+	margin-bottom: 2em;
+	display: flex;
+  flex-direction: column;
+}
+
+.inputMain {
+  margin: 1em 2em;
+}
