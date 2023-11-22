@@ -14,8 +14,14 @@ const Game: React.FC = () => {
 	let ball_pos_x = (width / 2);
 	let ball_pos_y = (height / 2);
 
-	let ball_x_dir = 1;
-	let ball_y_dir = 1;
+	let ball_x_dir = 0;
+	let ball_y_dir = 0;
+
+	let p1_up = 0;
+	let p1_down = 0;
+
+	let p2_up = 0;
+	let p2_down = 0;
 
 	let p1_dir = 0;
 	let p2_dir = 0;
@@ -29,30 +35,38 @@ const Game: React.FC = () => {
 	document.addEventListener('keydown', (e) => {
 		if (e.key == 'w')
 		{
-			p1_dir = -1;
+			p1_up = 1;
 		}
 		if (e.key == 's')
 		{
-			p1_dir = 1;
+			p1_down = 1;
 		}
 		if (e.key == 'ArrowUp')
 		{
-			p2_dir = -1;
+			p2_up = 1;
 		}
 		if (e.key == 'ArrowDown')
 		{
-			p2_dir = 1;
+			p2_down = 1;
 		}
 	});
 
 	document.addEventListener('keyup', (e) => {
-		if (e.key == 'w' || e.key == 's')
+		if (e.key == 'w')
 		{
-			p1_dir = 0;
+			p1_up = 0;
 		}
-		if (e.key == 'ArrowUp' || e.key == 'ArrowDown')
+		if (e.key == 's')
 		{
-			p2_dir = 0;
+			p1_down = 0;
+		}
+		if (e.key == 'ArrowUp')
+		{
+			p2_up = 0;
+		}
+		if (e.key == 'ArrowDown')
+		{
+			p2_down = 0;
 		}
 	}); 
 
@@ -91,6 +105,8 @@ const Game: React.FC = () => {
 
 	function resetball()
 	{
+		ball_x_dir = Math.sign(Math.random()*100 - 50);
+		ball_y_dir = Math.sign(Math.random()*100 - 50);
 		p1_score_counter = document.querySelector('.left_score'); 
 		p2_score_counter = document.querySelector('.right_score');
 		if (p2_score_counter != null)
@@ -103,6 +119,8 @@ const Game: React.FC = () => {
 
 	setInterval(updategame, 50);
 	function updategame(){
+		p1_dir = p1_down - p1_up;
+		p2_dir = p2_down - p2_up;
 		if (p1_dir < 0)
 		{
 			if (p1_pos_y > 0)
@@ -110,7 +128,7 @@ const Game: React.FC = () => {
 		}
 		if (p1_dir > 0)
 		{
-			if (p1_pos_y < height)
+			if (p1_pos_y < height - 10)
 				p1_move(p1_pos_x, ++p1_pos_y)
 		}
 		if (p2_dir < 0)
@@ -120,8 +138,12 @@ const Game: React.FC = () => {
 		}
 		if (p2_dir > 0)
 		{
-			if (p2_pos_y < height)
+			if (p2_pos_y < height - 10)
 				p2_move(p2_pos_x, ++p2_pos_y)
+		}
+		if (ball_x_dir == 0 || ball_y_dir == 0)
+		{
+			resetball();
 		}
 		if (ball_pos_x < 0)
 		{
@@ -137,9 +159,9 @@ const Game: React.FC = () => {
 			ball_y_dir = -1
 		else if (ball_pos_y < 0)
 			ball_y_dir = 1;
-		if (ball_pos_x > width - 5 && ball_pos_y <= p2_pos_y + 5 && ball_pos_y >= p2_pos_y - 5)
+		if (ball_pos_x > width - 8 && ball_pos_y <= p2_pos_y + 10 && ball_pos_y >= p2_pos_y)
 			ball_x_dir = -1
-		else if (ball_pos_x < 0 + 5 && ball_pos_y <= p1_pos_y + 5 && ball_pos_y >= p1_pos_y - 5)
+		else if (ball_pos_x < 0 + 8 && ball_pos_y <= p1_pos_y + 10 && ball_pos_y >= p1_pos_y)
 			ball_x_dir = 1;
 		ball_pos_y = ball_pos_y + ball_y_dir;
 		ball_pos_x = ball_pos_x + ball_x_dir;
