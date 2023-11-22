@@ -27,8 +27,8 @@ export class AuthService {
     try {
       const encryptedPassword = await bcrypt.hash(registerData.password, 12);
       const user = await this.usersService.create({
-        username: registerData.username,
-        displayname: registerData.username,
+        userName: registerData.userName,
+        displayName: registerData.userName,
         email: registerData.email,
         password: encryptedPassword,
         passwordRepeat: '',
@@ -75,11 +75,11 @@ export class AuthService {
 
   //get user information verify given data information
   public async getAutenticatedUser(
-    username: string,
+    userName: string,
     decryptedPassword: string,
   ) {
     try {
-      const user = await this.usersService.findByUsername(username);
+      const user = await this.usersService.findByUsername(userName);
       await this.verifyPassword(decryptedPassword, user.password);
       user.password = undefined;
       return user;
@@ -170,12 +170,12 @@ export class AuthService {
 
   async loginWith2fa(userWithoutPsw: Partial<User>) {
     const payload = {
-      username: userWithoutPsw.username,
+      userName: userWithoutPsw.userName,
       isTwoFactorAuthenticationEnabled: !!userWithoutPsw.is2FOn,
       isTwoFactorAuthenticated: true,
     };
     return {
-      email: payload.username,
+      email: payload.userName,
       access_token: this.jwtService.sign(payload),
     };
   }

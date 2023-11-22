@@ -23,7 +23,7 @@ let Jwt2faStrategy = class Jwt2faStrategy extends (0, passport_1.PassportStrateg
         this.userService = userService;
     }
     async validate(payload) {
-        const user = await this.userService.findByUsername(payload.username);
+        const user = await this.userService.findByUsername(payload.userName);
         if (!user.is2FOn) {
             return user;
         }

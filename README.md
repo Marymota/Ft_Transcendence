@@ -4,6 +4,15 @@ This project is about creating a website for the mighty Pong contest!
 
 ## Initial commads to have it all working (DEVELOPMENT FASE)
 
+- Node
+
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+source ~/.bashrc
+nvm install node
+npm install -g npm@latest
+```
+
 - Docker
 
 ```
@@ -14,6 +23,7 @@ docker volume rm $(docker volume ls -q); \
 docker network rm $(docker network ls -q) \
 docker-compose up -d \
 ```
+
 - Backend
 
 ```
@@ -23,13 +33,13 @@ npx prisma db pull; \
 npx prisma generate; \
 npm run start:dev
 ```
+
 - Frontend
 
 ```
 cd frontend/ && npm install; \
 npm run dev
 ```
-
 
 ## Backend
 

@@ -20,11 +20,11 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)('text', { unique: true }),
     __metadata("design:type", String)
-], User.prototype, "username", void 0);
+], User.prototype, "userName", void 0);
 __decorate([
     (0, typeorm_1.Column)('text', { unique: true }),
     __metadata("design:type", String)
-], User.prototype, "displayname", void 0);
+], User.prototype, "displayName", void 0);
 __decorate([
     (0, typeorm_1.Column)('text', { unique: true }),
     __metadata("design:type", String)

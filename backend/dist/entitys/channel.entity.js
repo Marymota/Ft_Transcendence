@@ -21,7 +21,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)('text', { unique: true }),
     __metadata("design:type", String)
-], Channel.prototype, "displayname", void 0);
+], Channel.prototype, "displayName", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)

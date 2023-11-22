@@ -24,7 +24,7 @@ export default function NewChannelPage({ currentUser }: Props) {
     <div className="mainTitle2">
       <input
         className="inputMain"
-        id="displayname"
+        id="displayName"
         type="text"
         placeholder="Name"
         value={name}
@@ -76,7 +76,7 @@ export default function NewChannelPage({ currentUser }: Props) {
         <p>Members</p>
         <div className="friends">
           {friends.map((friend: string) => (
-            <div className="friendCard">
+            <div key={friend} className="friendCard">
               <div className="friendName">{friend}</div>
               <div className="friendAdd">+</div>
             </div>

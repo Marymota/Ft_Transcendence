@@ -6,6 +6,6 @@ export declare class ChatService {
     private userService;
     constructor(chatRepo: Repository<Channel>, userService: UserService);
     findById(id: string): Promise<Channel>;
-    findByDisplayName(displayname: string): Promise<Channel>;
+    findByDisplayName(displayName: string): Promise<Channel>;
     createChannel(displayName: string, avatar: string, members: string[], creator: string, type: 'personal' | 'private' | 'public'): Promise<void>;
 }

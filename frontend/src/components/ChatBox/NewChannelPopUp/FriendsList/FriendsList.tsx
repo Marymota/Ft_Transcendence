@@ -17,13 +17,13 @@ export default function FriendsList({ currentUser }: Props) {
   const [friends, setFriends] = useRecoilState(userFriendsAtom);
 
   useEffect(() => {
-    getAllUsers().then((value) => {
-      setUsers(value);
-    });
     getUserFriends(currentUser).then((value) => {
       setFriends(value);
     });
-    console.log(users);
+    getAllUsers().then((value) => {
+      setUsers(value);
+    });
+    return () => void console.log("recycling");
   }, []);
 
   return (
@@ -31,24 +31,14 @@ export default function FriendsList({ currentUser }: Props) {
       <div className="title inputMain">all users</div>
       <div className="friends inputMain">
         {users.map((user: IUser) => {
-          let isFriend = 0;
-          friends.map((displayName: string) => {
-            if (displayName == user.displayName) isFriend = 1;
-          });
+          console.log(users);
           if (user.displayName != currentUser)
             return (
-              <div className="friendCard">
-                <div className="friendName">{user.displayName}</div>
-                {isFriend == 0 && (
-                  <div className="friendAdd" onClick={() => {}}>
-                    +
-                  </div>
-                )}
-                {isFriend == 1 && (
-                  <div className="friendRemove" onClick={() => {}}>
-                    -
-                  </div>
-                )}
+              <div key={user.id} className="friendCard">
+                <div className="friendName">{user.userName}</div>
+                <div className="friendAdd" onClick={() => {}}>
+                  +
+                </div>
               </div>
             );
         })}

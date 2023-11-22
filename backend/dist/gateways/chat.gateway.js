@@ -28,7 +28,7 @@ let ChatGateway = class ChatGateway {
         console.log('webScoket: frontend asked to send message');
     }
     async getUserChannels(userName) {
-        console.log('webScoket: frontend asked for all channels');
+        console.log(`webScoket: frontend asked for all channels. User: ${userName}`);
         const user = this.userService.findByUsername(userName);
         if (user) {
             const channels = (await user).channels;
@@ -51,8 +51,7 @@ let ChatGateway = class ChatGateway {
     }
     async getAllUsers() {
         console.log(`webScoket: frontend asked for all users`);
-        const users = await this.userService.GetAllUsersFromDB();
-        return users;
+        return await this.userService.GetAllUsersFromDB();
     }
 };
 exports.ChatGateway = ChatGateway;
@@ -95,7 +94,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ChatGateway.prototype, "getAllUsers", null);
 exports.ChatGateway = ChatGateway = __decorate([
-    (0, websockets_1.WebSocketGateway)({ cors: { origin: '*' } }),
+    (0, websockets_1.WebSocketGateway)({ cors: { origin: 'http://localhost:5173' } }),
     __metadata("design:paramtypes", [user_service_1.UserService,
         chat_service_1.ChatService])
 ], ChatGateway);

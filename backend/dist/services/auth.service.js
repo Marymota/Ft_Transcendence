@@ -34,8 +34,8 @@ let AuthService = class AuthService {
         try {
             const encryptedPassword = await bcrypt.hash(registerData.password, 12);
             const user = await this.usersService.create({
-                username: registerData.username,
-                displayname: registerData.username,
+                userName: registerData.userName,
+                displayName: registerData.userName,
                 email: registerData.email,
                 password: encryptedPassword,
                 passwordRepeat: '',
@@ -74,9 +74,9 @@ let AuthService = class AuthService {
             throw new common_1.HttpException('Error during registration request!', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    async getAutenticatedUser(username, decryptedPassword) {
+    async getAutenticatedUser(userName, decryptedPassword) {
         try {
-            const user = await this.usersService.findByUsername(username);
+            const user = await this.usersService.findByUsername(userName);
             await this.verifyPassword(decryptedPassword, user.password);
             user.password = undefined;
             return user;
@@ -133,12 +133,12 @@ let AuthService = class AuthService {
     }
     async loginWith2fa(userWithoutPsw) {
         const payload = {
-            username: userWithoutPsw.username,
+            userName: userWithoutPsw.userName,
             isTwoFactorAuthenticationEnabled: !!userWithoutPsw.is2FOn,
             isTwoFactorAuthenticated: true,
         };
         return {
-            email: payload.username,
+            email: payload.userName,
             access_token: this.jwtService.sign(payload),
         };
     }

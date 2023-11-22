@@ -37,8 +37,8 @@ export class UserService {
     );
   }
 
-  async findByUsername(username: string) {
-    const user = await this.userRepo.findOneBy({ username });
+  async findByUsername(userName: string) {
+    const user = await this.userRepo.findOneBy({ userName });
     if (user) return user;
     throw new HttpException(
       'Username provided is invalid!',
@@ -55,11 +55,11 @@ export class UserService {
   async updateDisplayName(id: string, registerData: ChangeDisplayNameDto) {
     try {
       const user = await this.findById(id);
-      (await user).displayname = registerData.displayname;
+      user.displayName = registerData.displayName;
       await this.userRepo.save(user);
     } catch (e) {
       throw new HttpException(
-        'Error while update user displayname!',
+        'Error while update user displayName!',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
@@ -95,11 +95,12 @@ export class UserService {
 
   async GetAllUsersFromDB() {
     // const user = await this.userRepo.query(
-    //   `SELECT userName, displayname, id, elo, xp FROM public."user"`,
+    //   `SELECT userName, displayName, id, elo, xp FROM public."user"`,
     // );
-    const users = await this.userRepo.query(
-      `SELECT userName, displayname, email, avatar, elo, friends, blocked FROM public."user"`,
-    );
+    // const users = await this.userRepo.query(
+    //   `SELECT userName, displayName, email, avatar, elo, friends, blocked FROM public."user"`,
+    // );
+    const users = await this.userRepo.find({ relations: { channels: true } });
     if (users) return users;
     throw new HttpException('Users not found!', HttpStatus.NOT_FOUND);
   }
@@ -115,7 +116,7 @@ export class UserService {
 
   async getUserPublicData(userID: string) {
     const user = await this.userRepo.query(
-      `SELECT displayname, id, elo FROM public."user" WHERE id = userID`,
+      `SELECT displayName, id, elo FROM public."user" WHERE id = userID`,
     );
     if (user) return user;
     throw new HttpException(
@@ -183,10 +184,10 @@ export class UserService {
     await this.userRepo.save(user);
   }
 
-  async findByDisplayname(displayname: string): Promise<string> {
+  async findByDisplayname(displayName: string): Promise<string> {
     try {
       const users = await this.userRepo.query(
-        `SELECT displayname, id FROM public."user"`,
+        `SELECT displayName, id FROM public."user"`,
       );
       if (!users)
         throw new HttpException(
@@ -194,7 +195,7 @@ export class UserService {
           HttpStatus.INTERNAL_SERVER_ERROR,
         );
       for (let i = 0; users[i]; i++) {
-        if (users[i].displayname == displayname) return users[i].id;
+        if (users[i].displayName == displayName) return users[i].id;
       }
       throw new HttpException(
         'User not found!',

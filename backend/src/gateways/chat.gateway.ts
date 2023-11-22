@@ -12,7 +12,7 @@ import User from 'src/entitys/user.entity';
 import { ChatService } from 'src/services/chat.service';
 import { UserService } from 'src/services/user.service';
 
-@WebSocketGateway({ cors: { origin: '*' } })
+@WebSocketGateway({ cors: { origin: 'http://localhost:5173' } })
 export class ChatGateway {
   constructor(
     private userService: UserService,
@@ -37,7 +37,9 @@ export class ChatGateway {
 
   @SubscribeMessage('getUserChannels')
   async getUserChannels(@MessageBody() userName: string): Promise<Channel[]> {
-    console.log('webScoket: frontend asked for all channels');
+    console.log(
+      `webScoket: frontend asked for all channels. User: ${userName}`,
+    );
     const user = this.userService.findByUsername(userName);
     if (user) {
       const channels = (await user).channels;
@@ -83,7 +85,6 @@ export class ChatGateway {
   @SubscribeMessage('getAllUsers')
   async getAllUsers(): Promise<User[]> {
     console.log(`webScoket: frontend asked for all users`);
-    const users = await this.userService.GetAllUsersFromDB();
-    return users;
+    return await this.userService.GetAllUsersFromDB();
   }
 }

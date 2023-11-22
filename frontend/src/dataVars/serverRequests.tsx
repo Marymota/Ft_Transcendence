@@ -6,21 +6,15 @@ import { socket } from "../App";
 // get all users
 export async function getUserChannels(userName: string) {
   console.log(`asking backend for the user ${userName} channels.`);
-  return (await socket.subscribeOnce(
-    "getUserChannels",
-    userName
-  )) as unknown as IChat[];
+  return await socket.send<IChat[]>("getUserChannels", userName);
 }
 
 export async function getUserFriends(userName: string) {
   console.log(`asking backend for the user ${userName} friends.`);
-  return (await socket.subscribeOnce(
-    "getUserFriends",
-    userName
-  )) as unknown as string[];
+  return await socket.send<string[]>("getUserFriends", userName);
 }
 
 export async function getAllUsers() {
   console.log(`asking backend for all users`);
-  return (await socket.subscribeOnce("getAllUsers", null)) as unknown as IUser[];
+  return await socket.send<IUser[]>("getAllUsers", null);
 }

@@ -12,7 +12,7 @@ export declare class AuthService {
     private readonly httpService;
     constructor(usersService: UserService, jwtService: JwtService, configService: ConfigService, httpService: HttpService);
     register(registerData: UserRegisterDto): Promise<User>;
-    getAutenticatedUser(username: string, decryptedPassword: string): Promise<User>;
+    getAutenticatedUser(userName: string, decryptedPassword: string): Promise<User>;
     private verifyPassword;
     getJwtToken(user: User): string;
     getCookieWithJwtToken(user: User): string;

@@ -1,8 +1,8 @@
 import Channel from './channel.entity';
 declare class User {
     id: string;
-    username: string;
-    displayname: string;
+    userName: string;
+    displayName: string;
     email: string;
     password: string;
     avatar: string;

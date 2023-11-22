@@ -80,14 +80,14 @@ export class AuthController {
         userInformation['image']['link'] as string,
       );
       const newUser: UserRegisterDto = {
-        username: userInformation['login'],
+        userName: userInformation['login'],
         password: process.env.PW_42AUTH,
         passwordRepeat: process.env.PW_42AUTH,
         email: userInformation['email'],
         avatar: linkImg as string,
         is2FOn: false,
         secret2F: 'notset',
-        displayname: userInformation['login'],
+        displayName: userInformation['login'],
         elo: 800,
         blocked: [],
         chat: [],

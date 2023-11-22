@@ -1,14 +1,14 @@
 import Channel from 'src/entitys/channel.entity';
 declare class UserRegisterDto {
     password: string;
-    username: string;
+    userName: string;
     email: string;
     avatar: string;
     passwordRepeat: string;
     is2FOn: boolean;
     secret2F: string;
     elo: number;
-    displayname: string;
+    displayName: string;
     friends: string[];
     blocked: string[];
     chat: Channel[];

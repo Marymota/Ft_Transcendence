@@ -16,7 +16,7 @@ class Channel {
   id: string;
 
   @Column('text', { unique: true })
-  displayname: string;
+  displayName: string;
 
   @Column()
   type: 'personal' | 'private' | 'public';
