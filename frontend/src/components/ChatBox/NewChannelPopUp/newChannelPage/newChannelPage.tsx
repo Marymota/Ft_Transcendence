@@ -1,6 +1,25 @@
+import { useEffect, useState } from "react";
 import "./newChannelPage.css";
+import { useRecoilState } from "recoil";
+import { userFriendsArtom } from "../../../../dataVars/atoms";
+import { getUserFriends } from "../../../../dataVars/serverRequests";
 
-export default function NewChannelPage() {
+interface Props {
+  currentUser: string;
+}
+
+export default function NewChannelPage({ currentUser }: Props) {
+  const [name, setName] = useState("");
+  const [type, setType] = useState("public");
+  const [avatar, setAvatar] = useState("");
+  const [friends, setFriends] = useRecoilState(userFriendsArtom);
+
+  useEffect(() => {
+    getUserFriends(currentUser).then((value) => {
+      setFriends(value);
+    });
+  }, []);
+
   return (
     <div className="mainTitle2">
       <input
@@ -8,23 +27,61 @@ export default function NewChannelPage() {
         id="displayname"
         type="text"
         placeholder="Name"
-      ></input>
-      <input
-        className="inputMain"
-        id="type"
-        type="text"
-        placeholder="Type"
-      ></input>
+        value={name}
+        onChange={(event) => {
+          setName(event.target.value);
+        }}
+      />
+      <div className="dropdown">
+        <button
+          className="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Type
+        </button>
+        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div
+            className="dropdown-item"
+            onClick={() => {
+              setType("Private");
+            }}
+          >
+            Private
+          </div>
+          <div
+            className="dropdown-item"
+            onClick={() => {
+              setType("Public");
+            }}
+          >
+            Public
+          </div>
+        </div>
+      </div>
       <input
         className="inputMain"
         id="avatar"
         type="text"
         placeholder="Description"
-      ></input>
+        value={avatar}
+        onChange={(event) => {
+          setAvatar(event.target.value);
+        }}
+      />
       <div className="inputMain">
         <p>Members</p>
-        <input placeholder="Search"></input>
-        <div className="userToAdd"></div>
+        <div className="friends">
+          {friends.map((friend: string) => (
+            <div className="friendCard">
+              <div className="friendName">{friend}</div>
+              <div className="friendAdd">+</div>
+            </div>
+          ))}
+        </div>
       </div>
       <button className="inputMain createChannelButton" onClick={() => {}}>
         <div>Create</div>

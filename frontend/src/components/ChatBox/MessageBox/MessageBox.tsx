@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
 import "./MessageBox.css";
-import { chatsAtom } from "../../../dataVars/atoms";
+import { userChatsAtom } from "../../../dataVars/atoms";
 import { useEffect, useState } from "react";
 import { getUserChannels } from "../../../dataVars/serverRequests";
 import { IMessage, IChat } from "../../../dataVars/types";
@@ -10,11 +10,8 @@ interface Props {
   selectedChannel: string;
 }
 
-export default function MessageBox({
-  currentUser,
-  selectedChannel,
-}: Props) {
-  const [chats, setChats] = useRecoilState(chatsAtom);
+export default function MessageBox({ currentUser, selectedChannel }: Props) {
+  const [chats, setChats] = useRecoilState(userChatsAtom);
   const [chat, setChat] = useState<IChat>();
 
   useEffect(() => {

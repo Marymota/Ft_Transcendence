@@ -1,9 +1,38 @@
 .mainTitle2 {
   display: flex;
   flex-direction: column;
-  background-color: #7766c2;
+  background-color: #d39bc6;
+	margin-bottom: 2em;
 }
 
 .inputMain {
   margin: 1em 2em;
+  background-color: #5cbbbe;
+}
+
+.friends {
+  display: flex;
+  flex-direction: column;
+}
+
+.friendCard {
+  display: flex;
+  flex-direction: row;
+}
+
+.dropdown {
+  margin: 1em 2em;
+}
+
+.dropdown-toggle {
+  background-color: #5cbbbe !important;
+	color: black !important;
+}
+
+.dropdown-menu {
+  background-color: #5cbbbe !important;
+}
+
+.dropdown-item:hover {
+  background-color: #438b8d !important;
 }

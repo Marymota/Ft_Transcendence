@@ -40,7 +40,7 @@ function ChatBox() {
           <SendDiv id="sendText" />
         </div>
       </div>
-      {popUp && <NewChannelPopUp popUp={setPopUp} />}
+      {popUp && <NewChannelPopUp popUp={setPopUp} currentUser={currentUser} />}
     </>
   );
 }

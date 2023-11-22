@@ -5,9 +5,10 @@ import NewPrivateMessage from "./newPrivateMessage/newPrivateMessage";
 
 interface Props {
   popUp: (n: number) => void;
+  currentUser: string;
 }
 
-export default function NewChannelPopUp({ popUp }: Props) {
+export default function NewChannelPopUp({ popUp, currentUser }: Props) {
   const [title, setTitle] = useState("title1");
   return (
     <div
@@ -36,8 +37,8 @@ export default function NewChannelPopUp({ popUp }: Props) {
           New Channel
         </div>
       </div>
-      {title == "title2" && <NewChannelPage />}
-      {title == "title1" && <NewPrivateMessage />}
+      {title == "title2" && <NewChannelPage currentUser={currentUser} />}
+      {title == "title1" && <NewPrivateMessage currentUser={currentUser} />}
       <div
         className="cancelButton"
         onClick={() => {

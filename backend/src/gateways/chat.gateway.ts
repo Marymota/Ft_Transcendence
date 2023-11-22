@@ -67,4 +67,15 @@ export class ChatGateway {
       data.type,
     );
   }
+
+  @SubscribeMessage('getUserFriends')
+  async getUserFriends(
+    @MessageBody()
+    userName: string,
+  ): Promise<string[]> {
+    console.log(`webScoket: frontend asked for user ${userName} friends`);
+    const user = await this.userService.findByUsername(userName);
+    if (!user) return [];
+    return user.friends;
+  }
 }
