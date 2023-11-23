@@ -19,7 +19,7 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.MinLength)(3),
     __metadata("design:type", String)
-], ChangeDisplayNameDto.prototype, "displayname", void 0);
+], ChangeDisplayNameDto.prototype, "displayName", void 0);
 class ChangeDisplayName {
 }
 exports.ChangeDisplayName = ChangeDisplayName;
@@ -27,7 +27,7 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.MaxLength)(10),
     __metadata("design:type", String)
-], ChangeDisplayName.prototype, "displayname", void 0);
+], ChangeDisplayName.prototype, "displayName", void 0);
 class UserId {
 }
 exports.UserId = UserId;

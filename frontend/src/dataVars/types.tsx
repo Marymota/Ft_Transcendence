@@ -31,7 +31,7 @@ export interface IUser {
 
 export interface IChat {
   id: number;
-  displayname: string;
+  displayName: string;
   type: "personal" | "private" | "public";
   avatar: string;
   members: IUser[];

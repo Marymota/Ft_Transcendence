@@ -30,8 +30,8 @@ let ChatService = class ChatService {
         }
         throw new common_1.HttpException('ChannelId provided is invalid!', common_1.HttpStatus.NOT_FOUND);
     }
-    async findByDisplayName(displayname) {
-        const channel = await this.chatRepo.findOneBy({ displayname });
+    async findByDisplayName(displayName) {
+        const channel = await this.chatRepo.findOneBy({ displayName });
         if (channel)
             return channel;
         throw new common_1.HttpException('Display name provided is invalid!', common_1.HttpStatus.NOT_FOUND);
@@ -48,7 +48,7 @@ let ChatService = class ChatService {
             throw new common_1.HttpException('type of channel not compatible with more than two mebers', common_1.HttpStatus.FORBIDDEN);
         }
         const newChannel = this.chatRepo.create();
-        newChannel.displayname = displayName;
+        newChannel.displayName = displayName;
         newChannel.creator = creator;
         newChannel.avatar = avatar;
         newChannel.members.push(creatorUser);
@@ -60,9 +60,9 @@ let ChatService = class ChatService {
             }
             newChannel.members.push(memberUser);
             newChannel.type = type;
-            newChannel.admins.push(creatorUser.username);
+            newChannel.admins.push(creatorUser.userName);
             await this.chatRepo.save(newChannel);
-            this.userService.addChannelToUser(creatorUser.username, newChannel.displayname);
+            this.userService.addChannelToUser(creatorUser.userName, newChannel.displayName);
         }
     }
 };

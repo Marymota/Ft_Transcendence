@@ -33,8 +33,8 @@ let UserService = class UserService {
         }
         throw new common_1.HttpException('UserId provided is invalid!', common_1.HttpStatus.NOT_FOUND);
     }
-    async findByUsername(username) {
-        const user = await this.userRepo.findOneBy({ username });
+    async findByUsername(userName) {
+        const user = await this.userRepo.findOneBy({ userName });
         if (user)
             return user;
         throw new common_1.HttpException('Username provided is invalid!', common_1.HttpStatus.NOT_FOUND);
@@ -47,11 +47,11 @@ let UserService = class UserService {
     async updateDisplayName(id, registerData) {
         try {
             const user = await this.findById(id);
-            (await user).displayname = registerData.displayname;
+            user.displayName = registerData.displayName;
             await this.userRepo.save(user);
         }
         catch (e) {
-            throw new common_1.HttpException('Error while update user displayname!', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new common_1.HttpException('Error while update user displayName!', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     async updateImage(id, path) {
@@ -77,7 +77,7 @@ let UserService = class UserService {
         return undefined;
     }
     async GetAllUsersFromDB() {
-        const users = await this.userRepo.query(`SELECT userName, displayname, email, avatar, elo, friends, blocked FROM public."user"`);
+        const users = await this.userRepo.find({ relations: { channels: true } });
         if (users)
             return users;
         throw new common_1.HttpException('Users not found!', common_1.HttpStatus.NOT_FOUND);
@@ -93,7 +93,7 @@ let UserService = class UserService {
         throw new common_1.HttpException('User not found!', common_1.HttpStatus.NOT_FOUND);
     }
     async getUserPublicData(userID) {
-        const user = await this.userRepo.query(`SELECT displayname, id, elo FROM public."user" WHERE id = userID`);
+        const user = await this.userRepo.query(`SELECT displayName, id, elo FROM public."user" WHERE id = userID`);
         if (user)
             return user;
         throw new common_1.HttpException('Error in get user public information!', common_1.HttpStatus.NOT_FOUND);
@@ -145,13 +145,13 @@ let UserService = class UserService {
         user.idWebSocket = socketId;
         await this.userRepo.save(user);
     }
-    async findByDisplayname(displayname) {
+    async findByDisplayname(displayName) {
         try {
-            const users = await this.userRepo.query(`SELECT displayname, id FROM public."user"`);
+            const users = await this.userRepo.query(`SELECT displayName, id FROM public."user"`);
             if (!users)
                 throw new common_1.HttpException('User not found QRY!', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
             for (let i = 0; users[i]; i++) {
-                if (users[i].displayname == displayname)
+                if (users[i].displayName == displayName)
                     return users[i].id;
             }
             throw new common_1.HttpException('User not found!', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
@@ -172,6 +172,36 @@ let UserService = class UserService {
         }
         user.channels.push(channel);
         await this.userRepo.save(user);
+    }
+    async addUserToFriendsList(currentUser, friendUserName) {
+        const user = await this.findByUsername(currentUser);
+        const friend = await this.findByUsername(friendUserName);
+        if (!user || !friend) {
+            throw new common_1.HttpException('user or friend not found', common_1.HttpStatus.NOT_FOUND);
+        }
+        console.log(`debuf: adding ${friendUserName} to ${currentUser} friend's list`);
+        user.friends.push(friendUserName);
+        this.userRepo.save(user);
+        console.log(`debuf: adding ${currentUser} to ${friendUserName} friend's list`);
+        friend.friends.push(currentUser);
+        this.userRepo.save(friend);
+    }
+    async removeUserToFriendsList(currentUser, friendUserName) {
+        const user = await this.findByUsername(currentUser);
+        const friend = await this.findByUsername(friendUserName);
+        if (!user || !friend) {
+            throw new common_1.HttpException('user or friend not found', common_1.HttpStatus.NOT_FOUND);
+        }
+        let index = user.friends.indexOf(friendUserName, 0);
+        if (index > -1) {
+            user.friends.splice(index, 1);
+        }
+        this.userRepo.save(user);
+        index = friend.friends.indexOf(currentUser, 0);
+        if (index > -1) {
+            friend.friends.splice(index, 1);
+        }
+        this.userRepo.save(friend);
     }
 };
 exports.UserService = UserService;

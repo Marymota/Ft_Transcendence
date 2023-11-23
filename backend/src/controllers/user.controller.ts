@@ -1,7 +1,25 @@
 import JwtAuthGuard from 'src/auth/jwtauth/jwt-auth.guard';
 import { UserService } from '../services/user.service';
-import { Body, Controller, Get, HttpCode, HttpException, HttpStatus, Post, Req, Res, UploadedFile, UseGuards, UseInterceptors, Param } from '@nestjs/common';
-import { ChangeDisplayName, ChangeDisplayNameDto, UserId } from 'src/dtos/user-changedisplay.dto';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpException,
+  HttpStatus,
+  Post,
+  Req,
+  Res,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+  Param,
+} from '@nestjs/common';
+import {
+  ChangeDisplayName,
+  ChangeDisplayNameDto,
+  UserId,
+} from 'src/dtos/user-changedisplay.dto';
 import RequestWithUser from 'src/interfaces/request-with-user.i';
 import { Response } from 'express';
 import { validate } from 'class-validator';
@@ -39,10 +57,10 @@ export class UserController {
   ) {
     let ret = {};
     const data: ChangeDisplayNameDto = new ChangeDisplayNameDto();
-    data.displayname = newData.displayname;
+    data.displayName = newData.displayName;
     await validate(data).then((errors) => {
       if (errors.length > 0) {
-        console.log(errors)
+        console.log(errors);
         ret = errors;
         return ret;
       }
@@ -75,8 +93,7 @@ export class UserController {
   async uploadFile(@Req() request: RequestWithUser, @UploadedFile() file) {
     if (!request.user || !file) return;
     const userProfile = await this.userService.findById(request.user.id);
-    if (userProfile.avatar == 'notset')
-        return ;
+    if (userProfile.avatar == 'notset') return;
     fs.unlink(process.cwd() + '/' + userProfile.avatar, (err) => {
       if (err) {
         console.log(err);
@@ -143,8 +160,7 @@ export class UserController {
   ) {
     const data = await this.userService.GetAllUsersFromDB();
     for (let i = 0; i < data.length; i++) {
-      if (data[i].id == userId.id)
-        return response.send(data[i]);
+      if (data[i].id == userId.id) return response.send(data[i]);
     }
     return response.send({ error: 'User not found!' });
   }
@@ -172,7 +188,6 @@ export class UserController {
     return response.send(user.idWebSocket);
   }
 
-
   // Get the socket id from the request body and use this information to update
   @HttpCode(200)
   @UseGuards(JwtAuthGuard)
@@ -183,7 +198,7 @@ export class UserController {
     @Body() body: socketId,
   ) {
     const user = await this.userService.findById(request.user.id);
-    const socketId = body.id; 
+    const socketId = body.id;
     await this.userService.updateWebSocketId(user.id, socketId);
     return response.send(true);
   }

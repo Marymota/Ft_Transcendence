@@ -37,8 +37,8 @@ export class UserService {
     );
   }
 
-  async findByUsername(username: string) {
-    const user = await this.userRepo.findOneBy({ username });
+  async findByUsername(userName: string) {
+    const user = await this.userRepo.findOneBy({ userName });
     if (user) return user;
     throw new HttpException(
       'Username provided is invalid!',
@@ -55,11 +55,11 @@ export class UserService {
   async updateDisplayName(id: string, registerData: ChangeDisplayNameDto) {
     try {
       const user = await this.findById(id);
-      (await user).displayname = registerData.displayname;
+      user.displayName = registerData.displayName;
       await this.userRepo.save(user);
     } catch (e) {
       throw new HttpException(
-        'Error while update user displayname!',
+        'Error while update user displayName!',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
@@ -95,11 +95,12 @@ export class UserService {
 
   async GetAllUsersFromDB() {
     // const user = await this.userRepo.query(
-    //   `SELECT userName, displayname, id, elo, xp FROM public."user"`,
+    //   `SELECT userName, displayName, id, elo, xp FROM public."user"`,
     // );
-    const users = await this.userRepo.query(
-      `SELECT userName, displayname, email, avatar, elo, friends, blocked FROM public."user"`,
-    );
+    // const users = await this.userRepo.query(
+    //   `SELECT userName, displayName, email, avatar, elo, friends, blocked FROM public."user"`,
+    // );
+    const users = await this.userRepo.find({ relations: { channels: true } });
     if (users) return users;
     throw new HttpException('Users not found!', HttpStatus.NOT_FOUND);
   }
@@ -115,7 +116,7 @@ export class UserService {
 
   async getUserPublicData(userID: string) {
     const user = await this.userRepo.query(
-      `SELECT displayname, id, elo FROM public."user" WHERE id = userID`,
+      `SELECT displayName, id, elo FROM public."user" WHERE id = userID`,
     );
     if (user) return user;
     throw new HttpException(
@@ -183,10 +184,10 @@ export class UserService {
     await this.userRepo.save(user);
   }
 
-  async findByDisplayname(displayname: string): Promise<string> {
+  async findByDisplayname(displayName: string): Promise<string> {
     try {
       const users = await this.userRepo.query(
-        `SELECT displayname, id FROM public."user"`,
+        `SELECT displayName, id FROM public."user"`,
       );
       if (!users)
         throw new HttpException(
@@ -194,7 +195,7 @@ export class UserService {
           HttpStatus.INTERNAL_SERVER_ERROR,
         );
       for (let i = 0; users[i]; i++) {
-        if (users[i].displayname == displayname) return users[i].id;
+        if (users[i].displayName == displayName) return users[i].id;
       }
       throw new HttpException(
         'User not found!',
@@ -227,5 +228,41 @@ export class UserService {
     }
     user.channels.push(channel);
     await this.userRepo.save(user);
+  }
+
+  async addUserToFriendsList(currentUser: string, friendUserName: string) {
+    const user = await this.findByUsername(currentUser);
+    const friend = await this.findByUsername(friendUserName);
+    if (!user || !friend) {
+      throw new HttpException('user or friend not found', HttpStatus.NOT_FOUND);
+    }
+    console.log(
+      `debuf: adding ${friendUserName} to ${currentUser} friend's list`,
+    );
+    user.friends.push(friendUserName);
+    this.userRepo.save(user);
+    console.log(
+      `debuf: adding ${currentUser} to ${friendUserName} friend's list`,
+    );
+    friend.friends.push(currentUser);
+    this.userRepo.save(friend);
+  }
+
+  async removeUserToFriendsList(currentUser: string, friendUserName: string) {
+    const user = await this.findByUsername(currentUser);
+    const friend = await this.findByUsername(friendUserName);
+    if (!user || !friend) {
+      throw new HttpException('user or friend not found', HttpStatus.NOT_FOUND);
+    }
+    let index = user.friends.indexOf(friendUserName, 0);
+    if (index > -1) {
+      user.friends.splice(index, 1);
+    }
+    this.userRepo.save(user);
+    index = friend.friends.indexOf(currentUser, 0);
+    if (index > -1) {
+      friend.friends.splice(index, 1);
+    }
+    this.userRepo.save(friend);
   }
 }

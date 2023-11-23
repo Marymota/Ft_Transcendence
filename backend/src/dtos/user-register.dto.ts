@@ -12,7 +12,7 @@ class UserRegisterDto {
 
   @IsString()
   @IsNotEmpty()
-  username: string;
+  userName: string;
 
   @IsEmail()
   email: string;
@@ -28,7 +28,7 @@ class UserRegisterDto {
 
   elo: number;
 
-  displayname: string;
+  displayName: string;
 
   friends: string[];
 
@@ -73,14 +73,14 @@ export default UserRegisterDto;
 
 // {
 // 	"password":1234567,
-// 	"username": "amaria-m",
+// 	"userName": "amaria-m",
 // 	"email":"amaria-m@gmail.com",
 // 	"avatar":"bla",
 // 	"passwordRepeat":"1234567",
 // 	"is2FOn":"false",
 // 	"secret2F",
 // 	"elo":"0",
-// 	"displayname":"antonio",
+// 	"displayName":"antonio",
 // 	"friends",
 // 	"blocked",
 // 	"chat",

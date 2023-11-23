@@ -12,56 +12,62 @@ interface Props {
 export default function NewChannelPopUp({ popUp, currentUser }: Props) {
   const [title, setTitle] = useState("title1");
   return (
-    <div
-      className={
-        "newChannelPopUp " +
-        (title == "title1" && "title1Selected") +
-        " " +
-        (title == "title2" && "title2Selected") +
-        " " +
-        (title == "title3" && "title3Selected")
-      }
-    >
-      <div className="popUpHeader">
-        <div
-          className={
-            "headerTitle title1 " + (title == "title2" && "title1TakePoint")
-          }
-          onClick={() => {
-            setTitle("title1");
-          }}
-        >
-          Private Message
-        </div>
-        <div
-          className={"headerTitle title2 " + (title == "title1" && " title2LeftPoint ") + (title == "title3" && " title2RightPoint")}
-          onClick={() => {
-            setTitle("title2");
-          }}
-        >
-          New Channel
-        </div>
-        <div
-          className={
-            "headerTitle title3 " + (title == "title2" && "title3TakePoint")
-          }
-          onClick={() => {
-            setTitle("title3");
-          }}
-        >
-          Friends
-        </div>
-      </div>
-      {title == "title1" && <NewPrivateMessage currentUser={currentUser} />}
-      {title == "title2" && <NewChannelPage currentUser={currentUser} />}
-      {title == "title3" && <FriendsList currentUser={currentUser} />}
+    <div className="bluredBackground">
       <div
-        className="cancelButton"
-        onClick={() => {
-          popUp(0);
-        }}
+        className={
+          "newChannelPopUp " +
+          (title == "title1" && "title1Selected") +
+          " " +
+          (title == "title2" && "title2Selected") +
+          " " +
+          (title == "title3" && "title3Selected")
+        }
       >
-        CANCEL
+        <div className="popUpHeader">
+          <div
+            className={
+              "headerTitle title1 " + (title == "title2" && "title1TakePoint")
+            }
+            onClick={() => {
+              setTitle("title1");
+            }}
+          >
+            Private Message
+          </div>
+          <div
+            className={
+              "headerTitle title2 " +
+              (title == "title1" && " title2LeftPoint ") +
+              (title == "title3" && " title2RightPoint")
+            }
+            onClick={() => {
+              setTitle("title2");
+            }}
+          >
+            New Channel
+          </div>
+          <div
+            className={
+              "headerTitle title3 " + (title == "title2" && "title3TakePoint")
+            }
+            onClick={() => {
+              setTitle("title3");
+            }}
+          >
+            Friends
+          </div>
+        </div>
+        {title == "title1" && <NewPrivateMessage currentUser={currentUser} />}
+        {title == "title2" && <NewChannelPage currentUser={currentUser} />}
+        {title == "title3" && <FriendsList currentUser={currentUser} />}
+        <div
+          className="cancelButton"
+          onClick={() => {
+            popUp(0);
+          }}
+        >
+          CANCEL
+        </div>
       </div>
     </div>
   );

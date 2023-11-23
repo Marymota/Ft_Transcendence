@@ -29,15 +29,15 @@ export default function ChannelButtons({
           <div
             key={chat.id}
             onClick={() => {
-              setSelectedChannel(chat.displayname);
-              getSelectedChannel(chat.displayname);
+              setSelectedChannel(chat.displayName);
+              getSelectedChannel(chat.displayName);
             }}
             className={
               "groupName " +
-              (selectedChannel == chat.displayname && "selectedChannelStyle")
+              (selectedChannel == chat.displayName && "selectedChannelStyle")
             }
           >
-            {chat.displayname}
+            {chat.displayName}
           </div>
         );
       } else {
@@ -49,12 +49,12 @@ export default function ChannelButtons({
           <div
             key={chat.id}
             onClick={() => {
-              setSelectedChannel(chat.displayname);
-              getSelectedChannel(chat.displayname);
+              setSelectedChannel(chat.displayName);
+              getSelectedChannel(chat.displayName);
             }}
             className={
               "groupName " +
-              (selectedChannel == chat.displayname && "selectedChannelStyle")
+              (selectedChannel == chat.displayName && "selectedChannelStyle")
             }
           >
             {name}

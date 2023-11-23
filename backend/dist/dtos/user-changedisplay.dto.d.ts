@@ -1,8 +1,8 @@
 export declare class ChangeDisplayNameDto {
-    displayname: string;
+    displayName: string;
 }
 export declare class ChangeDisplayName {
-    displayname: string;
+    displayName: string;
 }
 export declare class UserId {
     id: string;

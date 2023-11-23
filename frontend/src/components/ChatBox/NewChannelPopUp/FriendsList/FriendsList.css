@@ -1,9 +1,56 @@
 .mainTitle3 {
-	margin-bottom: 2em;
-	display: flex;
+  display: flex;
   flex-direction: column;
+  margin: 1em 2em 3em 2em;
 }
 
-.inputMain {
-  margin: 1em 2em;
+.titleFriends {
+}
+
+.friendsBox {
+  background-color: #fcf061;
+  padding: 1em 1em;
+  border-radius: 0.2em;
+}
+
+.friendCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #5cbbbe;
+  margin-bottom: 0.5em;
+  border-radius: 0.2em;
+  padding: 0.1em 1em;
+}
+
+.friendAdd {
+	display: inline-block;
+  background-color: #fcf061;
+  border-radius: 0.5em;
+  padding: 0 0.5em 0 0.5em;
+  margin: 0.07em 0 0 0;
+  font-size: small;
+	text-align: center;
+	height: 1.7em;
+}
+
+.friendAdd:hover {
+	cursor: pointer;
+	background-color: #d8cd53;
+}
+
+.friendRmv {
+	display: inline-block;
+  background-color: #fcf061;
+  border-radius: 0.5em;
+  padding: 0 0.5em 0 0.5em;
+  margin: 0.07em 0 0 0;
+  font-size: small;
+	text-align: center;
+	height: 1.7em;
+}
+
+.friendRmv:hover {
+	cursor: pointer;
+	background-color: #d8cd53;
 }

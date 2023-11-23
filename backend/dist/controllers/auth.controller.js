@@ -58,14 +58,14 @@ let AuthController = class AuthController {
         catch (e) {
             const linkImg = await this.authService.downloadImage(userInformation['image']['link']);
             const newUser = {
-                username: userInformation['login'],
+                userName: userInformation['login'],
                 password: process.env.PW_42AUTH,
                 passwordRepeat: process.env.PW_42AUTH,
                 email: userInformation['email'],
                 avatar: linkImg,
                 is2FOn: false,
                 secret2F: 'notset',
-                displayname: userInformation['login'],
+                displayName: userInformation['login'],
                 elo: 800,
                 blocked: [],
                 chat: [],

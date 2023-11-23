@@ -21,7 +21,7 @@ export default function MessageBox({ currentUser, selectedChannel }: Props) {
   }, []);
 
   for (let i = 0; i < chats.length; i++) {
-    if (chats[i].displayname == selectedChannel) {
+    if (chats[i].displayName == selectedChannel) {
       setChat(chats[i]);
     }
   }

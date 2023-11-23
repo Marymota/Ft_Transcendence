@@ -8,15 +8,15 @@ import User from 'src/entitys/user.entity';
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly authService: AuthService) {
     super({
-      usernameField: 'username',
+      userNameField: 'userName',
     });
   }
 
   async validate(
-    username: string,
+    userName: string,
     password: string,
     twoFactor: string,
   ): Promise<User> {
-    return await this.authService.getAutenticatedUser(username, password);
+    return await this.authService.getAutenticatedUser(userName, password);
   }
 }

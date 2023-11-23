@@ -30,8 +30,8 @@ export class ChatService {
     );
   }
 
-  async findByDisplayName(displayname: string) {
-    const channel = await this.chatRepo.findOneBy({ displayname });
+  async findByDisplayName(displayName: string) {
+    const channel = await this.chatRepo.findOneBy({ displayName });
     if (channel) return channel;
     throw new HttpException(
       'Display name provided is invalid!',
@@ -39,7 +39,6 @@ export class ChatService {
     );
   }
 
-  // TODO
   async createChannel(
     displayName: string,
     avatar: string,
@@ -67,7 +66,7 @@ export class ChatService {
       );
     }
     const newChannel = this.chatRepo.create();
-    newChannel.displayname = displayName;
+    newChannel.displayName = displayName;
     newChannel.creator = creator;
     newChannel.avatar = avatar;
     newChannel.members.push(creatorUser);
@@ -82,11 +81,11 @@ export class ChatService {
       }
       newChannel.members.push(memberUser);
       newChannel.type = type;
-      newChannel.admins.push(creatorUser.username);
+      newChannel.admins.push(creatorUser.userName);
       await this.chatRepo.save(newChannel);
       this.userService.addChannelToUser(
-        creatorUser.username,
-        newChannel.displayname,
+        creatorUser.userName,
+        newChannel.displayName,
       );
     }
   }

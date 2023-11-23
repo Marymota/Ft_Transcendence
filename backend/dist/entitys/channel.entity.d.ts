@@ -2,7 +2,7 @@ import User from './user.entity';
 import Message from './message.entity';
 declare class Channel {
     id: string;
-    displayname: string;
+    displayName: string;
     type: 'personal' | 'private' | 'public';
     avatar: string;
     members: User[];

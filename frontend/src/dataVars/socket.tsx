@@ -10,8 +10,8 @@ export class mySocket {
   constructor() {
     this._socket = io("http://localhost:3000");
     this._socket.on("connect", () => {
-			console.log("connection id: ", this._socket.id);
-		});
+      console.log("connection id: ", this._socket.id);
+    });
     this._socket.on("disconnect", () => {
       this._socket.close();
       window.location.reload();
@@ -23,6 +23,8 @@ export class mySocket {
   }
 
   subscribe(event: string, callback: (...args: any[]) => void): void {
+    console.log("subscribing to ", event);
+
     this._socket.on(event, callback);
   }
 
@@ -30,18 +32,7 @@ export class mySocket {
     this._socket.off(event);
   }
 
-  send(event: string, ...args: any[]): void {
-    this._socket.emit(event, ...args);
-  }
-
-  async subscribeOnce(event: string, body: any): Promise<Response | Data<any>> {
-    return new Promise((resolve) => {
-      const handler = (data: any) => {
-        this.unsubscribe(event);
-        resolve(data);
-      };
-      this.subscribe(event, handler);
-      this.send(event, body);
-    });
+  send<T>(event: string, ...args: any[]): Promise<T> {
+    return new Promise((r) => this._socket.emit(event, ...args, r));
   }
 }

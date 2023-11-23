@@ -36,7 +36,7 @@ let UserController = class UserController {
     async changeDisplayName(request, newData) {
         let ret = {};
         const data = new user_changedisplay_dto_1.ChangeDisplayNameDto();
-        data.displayname = newData.displayname;
+        data.displayName = newData.displayName;
         await (0, class_validator_1.validate)(data).then((errors) => {
             if (errors.length > 0) {
                 console.log(errors);

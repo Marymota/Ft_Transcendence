@@ -14,10 +14,10 @@ class User {
   id: string;
 
   @Column('text', { unique: true })
-  username: string;
+  userName: string;
 
   @Column('text', { unique: true })
-  displayname: string;
+  displayName: string;
 
   @Column('text', { unique: true })
   email: string;

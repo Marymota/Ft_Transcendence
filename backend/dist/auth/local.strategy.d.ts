@@ -5,6 +5,6 @@ declare const LocalStrategy_base: new (...args: any[]) => Strategy;
 export declare class LocalStrategy extends LocalStrategy_base {
     private readonly authService;
     constructor(authService: AuthService);
-    validate(username: string, password: string, twoFactor: string): Promise<User>;
+    validate(userName: string, password: string, twoFactor: string): Promise<User>;
 }
 export {};

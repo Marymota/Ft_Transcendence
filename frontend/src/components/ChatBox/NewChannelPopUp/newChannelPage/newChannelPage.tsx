@@ -9,10 +9,10 @@ interface Props {
 }
 
 export default function NewChannelPage({ currentUser }: Props) {
+  const [friends, setFriends] = useRecoilState(userFriendsAtom);
   const [name, setName] = useState("");
   const [type, setType] = useState("public");
-  const [avatar, setAvatar] = useState("");
-  const [friends, setFriends] = useRecoilState(userFriendsAtom);
+  let members = [""];
 
   useEffect(() => {
     getUserFriends(currentUser).then((value) => {
@@ -24,7 +24,7 @@ export default function NewChannelPage({ currentUser }: Props) {
     <div className="mainTitle2">
       <input
         className="inputMain"
-        id="displayname"
+        id="displayName"
         type="text"
         placeholder="Name"
         value={name}
@@ -62,25 +62,41 @@ export default function NewChannelPage({ currentUser }: Props) {
           </div>
         </div>
       </div>
-      <input
-        className="inputMain"
-        id="avatar"
-        type="text"
-        placeholder="Description"
-        value={avatar}
-        onChange={(event) => {
-          setAvatar(event.target.value);
-        }}
-      />
       <div className="inputMain">
         <p>Members</p>
         <div className="friends">
-          {friends.map((friend: string) => (
-            <div className="friendCard">
-              <div className="friendName">{friend}</div>
-              <div className="friendAdd">+</div>
-            </div>
-          ))}
+          {friends.map((friend: string) => {
+            let isMember = 0;
+            for (let i = 0; i < members.length; i++) {
+              if (members[i] == friend) isMember = 1;
+            }
+            return (
+              <div key={friend} className="friendCard">
+                <div className="friendName">{friend}</div>
+                {isMember == 0 && (
+                  <div
+                    className="friendAdd"
+                    onClick={() => {
+                      members.push(friend);
+                    }}
+                  >
+                    +
+                  </div>
+                )}
+                {isMember == 1 && (
+                  <div
+                    className="friendRmv"
+                    onClick={() => {
+                      let index = members.indexOf(friend, 0);
+                      if (index > -1) members.splice(index, 1);
+                    }}
+                  >
+                    -
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
       <button className="inputMain createChannelButton" onClick={() => {}}>

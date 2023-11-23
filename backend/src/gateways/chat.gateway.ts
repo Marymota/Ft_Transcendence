@@ -12,7 +12,7 @@ import User from 'src/entitys/user.entity';
 import { ChatService } from 'src/services/chat.service';
 import { UserService } from 'src/services/user.service';
 
-@WebSocketGateway({ cors: { origin: '*' } })
+@WebSocketGateway({ cors: { origin: 'http://localhost:5173' } })
 export class ChatGateway {
   constructor(
     private userService: UserService,
@@ -37,7 +37,9 @@ export class ChatGateway {
 
   @SubscribeMessage('getUserChannels')
   async getUserChannels(@MessageBody() userName: string): Promise<Channel[]> {
-    console.log('webScoket: frontend asked for all channels');
+    console.log(
+      `webScoket: frontend asked for all channels. User: ${userName}`,
+    );
     const user = this.userService.findByUsername(userName);
     if (user) {
       const channels = (await user).channels;
@@ -83,7 +85,44 @@ export class ChatGateway {
   @SubscribeMessage('getAllUsers')
   async getAllUsers(): Promise<User[]> {
     console.log(`webScoket: frontend asked for all users`);
-    const users = await this.userService.GetAllUsersFromDB();
-    return users;
+    return await this.userService.GetAllUsersFromDB();
+  }
+
+  @SubscribeMessage('addFriend')
+  async addFriendToUser(
+    @MessageBody() data: { friend: string; currentUser: string },
+  ): Promise<string[]> {
+    console.log(`webScoket: frontend asked to add friend to user friends list`);
+    console.log(`debug: ${data}`);
+    console.log(
+      `debug: frontend asked to add ${data.friend} to ${data.currentUser} friends list`,
+    );
+    if (!data.friend || !data.friend) return [];
+    const user = await this.userService.findByUsername(data.currentUser);
+    if (!user) return [];
+    for (let i = 0; i < user.friends.length; i++) {
+      if (data.friend == user.friends[i]) return user.friends;
+    }
+    this.userService.addUserToFriendsList(data.currentUser, data.friend);
+    return user.friends;
+  }
+
+  @SubscribeMessage('removeFriend')
+  async removeFriendToUser(
+    @MessageBody() data: { friend: string; currentUser: string },
+  ): Promise<string[]> {
+    console.log(
+      `webScoket: frontend asked to remove friend from user friends list`,
+    );
+    if (!data.friend || !data.friend) return [];
+    const user = await this.userService.findByUsername(data.currentUser);
+    if (!user) return [];
+    let exists = 0;
+    for (let i = 0; i < user.friends.length; i++) {
+      if (data.friend == user.friends[i]) exists = 1;
+    }
+    if (!exists) return user.friends;
+    this.userService.removeUserToFriendsList(data.currentUser, data.friend);
+    return user.friends;
   }
 }
