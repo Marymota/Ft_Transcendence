@@ -53,6 +53,39 @@ let ChatGateway = class ChatGateway {
         console.log(`webScoket: frontend asked for all users`);
         return await this.userService.GetAllUsersFromDB();
     }
+    async addFriendToUser(data) {
+        console.log(`webScoket: frontend asked to add friend to user friends list`);
+        console.log(`debug: ${data}`);
+        console.log(`debug: frontend asked to add ${data.friend} to ${data.currentUser} friends list`);
+        if (!data.friend || !data.friend)
+            return [];
+        const user = await this.userService.findByUsername(data.currentUser);
+        if (!user)
+            return [];
+        for (let i = 0; i < user.friends.length; i++) {
+            if (data.friend == user.friends[i])
+                return user.friends;
+        }
+        this.userService.addUserToFriendsList(data.currentUser, data.friend);
+        return user.friends;
+    }
+    async removeFriendToUser(data) {
+        console.log(`webScoket: frontend asked to remove friend from user friends list`);
+        if (!data.friend || !data.friend)
+            return [];
+        const user = await this.userService.findByUsername(data.currentUser);
+        if (!user)
+            return [];
+        let exists = 0;
+        for (let i = 0; i < user.friends.length; i++) {
+            if (data.friend == user.friends[i])
+                exists = 1;
+        }
+        if (!exists)
+            return user.friends;
+        this.userService.removeUserToFriendsList(data.currentUser, data.friend);
+        return user.friends;
+    }
 };
 exports.ChatGateway = ChatGateway;
 __decorate([
@@ -93,6 +126,20 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ChatGateway.prototype, "getAllUsers", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('addFriend'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ChatGateway.prototype, "addFriendToUser", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('removeFriend'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ChatGateway.prototype, "removeFriendToUser", null);
 exports.ChatGateway = ChatGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({ cors: { origin: 'http://localhost:5173' } }),
     __metadata("design:paramtypes", [user_service_1.UserService,

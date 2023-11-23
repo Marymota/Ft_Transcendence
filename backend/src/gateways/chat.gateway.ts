@@ -87,4 +87,42 @@ export class ChatGateway {
     console.log(`webScoket: frontend asked for all users`);
     return await this.userService.GetAllUsersFromDB();
   }
+
+  @SubscribeMessage('addFriend')
+  async addFriendToUser(
+    @MessageBody() data: { friend: string; currentUser: string },
+  ): Promise<string[]> {
+    console.log(`webScoket: frontend asked to add friend to user friends list`);
+    console.log(`debug: ${data}`);
+    console.log(
+      `debug: frontend asked to add ${data.friend} to ${data.currentUser} friends list`,
+    );
+    if (!data.friend || !data.friend) return [];
+    const user = await this.userService.findByUsername(data.currentUser);
+    if (!user) return [];
+    for (let i = 0; i < user.friends.length; i++) {
+      if (data.friend == user.friends[i]) return user.friends;
+    }
+    this.userService.addUserToFriendsList(data.currentUser, data.friend);
+    return user.friends;
+  }
+
+  @SubscribeMessage('removeFriend')
+  async removeFriendToUser(
+    @MessageBody() data: { friend: string; currentUser: string },
+  ): Promise<string[]> {
+    console.log(
+      `webScoket: frontend asked to remove friend from user friends list`,
+    );
+    if (!data.friend || !data.friend) return [];
+    const user = await this.userService.findByUsername(data.currentUser);
+    if (!user) return [];
+    let exists = 0;
+    for (let i = 0; i < user.friends.length; i++) {
+      if (data.friend == user.friends[i]) exists = 1;
+    }
+    if (!exists) return user.friends;
+    this.userService.removeUserToFriendsList(data.currentUser, data.friend);
+    return user.friends;
+  }
 }

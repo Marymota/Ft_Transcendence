@@ -39,7 +39,6 @@ export class ChatService {
     );
   }
 
-  // TODO
   async createChannel(
     displayName: string,
     avatar: string,

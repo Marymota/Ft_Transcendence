@@ -173,6 +173,36 @@ let UserService = class UserService {
         user.channels.push(channel);
         await this.userRepo.save(user);
     }
+    async addUserToFriendsList(currentUser, friendUserName) {
+        const user = await this.findByUsername(currentUser);
+        const friend = await this.findByUsername(friendUserName);
+        if (!user || !friend) {
+            throw new common_1.HttpException('user or friend not found', common_1.HttpStatus.NOT_FOUND);
+        }
+        console.log(`debuf: adding ${friendUserName} to ${currentUser} friend's list`);
+        user.friends.push(friendUserName);
+        this.userRepo.save(user);
+        console.log(`debuf: adding ${currentUser} to ${friendUserName} friend's list`);
+        friend.friends.push(currentUser);
+        this.userRepo.save(friend);
+    }
+    async removeUserToFriendsList(currentUser, friendUserName) {
+        const user = await this.findByUsername(currentUser);
+        const friend = await this.findByUsername(friendUserName);
+        if (!user || !friend) {
+            throw new common_1.HttpException('user or friend not found', common_1.HttpStatus.NOT_FOUND);
+        }
+        let index = user.friends.indexOf(friendUserName, 0);
+        if (index > -1) {
+            user.friends.splice(index, 1);
+        }
+        this.userRepo.save(user);
+        index = friend.friends.indexOf(currentUser, 0);
+        if (index > -1) {
+            friend.friends.splice(index, 1);
+        }
+        this.userRepo.save(friend);
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([

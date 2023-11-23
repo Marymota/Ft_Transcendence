@@ -18,3 +18,22 @@ export async function getAllUsers() {
   console.log(`asking backend for all users`);
   return await socket.send<IUser[]>("getAllUsers", null);
 }
+
+export async function addFriend(friend: string, currentUser: string) {
+  console.log(`asking backend to add friend to user friendsList`);
+  return await socket.send<string[]>("addFriend", { currentUser, friend });
+}
+
+export async function removeFriend(friend: string, currentUser: string) {
+  console.log(`asking backend to remove friend from user friendsList`);
+  return await socket.send<string[]>("removeFriend", { currentUser, friend });
+}
+
+export async function createChannel(
+  displayName: string,
+  type: string,
+  members: string[],
+  creator: string
+) {
+  console.log(`asking backend to create channel`);
+}

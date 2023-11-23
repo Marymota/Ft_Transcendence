@@ -23,4 +23,6 @@ export declare class UserService {
     updateWebSocketId(userId: string, socketId: string): Promise<void>;
     findByDisplayname(displayName: string): Promise<string>;
     addChannelToUser(userName: string, channelDisplayName: string): Promise<void>;
+    addUserToFriendsList(currentUser: string, friendUserName: string): Promise<void>;
+    removeUserToFriendsList(currentUser: string, friendUserName: string): Promise<void>;
 }

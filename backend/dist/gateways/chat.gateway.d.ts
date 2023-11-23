@@ -24,4 +24,12 @@ export declare class ChatGateway {
     }): Promise<undefined>;
     getUserFriends(userName: string): Promise<string[]>;
     getAllUsers(): Promise<User[]>;
+    addFriendToUser(data: {
+        friend: string;
+        currentUser: string;
+    }): Promise<string[]>;
+    removeFriendToUser(data: {
+        friend: string;
+        currentUser: string;
+    }): Promise<string[]>;
 }
