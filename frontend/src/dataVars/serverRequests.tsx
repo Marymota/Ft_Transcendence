@@ -29,11 +29,23 @@ export async function removeFriend(friend: string, currentUser: string) {
   return await socket.send<string[]>("removeFriend", { currentUser, friend });
 }
 
+export async function addingMembers(type: "add" | "rmv", member: string) {
+  return await socket.send<string[]>("addingMembers", { type, member });
+}
+
 export async function createChannel(
   displayName: string,
   type: string,
   members: string[],
   creator: string
 ) {
+  const avatar = "no avatar";
   console.log(`asking backend to create channel`);
+  return await socket.send<string[]>("createChannel", {
+    creator,
+    displayName,
+    avatar,
+    members,
+    type,
+  });
 }

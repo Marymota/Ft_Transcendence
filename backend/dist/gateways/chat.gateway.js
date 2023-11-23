@@ -18,6 +18,7 @@ const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
 const chat_service_1 = require("../services/chat.service");
 const user_service_1 = require("../services/user.service");
+let backendMembers = [""];
 let ChatGateway = class ChatGateway {
     constructor(userService, chatService) {
         this.userService = userService;
@@ -86,6 +87,17 @@ let ChatGateway = class ChatGateway {
         this.userService.removeUserToFriendsList(data.currentUser, data.friend);
         return user.friends;
     }
+    async addingMembers(data) {
+        console.log(`frontend asked to add user to possible channel member; data: ${data}; type: ${data.type}; member: ${data.member}`);
+        if (data.type == 'add')
+            backendMembers.push(data.member);
+        else if (data.type == 'rmv') {
+            const index = backendMembers.indexOf(data.member, 0);
+            if (index > -1)
+                backendMembers.splice(index, 1);
+        }
+        return backendMembers;
+    }
 };
 exports.ChatGateway = ChatGateway;
 __decorate([
@@ -140,6 +152,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ChatGateway.prototype, "removeFriendToUser", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('addingMembers'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ChatGateway.prototype, "addingMembers", null);
 exports.ChatGateway = ChatGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({ cors: { origin: 'http://localhost:5173' } }),
     __metadata("design:paramtypes", [user_service_1.UserService,

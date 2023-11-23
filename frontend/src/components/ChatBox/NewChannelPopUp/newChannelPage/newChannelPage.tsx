@@ -2,17 +2,22 @@ import { useEffect, useState } from "react";
 import "./newChannelPage.css";
 import { useRecoilState } from "recoil";
 import { userFriendsAtom } from "../../../../dataVars/atoms";
-import { getUserFriends } from "../../../../dataVars/serverRequests";
+import {
+  addingMembers,
+  createChannel,
+  getUserFriends,
+} from "../../../../dataVars/serverRequests";
 
 interface Props {
   currentUser: string;
+  closePopUp: (n: number) => void;
 }
 
-export default function NewChannelPage({ currentUser }: Props) {
+export default function NewChannelPage({ currentUser, closePopUp }: Props) {
   const [friends, setFriends] = useRecoilState(userFriendsAtom);
   const [name, setName] = useState("");
   const [type, setType] = useState("public");
-  let members = [""];
+  const [members, setMembers] = useState([""]);
 
   useEffect(() => {
     getUserFriends(currentUser).then((value) => {
@@ -77,7 +82,9 @@ export default function NewChannelPage({ currentUser }: Props) {
                   <div
                     className="friendAdd"
                     onClick={() => {
-                      members.push(friend);
+                      addingMembers("add", friend).then((value) => {
+                        setMembers(value);
+                      });
                     }}
                   >
                     +
@@ -87,8 +94,9 @@ export default function NewChannelPage({ currentUser }: Props) {
                   <div
                     className="friendRmv"
                     onClick={() => {
-                      let index = members.indexOf(friend, 0);
-                      if (index > -1) members.splice(index, 1);
+                      addingMembers("rmv", friend).then((value) => {
+                        setMembers(value);
+                      });
                     }}
                   >
                     -
@@ -99,7 +107,13 @@ export default function NewChannelPage({ currentUser }: Props) {
           })}
         </div>
       </div>
-      <button className="inputMain createChannelButton" onClick={() => {}}>
+      <button
+        className="inputMain createChannelButton"
+        onClick={() => {
+          createChannel(name, type, members, currentUser);
+					closePopUp;
+        }}
+      >
         <div>Create</div>
       </button>
     </div>

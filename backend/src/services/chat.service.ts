@@ -59,7 +59,7 @@ export class ChatService {
         HttpStatus.NOT_FOUND,
       );
     }
-    if (members.length > 1 && type != 'personal') {
+    if (members.length > 1 && type == 'personal') {
       throw new HttpException(
         'type of channel not compatible with more than two mebers',
         HttpStatus.FORBIDDEN,

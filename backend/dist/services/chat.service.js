@@ -44,7 +44,7 @@ let ChatService = class ChatService {
         if (!creatorUser) {
             throw new common_1.HttpException('Creator userName not found', common_1.HttpStatus.NOT_FOUND);
         }
-        if (members.length > 1 && type != 'personal') {
+        if (members.length > 1 && type == 'personal') {
             throw new common_1.HttpException('type of channel not compatible with more than two mebers', common_1.HttpStatus.FORBIDDEN);
         }
         const newChannel = this.chatRepo.create();

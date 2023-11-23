@@ -32,4 +32,8 @@ export declare class ChatGateway {
         friend: string;
         currentUser: string;
     }): Promise<string[]>;
+    addingMembers(data: {
+        type: 'add' | 'rmv';
+        member: string;
+    }): Promise<string[]>;
 }

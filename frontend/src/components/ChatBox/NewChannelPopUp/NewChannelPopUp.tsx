@@ -58,7 +58,12 @@ export default function NewChannelPopUp({ popUp, currentUser }: Props) {
           </div>
         </div>
         {title == "title1" && <NewPrivateMessage currentUser={currentUser} />}
-        {title == "title2" && <NewChannelPage currentUser={currentUser} />}
+        {title == "title2" && (
+          <NewChannelPage
+            currentUser={currentUser}
+            closePopUp={() => popUp(0)}
+          />
+        )}
         {title == "title3" && <FriendsList currentUser={currentUser} />}
         <div
           className="cancelButton"

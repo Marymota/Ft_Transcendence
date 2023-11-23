@@ -12,16 +12,18 @@ import User from 'src/entitys/user.entity';
 import { ChatService } from 'src/services/chat.service';
 import { UserService } from 'src/services/user.service';
 
+let backendMembers = [""];
+
 @WebSocketGateway({ cors: { origin: 'http://localhost:5173' } })
 export class ChatGateway {
-  constructor(
-    private userService: UserService,
+	constructor(
+		private userService: UserService,
     private chatService: ChatService,
-  ) {}
-  @WebSocketServer()
-  server: Server;
-
-  private logger: Logger = new Logger('Gateway Log');
+	) {}
+	@WebSocketServer()
+	server: Server;
+		
+	private logger: Logger = new Logger('Gateway Log');
 
   @SubscribeMessage('sendMessage')
   async sendMessage(
@@ -124,5 +126,20 @@ export class ChatGateway {
     if (!exists) return user.friends;
     this.userService.removeUserToFriendsList(data.currentUser, data.friend);
     return user.friends;
+  }
+
+  @SubscribeMessage('addingMembers')
+  async addingMembers(
+    @MessageBody() data: { type: 'add' | 'rmv'; member: string },
+  ): Promise<string[]> {
+    console.log(
+      `frontend asked to add user to possible channel member; data: ${data}; type: ${data.type}; member: ${data.member}`,
+    );
+    if (data.type == 'add') backendMembers.push(data.member);
+    else if (data.type == 'rmv') {
+      const index = backendMembers.indexOf(data.member, 0);
+      if (index > -1) backendMembers.splice(index, 1);
+    }
+    return backendMembers;
   }
 }
