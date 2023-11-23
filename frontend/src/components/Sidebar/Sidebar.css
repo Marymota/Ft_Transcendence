@@ -5,13 +5,11 @@
   color: #fff;
   background-color: #463366;
   border-right: 5px solid aquamarine;
-  width: 20%;
-  height: 100vh;
-  max-width: 100px;
   padding-top:120px;
-  padding-right: 350px;
-  margin-right: 50px;;
+  padding-right: 100px;
+  margin-right: 100px;;
   margin-left: 40px;
+  height:100vh;
 }
 
 .sidebar > .logo {
@@ -41,7 +39,7 @@
   border: 2px solid transparent;
   border-radius: 25px;
   padding: 20px;
-  width: 300px;
+  width: 35vh;
 }
 
 .menu-item img {
@@ -73,7 +71,7 @@
   --color-dark: #463366;
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 1100px) {
   .sidebar {
     display: flex; /* Show the container when the screen size is larger */
   }

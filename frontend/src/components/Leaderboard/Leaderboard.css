@@ -8,6 +8,7 @@
   height:100vh;
   overflow-x: hidden;
   width: 100vw;
+  margin-top:100px;
 }
 
 .leaderboard .time {
@@ -33,7 +34,6 @@
 }
 
 .leaderboard > .page-header {
-  margin-top: 0;
   background-color: #463366;
   padding: 50px;
 }
@@ -51,7 +51,6 @@
 #profile .flex {
   display: flex;
   justify-content: space-between;
-  gap: 5em;
   text-align: left;
 }
 
@@ -83,12 +82,10 @@
 
 #profile .score {
   display: flex;
-  align-items: center;
   font-size: 15px;
+  margin-top: 30px;
 }
-#profile p {
-  margin-left: 10px;
-}
+
 
 .rank {
   font-size: 20px;
@@ -105,9 +102,12 @@
 
 @media (max-width: 500px) {
 
+  .page-header > h1 {
+    font-size: 2rem;
+  }
+
   #profile .flex {
     display: flex;
     justify-content: space-between;
-    gap: 1em;
   }
 }

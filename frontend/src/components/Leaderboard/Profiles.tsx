@@ -15,13 +15,12 @@ function item(data: any) {
             <span className="rank">{index + 1}</span>
             <img src={value.img} alt="" />
             <div className="info">
-              <h3 className="name text-dark">{value.name}</h3>
+              <h3 className="name">{value.name}</h3>
               <span>{value.location}</span>
             </div>
           </div>
           <div className="score">
-            <span>{value.score}</span>
-            <p>XP</p>
+            <span>{value.score} XP</span>
           </div>
         </div>
       ))}
