@@ -1,49 +1,47 @@
   .pong {
 	position: absolute;
 	background-color: #000000;
-	top: 20px;
-	left: 60vh;
-	width: 85vh;
-	height: 60vh;
+	top: 20vmin;
+	left: 80vmin;
+	width: 85vmin;
+	height: 60vmin;
 }
 
 .rightplayer {
 	position: absolute;
 	background-color: #0000ff;
-	top: 30vh;
-	right: 5vh;
-	width: 3vh;
-	height: 10vh;
+	top: 30vmin;
+	right: 5vmin;
+	width: 3vmin;
+	height: 10vmin;
 }
 
 .leftplayer {
 	position: absolute;
 	background-color: #ff0000;
-	top: 30vh;
-	left: 5vh;
-	width: 3vh;
-	height: 10vh;
+	top: 30vmin;
+	left: 5vmin;
+	width: 3vmin;
+	height: 10vmin;
 }
 
 .ball {
 	position: absolute;
 	background-color: #ffffff;
-	top: 40vh;
-	left: 30vh;
-	width: 1vh;
-	height: 1vh;
+	width: 1vmin;
+	height: 1vmin;
 }
 
 .left_score { 
 	color: #00ff00; 
 	position: absolute; 
-	left: 10vh; 
-	top: 5vh;
+	left: 10vmin; 
+	top: 5vmin;
 }
 
 .right_score { 
 	color: #00ff00; 
 	position: absolute; 
-	right: 10vh; 
-	top: 5vh;
+	right: 10vmin; 
+	top: 5vmin;
 } 
