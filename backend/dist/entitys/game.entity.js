@@ -14,7 +14,7 @@ const user_entity_1 = require("./user.entity");
 let Game = class Game {
 };
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
 ], Game.prototype, "id", void 0);
 __decorate([

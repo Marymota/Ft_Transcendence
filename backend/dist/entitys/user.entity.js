@@ -14,7 +14,7 @@ const channel_entity_1 = require("./channel.entity");
 let User = class User {
 };
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
 ], User.prototype, "id", void 0);
 __decorate([
@@ -50,16 +50,16 @@ __decorate([
     __metadata("design:type", Number)
 ], User.prototype, "elo", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: String, array: true }),
+    (0, typeorm_1.Column)('text', { array: true }),
     __metadata("design:type", Array)
 ], User.prototype, "friends", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: String, array: true }),
+    (0, typeorm_1.Column)('text', { array: true }),
     __metadata("design:type", Array)
 ], User.prototype, "blocked", void 0);
 __decorate([
     (0, typeorm_1.ManyToMany)(() => channel_entity_1.default, (channel) => channel.members),
-    (0, typeorm_1.JoinTable)(),
+    (0, typeorm_1.JoinTable)({ name: 'user_channels' }),
     __metadata("design:type", Array)
 ], User.prototype, "channels", void 0);
 __decorate([

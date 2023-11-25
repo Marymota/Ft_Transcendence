@@ -10,7 +10,7 @@ import Channel from './channel.entity';
 
 @Entity()
 class Message {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
@@ -22,7 +22,7 @@ class Message {
   @Column()
   content: string;
 
-	@ManyToOne(() => Channel, (channel) => channel.history)
+  @ManyToOne(() => Channel, (channel) => channel.history)
   channel: Channel;
 }
 

@@ -16,7 +16,7 @@
   flex-direction: column;
   box-shadow: 0 0.2em 0.5em 0 rgba(0, 0, 0, 0.2),
     0 0.2em 0.5em 0 rgba(0, 0, 0, 0.2);
-  border-radius: 2em 2em 2em 2em;
+  border-radius: 0.5em 0.5em 0.5em 0.5em;
 }
 
 .popUpHeader {
@@ -30,7 +30,7 @@
 
 .title1 {
   background-color: #fcf061;
-	border-radius: 2em 0 0 0;
+	border-radius: 0.5em 0 0 0;
 }
 
 .title1Selected {
@@ -38,7 +38,7 @@
 }
 
 .title1TakePoint {
-  border-radius: 2em 0 2em 0;
+  border-radius: 0.5em 0 2em 0;
 }
 
 .title2 {
@@ -59,7 +59,7 @@
 
 .title3 {
   background-color: #5cbbbe;
-	border-radius: 0 2em 0 0;
+	border-radius: 0 0.5em 0 0;
 }
 
 .title3Selected {
@@ -67,7 +67,7 @@
 }
 
 .title3TakePoint {
-  border-radius: 0 2em 0 2em;
+  border-radius: 0 0.5em 0 2em;
 }
 
 .cancelButton {
@@ -77,7 +77,7 @@
   width: 100%;
   background-color: #5cbbbe;
   bottom: 0;
-	border-radius: 0 0 2em 2em;
+	border-radius: 0 0 0.5em 0.5em;
 }
 
 .cancelButton:hover {

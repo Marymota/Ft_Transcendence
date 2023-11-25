@@ -52,7 +52,7 @@ export default function NewChannelPage({ currentUser, closePopUp }: Props) {
           <div
             className="dropdown-item"
             onClick={() => {
-              setType("Private");
+              setType("private");
             }}
           >
             Private
@@ -60,7 +60,7 @@ export default function NewChannelPage({ currentUser, closePopUp }: Props) {
           <div
             className="dropdown-item"
             onClick={() => {
-              setType("Public");
+              setType("public");
             }}
           >
             Public
@@ -111,7 +111,7 @@ export default function NewChannelPage({ currentUser, closePopUp }: Props) {
         className="inputMain createChannelButton"
         onClick={() => {
           createChannel(name, type, members, currentUser);
-					closePopUp;
+          closePopUp;
         }}
       >
         <div>Create</div>

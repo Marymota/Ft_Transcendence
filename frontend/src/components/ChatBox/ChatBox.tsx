@@ -23,12 +23,10 @@ function ChatBox() {
           >
             New +
           </div>
-          <div className="group-names">
-            <ChannelButtons
-              currentUser={currentUser}
-              getSelectedChannel={setSelectedChannel}
-            />
-          </div>
+          <ChannelButtons
+            currentUser={currentUser}
+            getSelectedChannel={setSelectedChannel}
+          />
         </div>
         <div className="chatDisplay">
           <div className="messagesBox">

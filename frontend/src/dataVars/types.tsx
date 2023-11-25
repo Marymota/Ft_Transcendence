@@ -37,5 +37,6 @@ export interface IChat {
   members: IUser[];
   creator: string;
   admins: string[];
+  blocked: string[];
   history: IMessage[];
 }

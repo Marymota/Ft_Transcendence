@@ -10,7 +10,7 @@ import Channel from './channel.entity';
 
 @Entity()
 class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column('text', { unique: true })
@@ -37,14 +37,14 @@ class User {
   @Column()
   elo: number;
 
-  @Column({ type: String, array: true })
+  @Column('text', { array: true })
   friends: string[];
 
-  @Column({ type: String, array: true })
+  @Column('text', { array: true })
   blocked: string[];
 
   @ManyToMany(() => Channel, (channel) => channel.members)
-  @JoinTable()
+  @JoinTable({ name: 'user_channels' })
   channels: Channel[];
 
   @Column()

@@ -18,7 +18,7 @@ const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
 const chat_service_1 = require("../services/chat.service");
 const user_service_1 = require("../services/user.service");
-let backendMembers = [""];
+let backendMembers = [''];
 let ChatGateway = class ChatGateway {
     constructor(userService, chatService) {
         this.userService = userService;
@@ -29,19 +29,17 @@ let ChatGateway = class ChatGateway {
         console.log('webScoket: frontend asked to send message');
     }
     async getUserChannels(userName) {
-        console.log(`webScoket: frontend asked for all channels. User: ${userName}`);
-        const user = this.userService.findByUsername(userName);
-        if (user) {
-            const channels = (await user).channels;
-            if (channels)
-                return channels;
-        }
+        console.log(`webScoket: frontend asked for user channels. User: ${userName}`);
+        const user = await this.userService.findByUsername(userName);
+        if (user && user.channels)
+            return user.channels;
     }
     async createChannel(data) {
         console.log(`webScoket: frontend asked to creat a channel: {\n\tData:\n\t\tcreator: ${data.creator}\n\t\tdisplayName: ${data.displayName}\n\t\tavatar: ${data.avatar}\n\t\tmembers: ${data.members}}`);
         if (data.creator.length < 1)
             return;
-        await this.chatService.createChannel(data.displayName, data.avatar, data.members, data.creator, data.type);
+        const newChannel = await this.chatService.createChannel(data.displayName, data.avatar, data.members, data.creator, data.type);
+        return newChannel;
     }
     async getUserFriends(userName) {
         console.log(`webScoket: frontend asked for user ${userName} friends`);
@@ -56,8 +54,6 @@ let ChatGateway = class ChatGateway {
     }
     async addFriendToUser(data) {
         console.log(`webScoket: frontend asked to add friend to user friends list`);
-        console.log(`debug: ${data}`);
-        console.log(`debug: frontend asked to add ${data.friend} to ${data.currentUser} friends list`);
         if (!data.friend || !data.friend)
             return [];
         const user = await this.userService.findByUsername(data.currentUser);

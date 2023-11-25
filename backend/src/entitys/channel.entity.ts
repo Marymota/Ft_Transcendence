@@ -12,7 +12,7 @@ import Message from './message.entity';
 
 @Entity()
 class Channel {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column('text', { unique: true })
@@ -25,7 +25,6 @@ class Channel {
   avatar: string;
 
   @ManyToMany(() => User, (user) => user.channels)
-  @JoinTable()
   members: User[];
 
   @Column()

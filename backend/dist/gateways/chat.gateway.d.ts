@@ -21,7 +21,7 @@ export declare class ChatGateway {
         avatar: string;
         members: string[];
         type: 'personal' | 'private' | 'public';
-    }): Promise<undefined>;
+    }): Promise<Channel>;
     getUserFriends(userName: string): Promise<string[]>;
     getAllUsers(): Promise<User[]>;
     addFriendToUser(data: {

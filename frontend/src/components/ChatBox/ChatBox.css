@@ -43,14 +43,6 @@
   cursor: pointer;
 }
 
-.group-names {
-  margin: 5% 0%;
-  padding: 2%;
-  border: solid 0.1em #5cbbbe;
-  border-radius: 0.1em;
-  height: 90%;
-}
-
 .chatDisplay {
   display: flex;
   flex-direction: column;

@@ -34,7 +34,10 @@ let UserService = class UserService {
         throw new common_1.HttpException('UserId provided is invalid!', common_1.HttpStatus.NOT_FOUND);
     }
     async findByUsername(userName) {
-        const user = await this.userRepo.findOneBy({ userName });
+        const user = await this.userRepo.findOne({
+            where: { userName: userName },
+            relations: { channels: true },
+        });
         if (user)
             return user;
         throw new common_1.HttpException('Username provided is invalid!', common_1.HttpStatus.NOT_FOUND);
@@ -57,7 +60,7 @@ let UserService = class UserService {
     async updateImage(id, path) {
         try {
             const user = await this.findById(id);
-            (await user).avatar = path;
+            user.avatar = path;
             await this.userRepo.save(user);
             return user;
         }
@@ -168,10 +171,13 @@ let UserService = class UserService {
         }
         const channel = await this.chatService.findByDisplayName(channelDisplayName);
         if (!channel) {
-            throw new common_1.HttpException('Cahnnel not found!', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new common_1.HttpException('Channel not found!', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        if (!Array.isArray(user.channels)) {
+            user.channels = [];
         }
         user.channels.push(channel);
-        await this.userRepo.save(user);
+        return await this.userRepo.save(user);
     }
     async addUserToFriendsList(currentUser, friendUserName) {
         const user = await this.findByUsername(currentUser);

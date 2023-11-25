@@ -15,7 +15,7 @@ const message_entity_1 = require("./message.entity");
 let Channel = class Channel {
 };
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
 ], Channel.prototype, "id", void 0);
 __decorate([
@@ -32,7 +32,6 @@ __decorate([
 ], Channel.prototype, "avatar", void 0);
 __decorate([
     (0, typeorm_1.ManyToMany)(() => user_entity_1.default, (user) => user.channels),
-    (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
 ], Channel.prototype, "members", void 0);
 __decorate([

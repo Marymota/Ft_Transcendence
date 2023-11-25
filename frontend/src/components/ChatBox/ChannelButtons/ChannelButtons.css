@@ -1,3 +1,11 @@
+.group-names {
+  margin: 5% 0%;
+  padding: 2%;
+  border: solid 0.1em #5cbbbe;
+  border-radius: 0.1em;
+  height: 90%;
+}
+
 .groupName {
   margin: 5% 2%;
   background-color: #5cbbbe;
@@ -8,8 +16,9 @@
 }
 
 .groupName:hover {
-  background-color: #4ea0a2;
-  color: #d2c951;
+  background-color: #62b2b3;
+  color: #c4b80f;
+	cursor: pointer;
 }
 
 .selectedChannelStyle {

@@ -31,7 +31,9 @@ let ChatService = class ChatService {
         throw new common_1.HttpException('ChannelId provided is invalid!', common_1.HttpStatus.NOT_FOUND);
     }
     async findByDisplayName(displayName) {
-        const channel = await this.chatRepo.findOneBy({ displayName });
+        const channel = await this.chatRepo.findOne({
+            where: { displayName: displayName },
+        });
         if (channel)
             return channel;
         throw new common_1.HttpException('Display name provided is invalid!', common_1.HttpStatus.NOT_FOUND);
@@ -47,23 +49,43 @@ let ChatService = class ChatService {
         if (members.length > 1 && type == 'personal') {
             throw new common_1.HttpException('type of channel not compatible with more than two mebers', common_1.HttpStatus.FORBIDDEN);
         }
-        const newChannel = this.chatRepo.create();
-        newChannel.displayName = displayName;
-        newChannel.creator = creator;
-        newChannel.avatar = avatar;
-        newChannel.members.push(creatorUser);
-        await this.chatRepo.save(newChannel);
+        let index = members.indexOf('', 0);
+        if (index > -1)
+            members.splice(index, 1);
+        members.push(creator);
+        let userMembers = [];
         for (let i = 0; i < members.length; i++) {
             const memberUser = await this.userService.findByUsername(members[i]);
             if (!memberUser) {
                 throw new common_1.HttpException('member userName not found', common_1.HttpStatus.NOT_FOUND);
             }
-            newChannel.members.push(memberUser);
-            newChannel.type = type;
-            newChannel.admins.push(creatorUser.userName);
-            await this.chatRepo.save(newChannel);
-            this.userService.addChannelToUser(creatorUser.userName, newChannel.displayName);
+            userMembers.push(memberUser);
         }
+        const uniqueMembers = Array.from(new Set(userMembers));
+        const newChannel = this.chatRepo.create({
+            displayName: displayName,
+            type: type,
+            avatar: avatar,
+            members: [],
+            creator: creator,
+            admins: [creatorUser.userName],
+            blocked: [],
+            history: [],
+        });
+        const savedChannel = await this.chatRepo.save(newChannel);
+        savedChannel.members = uniqueMembers;
+        const updatedChannel = await this.chatRepo.save(savedChannel);
+        for (let i = 0; i < uniqueMembers.length; i++) {
+            this.userService.addChannelToUser(uniqueMembers[i].userName, updatedChannel.displayName);
+        }
+        return updatedChannel;
+    }
+    async GetAllChannelsFromDB() {
+        const channels = await this.chatRepo.find({ relations: { members: true } });
+        if (channels)
+            return channels;
+        else
+            return [];
     }
 };
 exports.ChatService = ChatService;

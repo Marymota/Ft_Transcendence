@@ -12,18 +12,18 @@ import User from 'src/entitys/user.entity';
 import { ChatService } from 'src/services/chat.service';
 import { UserService } from 'src/services/user.service';
 
-let backendMembers = [""];
+let backendMembers = [''];
 
 @WebSocketGateway({ cors: { origin: 'http://localhost:5173' } })
 export class ChatGateway {
-	constructor(
-		private userService: UserService,
+  constructor(
+    private userService: UserService,
     private chatService: ChatService,
-	) {}
-	@WebSocketServer()
-	server: Server;
-		
-	private logger: Logger = new Logger('Gateway Log');
+  ) {}
+  @WebSocketServer()
+  server: Server;
+
+  private logger: Logger = new Logger('Gateway Log');
 
   @SubscribeMessage('sendMessage')
   async sendMessage(
@@ -40,13 +40,10 @@ export class ChatGateway {
   @SubscribeMessage('getUserChannels')
   async getUserChannels(@MessageBody() userName: string): Promise<Channel[]> {
     console.log(
-      `webScoket: frontend asked for all channels. User: ${userName}`,
+      `webScoket: frontend asked for user channels. User: ${userName}`,
     );
-    const user = this.userService.findByUsername(userName);
-    if (user) {
-      const channels = (await user).channels;
-      if (channels) return channels;
-    }
+    const user = await this.userService.findByUsername(userName);
+    if (user && user.channels) return user.channels;
   }
 
   @SubscribeMessage('createChannel')
@@ -59,18 +56,19 @@ export class ChatGateway {
       members: string[];
       type: 'personal' | 'private' | 'public';
     },
-  ): Promise<undefined> {
+  ): Promise<Channel> {
     console.log(
       `webScoket: frontend asked to creat a channel: {\n\tData:\n\t\tcreator: ${data.creator}\n\t\tdisplayName: ${data.displayName}\n\t\tavatar: ${data.avatar}\n\t\tmembers: ${data.members}}`,
     );
     if (data.creator.length < 1) return;
-    await this.chatService.createChannel(
+    const newChannel = await this.chatService.createChannel(
       data.displayName,
       data.avatar,
       data.members,
       data.creator,
       data.type,
     );
+    return newChannel;
   }
 
   @SubscribeMessage('getUserFriends')
@@ -95,10 +93,6 @@ export class ChatGateway {
     @MessageBody() data: { friend: string; currentUser: string },
   ): Promise<string[]> {
     console.log(`webScoket: frontend asked to add friend to user friends list`);
-    console.log(`debug: ${data}`);
-    console.log(
-      `debug: frontend asked to add ${data.friend} to ${data.currentUser} friends list`,
-    );
     if (!data.friend || !data.friend) return [];
     const user = await this.userService.findByUsername(data.currentUser);
     if (!user) return [];

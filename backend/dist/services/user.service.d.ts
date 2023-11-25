@@ -22,7 +22,7 @@ export declare class UserService {
     generateQrCodeDataURL(otpAuthUrl: string): Promise<string>;
     updateWebSocketId(userId: string, socketId: string): Promise<void>;
     findByDisplayname(displayName: string): Promise<string>;
-    addChannelToUser(userName: string, channelDisplayName: string): Promise<void>;
+    addChannelToUser(userName: string, channelDisplayName: string): Promise<User>;
     addUserToFriendsList(currentUser: string, friendUserName: string): Promise<void>;
     removeUserToFriendsList(currentUser: string, friendUserName: string): Promise<void>;
 }

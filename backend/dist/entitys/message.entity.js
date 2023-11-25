@@ -15,7 +15,7 @@ const channel_entity_1 = require("./channel.entity");
 let Message = class Message {
 };
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
 ], Message.prototype, "id", void 0);
 __decorate([
