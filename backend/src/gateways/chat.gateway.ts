@@ -30,8 +30,8 @@ export class ChatGateway {
   async sendMessage(
     @MessageBody()
     messageData: {
-      chatId: number;
-      sender: string;
+      channel: string;
+      userName: string;
       content: string;
     },
   ) {

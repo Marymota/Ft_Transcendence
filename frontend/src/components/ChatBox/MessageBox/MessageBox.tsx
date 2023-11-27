@@ -3,14 +3,10 @@ import "./MessageBox.css";
 import {
   channelMessagesAtom,
   selectedChannelAtom,
-  userChatsAtom,
 } from "../../../dataVars/atoms";
-import { useEffect, useState } from "react";
-import {
-  getChannelMessages,
-  getUserChannels,
-} from "../../../dataVars/serverRequests";
-import { IMessage, IChat } from "../../../dataVars/types";
+import { useEffect } from "react";
+import { getChannelMessages } from "../../../dataVars/serverRequests";
+import { IMessage } from "../../../dataVars/types";
 
 interface Props {
   currentUser: string;

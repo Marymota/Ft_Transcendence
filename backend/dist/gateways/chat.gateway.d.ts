@@ -11,8 +11,8 @@ export declare class ChatGateway {
     server: Server;
     private logger;
     sendMessage(messageData: {
-        chatId: number;
-        sender: string;
+        channel: string;
+        userName: string;
         content: string;
     }): Promise<void>;
     getUserChannels(userName: string): Promise<Channel[]>;

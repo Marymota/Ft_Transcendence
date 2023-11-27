@@ -33,7 +33,7 @@ export class ChatService {
   async findByDisplayName(displayName: string) {
     const channel = await this.chatRepo.findOne({
       where: { displayName: displayName },
-      relations: { history: true },
+      relations: { members: true, history: true },
     });
     if (channel) return channel;
     throw new HttpException(

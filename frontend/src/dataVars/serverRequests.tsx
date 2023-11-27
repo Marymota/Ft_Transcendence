@@ -56,3 +56,15 @@ export async function getChannelMessages(channel: string, userName: string) {
     userName,
   });
 }
+
+export async function sendMessage(
+  channel: string,
+  userName: string,
+  content: string
+) {
+  return await socket.send<undefined>("sendMessage", {
+    channel,
+    userName,
+    content,
+  });
+}
