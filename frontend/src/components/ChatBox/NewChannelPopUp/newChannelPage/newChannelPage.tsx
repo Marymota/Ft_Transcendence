@@ -111,7 +111,7 @@ export default function NewChannelPage({ currentUser, closePopUp }: Props) {
         className="inputMain createChannelButton"
         onClick={() => {
           createChannel(name, type, members, currentUser);
-          closePopUp;
+          closePopUp(0);
         }}
       >
         <div>Create</div>

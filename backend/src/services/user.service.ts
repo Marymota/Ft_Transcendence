@@ -40,7 +40,7 @@ export class UserService {
   async findByUsername(userName: string) {
     const user = await this.userRepo.findOne({
       where: { userName: userName },
-      relations: { channels: true },
+      relations: { channels: { history: true } },
     });
     if (user) return user;
     throw new HttpException(

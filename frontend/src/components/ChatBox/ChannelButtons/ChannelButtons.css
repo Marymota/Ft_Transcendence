@@ -6,7 +6,7 @@
   height: 90%;
 }
 
-.groupName {
+.group-names > .groupName {
   margin: 5% 2%;
   background-color: #5cbbbe;
   padding: 2%;
@@ -15,12 +15,12 @@
   color: white;
 }
 
-.groupName:hover {
+.group-names > .groupName:hover {
   background-color: #62b2b3;
   color: #c4b80f;
-	cursor: pointer;
+  cursor: pointer;
 }
 
-.selectedChannelStyle {
+.group-names > .selectedChannelStyle {
   background-color: #356b6d;
 }

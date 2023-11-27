@@ -1,26 +1,20 @@
-import { useEffect, useState } from "react";
-import { getUserChannels } from "../../../dataVars/serverRequests";
-import { useRecoilState } from "recoil";
-import { userChatsAtom } from "../../../dataVars/atoms";
+import { useEffect } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { selectedChannelAtom, userChatsAtom } from "../../../dataVars/atoms";
 import { IChat, IUser } from "../../../dataVars/types";
 import "./ChannelButtons.css";
 
 interface Props {
   currentUser: string;
-  getSelectedChannel: (channel: string) => void;
 }
 
-export default function ChannelButtons({
-  currentUser,
-  getSelectedChannel,
-}: Props) {
-  const [chats, setChats] = useRecoilState(userChatsAtom);
-  const [selectedChannel, setSelectedChannel] = useState("");
+export default function ChannelButtons({ currentUser }: Props) {
+  const chats = useRecoilValue(userChatsAtom);
+  const [selectedChannel, setSelectedChannel] =
+    useRecoilState(selectedChannelAtom);
 
   useEffect(() => {
-    getUserChannels(currentUser).then((value) => {
-      setChats(value);
-    });
+    return () => void console.log("recycling channelButtons");
   }, []);
 
   if (chats.length > 0) {
@@ -33,7 +27,6 @@ export default function ChannelButtons({
                 key={chat.id}
                 onClick={() => {
                   setSelectedChannel(chat.displayName);
-                  getSelectedChannel(chat.displayName);
                 }}
                 className={
                   "groupName " +
@@ -54,7 +47,6 @@ export default function ChannelButtons({
                 key={chat.id}
                 onClick={() => {
                   setSelectedChannel(chat.displayName);
-                  getSelectedChannel(chat.displayName);
                 }}
                 className={
                   "groupName " +

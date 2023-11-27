@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./ChatBox.css";
 import ChannelButtons from "./ChannelButtons/ChannelButtons";
 import SendDiv from "./MessageBox/sendDiv/SendDiv";
@@ -7,8 +7,11 @@ import NewChannelPopUp from "./NewChannelPopUp/NewChannelPopUp";
 
 function ChatBox() {
   const currentUser = "amaria-m";
-  const [selectedChannel, setSelectedChannel] = useState("");
   const [popUp, setPopUp] = useState(0);
+
+  useEffect(() => {
+    return () => void console.log("recycling chatBox");
+  }, []);
 
   return (
     <>
@@ -23,18 +26,10 @@ function ChatBox() {
           >
             New +
           </div>
-          <ChannelButtons
-            currentUser={currentUser}
-            getSelectedChannel={setSelectedChannel}
-          />
+          <ChannelButtons currentUser={currentUser} />
         </div>
         <div className="chatDisplay">
-          <div className="messagesBox">
-            <MessageBox
-              currentUser={currentUser}
-              selectedChannel={selectedChannel}
-            />
-          </div>
+          <MessageBox currentUser={currentUser} />
           <SendDiv id="sendText" />
         </div>
       </div>

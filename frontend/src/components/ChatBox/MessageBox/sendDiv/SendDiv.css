@@ -8,7 +8,7 @@
   background-color: #4ea0a2;
 }
 
-.sendTextInput {
+.writeBox > .sendTextInput {
   color: white;
   margin: 3%;
   width: 80%;
@@ -17,7 +17,7 @@
   padding: 1.5% 1% 1% 1%;
 }
 
-.sendMessageButton {
+.writeBox > .sendMessageButton {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

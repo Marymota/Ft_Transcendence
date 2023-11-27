@@ -9,7 +9,7 @@
   box-shadow: 0 0.1em 1em 0 rgba(0, 0, 0, 0.5), 0 0.2em 1em 0 rgba(0, 0, 0, 0.2);
 }
 
-.chatGroups {
+.chatBox > .chatGroups {
   background-color: #4ea0a2;
   padding: 2%;
   width: 30%;
@@ -17,49 +17,34 @@
   flex-flow: column;
 }
 
-.chatDisplay {
+.chatBox > .chatDisplay {
   width: 70%;
   padding: auto;
 }
 
-.searchGroup {
+.chatBox > .chatGroups > .searchGroup {
   border: 0;
   background-color: #5cbbbe;
   padding: 2%;
   color: white;
 }
 
-.newChannelButton {
+.chatBox > .chatGroups > .newChannelButton {
   margin: 1em 0 0 0;
   padding: 0.3em 0.3em;
   border-radius: 0.3em;
   background-color: #5cbbbe;
   font-size: small;
-	color: #e9dd5a;
+  color: #e9dd5a;
 }
 
-.newChannelButton:hover {
+.chatBox > .chatGroups > .newChannelButton:hover {
   background-color: #2e7a7c;
   cursor: pointer;
 }
 
-.chatDisplay {
+.chatBox > .chatDisplay {
   display: flex;
   flex-direction: column;
   height: 100%;
-}
-
-.messagesBox {
-  height: 90%;
-  width: 90%;
-  background-color: #4ea0a2;
-  margin: 5% 5% 1% 5%;
-  overflow: auto;
-  display: flex;
-  flex-direction: column-reverse;
-}
-
-.messageScroll {
-  height: 100%;
-  width: 100%;
 }

@@ -1,47 +1,47 @@
-  .pong {
-	position: absolute;
-	background-color: #000000;
-	top: 20vmin;
-	left: 80vmin;
-	width: 85vmin;
-	height: 60vmin;
+.game > .pong {
+  position: absolute;
+  background-color: #000000;
+  top: 20vmin;
+  left: 80vmin;
+  width: 85vmin;
+  height: 60vmin;
 }
 
-.rightplayer {
-	position: absolute;
-	background-color: #0000ff;
-	top: 30vmin;
-	right: 5vmin;
-	width: 3vmin;
-	height: 10vmin;
+.game > .pong > .rightplayer {
+  position: absolute;
+  background-color: #0000ff;
+  top: 30vmin;
+  right: 5vmin;
+  width: 3vmin;
+  height: 10vmin;
 }
 
-.leftplayer {
-	position: absolute;
-	background-color: #ff0000;
-	top: 30vmin;
-	left: 5vmin;
-	width: 3vmin;
-	height: 10vmin;
+.game > .pong > .leftplayer {
+  position: absolute;
+  background-color: #ff0000;
+  top: 30vmin;
+  left: 5vmin;
+  width: 3vmin;
+  height: 10vmin;
 }
 
-.ball {
-	position: absolute;
-	background-color: #ffffff;
-	width: 1vmin;
-	height: 1vmin;
+.game > .pong > .ball {
+  position: absolute;
+  background-color: #ffffff;
+  width: 1vmin;
+  height: 1vmin;
 }
 
-.left_score { 
-	color: #00ff00; 
-	position: absolute; 
-	left: 10vmin; 
-	top: 5vmin;
+.game > .pong > .left_score {
+  color: #00ff00;
+  position: absolute;
+  left: 10vmin;
+  top: 5vmin;
 }
 
-.right_score { 
-	color: #00ff00; 
-	position: absolute; 
-	right: 10vmin; 
-	top: 5vmin;
-} 
+.game > .pong > .right_score {
+  color: #00ff00;
+  position: absolute;
+  right: 10vmin;
+  top: 5vmin;
+}

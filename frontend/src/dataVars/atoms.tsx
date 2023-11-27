@@ -15,3 +15,8 @@ export const allUsersAtom = atom<IUser[]>({
   key: "allUsersAtom",
   default: [],
 });
+
+export const selectedChannelAtom = atom<string>({
+  key: "selectedChannelAtom",
+  default: "",
+});

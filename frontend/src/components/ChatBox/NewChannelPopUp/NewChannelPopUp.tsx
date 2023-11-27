@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./NewChannelPopUp.css";
 import NewChannelPage from "./newChannelPage/newChannelPage";
 import NewPrivateMessage from "./newPrivateMessage/newPrivateMessage";
@@ -11,6 +11,11 @@ interface Props {
 
 export default function NewChannelPopUp({ popUp, currentUser }: Props) {
   const [title, setTitle] = useState("title1");
+
+  useEffect(() => {
+    return () => void console.log("recycling newChannelPopUp");
+  }, []);
+
   return (
     <div className="bluredBackground">
       <div
@@ -59,10 +64,7 @@ export default function NewChannelPopUp({ popUp, currentUser }: Props) {
         </div>
         {title == "title1" && <NewPrivateMessage currentUser={currentUser} />}
         {title == "title2" && (
-          <NewChannelPage
-            currentUser={currentUser}
-            closePopUp={() => popUp(0)}
-          />
+          <NewChannelPage currentUser={currentUser} closePopUp={popUp} />
         )}
         {title == "title3" && <FriendsList currentUser={currentUser} />}
         <div

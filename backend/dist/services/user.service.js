@@ -36,7 +36,7 @@ let UserService = class UserService {
     async findByUsername(userName) {
         const user = await this.userRepo.findOne({
             where: { userName: userName },
-            relations: { channels: true },
+            relations: { channels: { history: true } },
         });
         if (user)
             return user;
