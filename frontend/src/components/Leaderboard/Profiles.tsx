@@ -1,3 +1,5 @@
+import "./Profiles.css";
+
 interface ProfilesProps {
   DataBoard: any;
 }

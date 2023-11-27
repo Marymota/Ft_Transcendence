@@ -2,6 +2,8 @@
 
 * > * {
   font-family: "Rubik Mono One", regular;
+  --color-light: aquamarine;
+  --color-dark: #463366;
 }
 
 .page {

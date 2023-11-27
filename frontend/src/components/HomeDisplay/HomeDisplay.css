@@ -1,4 +1,4 @@
-.container {
+.home {
     width: 100%;
     display: flex;
     align-items: center;
@@ -7,29 +7,27 @@
     margin-top: 200px;
   }
 
-  .container > .disk {
-    max-width: 40vh;
-    margin-bottom: 50px;
-  }
+.home > .disk {
+  max-width: 40vh;
+  margin-bottom: 50px;
+}
   
-  .container > .logo {
-    width: 50%;
-    max-width: 40vh;
-    margin-bottom: 25px;
+.home > .logo {
+  width: 50%;
+  max-width: 40vh;
+  margin-bottom: 25px;
+}
+
+@media (max-width: 1000px) {
+  .home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
   }
 
-
-
-  @media (max-width: 1000px) {
-    .container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 100px;
-    }
-
-    .container > .slogan {
-      font-size: 200px;
-    }
+.home > .slogan {
+    font-size: 200px;
   }
+}
   

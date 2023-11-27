@@ -8,7 +8,7 @@ function HomeDisplay() {
 
   return (
     <>
-      <div className='container'>
+      <div className='home'>
         <img className='disk' src={Disk.default} alt="Disquete Illustration" />
         <img className='logo' src={Logo.default} alt="Logo Pong" />
         <div className="play-button">

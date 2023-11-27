@@ -45,3 +45,25 @@
   right: 10vmin;
   top: 5vmin;
 }
+
+@media (max-width: 1500px) {
+  .game > .pong {
+    position: absolute;
+    background-color: #000000;
+    top: 20vmin;
+    left: 50%;
+    width: 85vmin;
+    height: 60vmin;
+  }
+}
+
+@media (max-width: 1100px) {
+  .game > .pong {
+    position: absolute;
+    background-color: #000000;
+    top: 20vmin;
+    left: 7vmin;
+    width: 85vmin;
+    height: 60vmin;
+  }
+}
