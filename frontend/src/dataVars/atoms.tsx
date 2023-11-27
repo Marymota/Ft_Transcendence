@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { IChat, IUser } from "./types";
+import { IChat, IMessage, IUser } from "./types";
 
 export const userChatsAtom = atom<IChat[]>({
   key: "userChatsAtom",
@@ -19,4 +19,9 @@ export const allUsersAtom = atom<IUser[]>({
 export const selectedChannelAtom = atom<string>({
   key: "selectedChannelAtom",
   default: "",
+});
+
+export const channelMessagesAtom = atom<IMessage[]>({
+  key: "channelMessagesAtom",
+  default: [],
 });

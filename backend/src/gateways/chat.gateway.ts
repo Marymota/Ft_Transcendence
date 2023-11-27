@@ -8,6 +8,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import Channel from 'src/entitys/channel.entity';
+import Message from 'src/entitys/message.entity';
 import User from 'src/entitys/user.entity';
 import { ChatService } from 'src/services/chat.service';
 import { UserService } from 'src/services/user.service';
@@ -127,7 +128,7 @@ export class ChatGateway {
     @MessageBody() data: { type: 'add' | 'rmv'; member: string },
   ): Promise<string[]> {
     console.log(
-      `frontend asked to add user to possible channel member; data: ${data}; type: ${data.type}; member: ${data.member}`,
+      `frontend asked to add user to possible channel member; type: ${data.type}; member: ${data.member}`,
     );
     if (data.type == 'add') backendMembers.push(data.member);
     else if (data.type == 'rmv') {
@@ -135,5 +136,24 @@ export class ChatGateway {
       if (index > -1) backendMembers.splice(index, 1);
     }
     return backendMembers;
+  }
+
+  @SubscribeMessage('getChannelMessages')
+  async getChannelMessages(
+    @MessageBody() data: { channel: string; userName: string },
+  ): Promise<Message[]> {
+    console.log(
+      `frontend asked for channel ${data.channel} messages; user that asked: ${data.userName}`,
+    );
+    const user = await this.userService.findByUsername(data.userName);
+    if (!user) return [];
+    const channel = await this.chatService.findByDisplayName(data.channel);
+    if (!channel) return [];
+    let userIsMember = false;
+    channel.members.map((member: User) => {
+      if (member.userName == data.userName) userIsMember = true;
+    });
+    if (userIsMember == false) return [];
+    return channel.history;
   }
 }

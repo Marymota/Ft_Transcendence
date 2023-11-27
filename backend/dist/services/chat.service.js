@@ -33,6 +33,7 @@ let ChatService = class ChatService {
     async findByDisplayName(displayName) {
         const channel = await this.chatRepo.findOne({
             where: { displayName: displayName },
+            relations: { history: true },
         });
         if (channel)
             return channel;

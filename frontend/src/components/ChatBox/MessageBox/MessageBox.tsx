@@ -1,8 +1,15 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import "./MessageBox.css";
-import { selectedChannelAtom, userChatsAtom } from "../../../dataVars/atoms";
+import {
+  channelMessagesAtom,
+  selectedChannelAtom,
+  userChatsAtom,
+} from "../../../dataVars/atoms";
 import { useEffect, useState } from "react";
-import { getUserChannels } from "../../../dataVars/serverRequests";
+import {
+  getChannelMessages,
+  getUserChannels,
+} from "../../../dataVars/serverRequests";
 import { IMessage, IChat } from "../../../dataVars/types";
 
 interface Props {
@@ -10,27 +17,22 @@ interface Props {
 }
 
 export default function MessageBox({ currentUser }: Props) {
-  const [chats, setChats] = useRecoilState(userChatsAtom);
-  const [chat, setChat] = useState<IChat>();
+  const [messages, setMessages] = useRecoilState(channelMessagesAtom);
   const selectedChannel = useRecoilValue(selectedChannelAtom);
 
   useEffect(() => {
-    getUserChannels(currentUser).then((value) => {
-      setChats(value);
-    });
+    if (selectedChannel != "") {
+      getChannelMessages(selectedChannel, currentUser).then((value) => {
+        setMessages(value);
+      });
+    }
     return () => void console.log("recycling messageBox");
   }, []);
-
-  for (let i = 0; i < chats.length; i++) {
-    if (chats[i].displayName == selectedChannel) {
-      setChat(chats[i]);
-    }
-  }
-  if (chat && chat.history && chat.history.length > 0) {
+  if (messages && messages.length > 0) {
     console.log("test2.1");
     return (
       <div className="messagesBox">
-        {chat.history
+        {messages
           .slice(0)
           .reverse()
           .map((msg: IMessage) => {

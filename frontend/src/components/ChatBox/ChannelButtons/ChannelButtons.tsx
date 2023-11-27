@@ -1,19 +1,23 @@
 import { useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { selectedChannelAtom, userChatsAtom } from "../../../dataVars/atoms";
 import { IChat, IUser } from "../../../dataVars/types";
 import "./ChannelButtons.css";
+import { getUserChannels } from "../../../dataVars/serverRequests";
 
 interface Props {
   currentUser: string;
 }
 
 export default function ChannelButtons({ currentUser }: Props) {
-  const chats = useRecoilValue(userChatsAtom);
+  const [chats, setChats] = useRecoilState(userChatsAtom);
   const [selectedChannel, setSelectedChannel] =
     useRecoilState(selectedChannelAtom);
 
   useEffect(() => {
+    getUserChannels(currentUser).then((value) => {
+      setChats(value);
+    });
     return () => void console.log("recycling channelButtons");
   }, []);
 

@@ -84,7 +84,7 @@ let ChatGateway = class ChatGateway {
         return user.friends;
     }
     async addingMembers(data) {
-        console.log(`frontend asked to add user to possible channel member; data: ${data}; type: ${data.type}; member: ${data.member}`);
+        console.log(`frontend asked to add user to possible channel member; type: ${data.type}; member: ${data.member}`);
         if (data.type == 'add')
             backendMembers.push(data.member);
         else if (data.type == 'rmv') {
@@ -93,6 +93,23 @@ let ChatGateway = class ChatGateway {
                 backendMembers.splice(index, 1);
         }
         return backendMembers;
+    }
+    async getChannelMessages(data) {
+        console.log(`frontend asked for channel ${data.channel} messages; user that asked: ${data.userName}`);
+        const user = await this.userService.findByUsername(data.userName);
+        if (!user)
+            return [];
+        const channel = await this.chatService.findByDisplayName(data.channel);
+        if (!channel)
+            return [];
+        let userIsMember = false;
+        channel.members.map((member) => {
+            if (member.userName == data.userName)
+                userIsMember = true;
+        });
+        if (userIsMember == false)
+            return [];
+        return channel.history;
     }
 };
 exports.ChatGateway = ChatGateway;
@@ -155,6 +172,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ChatGateway.prototype, "addingMembers", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('getChannelMessages'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ChatGateway.prototype, "getChannelMessages", null);
 exports.ChatGateway = ChatGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({ cors: { origin: 'http://localhost:5173' } }),
     __metadata("design:paramtypes", [user_service_1.UserService,

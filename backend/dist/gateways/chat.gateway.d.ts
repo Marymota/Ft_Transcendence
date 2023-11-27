@@ -1,5 +1,6 @@
 import { Server } from 'socket.io';
 import Channel from 'src/entitys/channel.entity';
+import Message from 'src/entitys/message.entity';
 import User from 'src/entitys/user.entity';
 import { ChatService } from 'src/services/chat.service';
 import { UserService } from 'src/services/user.service';
@@ -36,4 +37,8 @@ export declare class ChatGateway {
         type: 'add' | 'rmv';
         member: string;
     }): Promise<string[]>;
+    getChannelMessages(data: {
+        channel: string;
+        userName: string;
+    }): Promise<Message[]>;
 }

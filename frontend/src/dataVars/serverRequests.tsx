@@ -1,4 +1,4 @@
-import { IChat, IUser } from "./types";
+import { IChat, IMessage, IUser } from "./types";
 import { socket } from "../App";
 
 // USERS
@@ -47,5 +47,12 @@ export async function createChannel(
     avatar,
     members,
     type,
+  });
+}
+
+export async function getChannelMessages(channel: string, userName: string) {
+  return await socket.send<IMessage[]>("getChannelMessages", {
+    channel,
+    userName,
   });
 }
