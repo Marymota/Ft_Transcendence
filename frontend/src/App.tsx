@@ -6,6 +6,7 @@ import Play from "./pages/Play/Play";
 import Chat from "./pages/Chat/Chat";
 import Profile from "./pages/Profile/Profile";
 import LeaderBoard from "./pages/Leaderboard/Leaderboard";
+import Registration from "./components/Registration/Registration";
 import { mySocket } from "./dataVars/socket";
 import { RecoilRoot } from "recoil";
 
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="/Chat" element={<Chat />} />
             <Route path="/Profile" element={<Profile />} />
             <Route path="/Leaderboard" element={<LeaderBoard />} />
+            <Route path="/Reg" element={<Registration />} />
           </Routes>
         </Router>
       </RecoilRoot>
